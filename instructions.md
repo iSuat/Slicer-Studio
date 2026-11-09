@@ -122,12 +122,47 @@ When searching inside the file, target these specific section headers instead of
 ---
 
 ## 5. Upcoming Roadmap
-* **`P2+` (Next Slicing Techniques):**
-  * **Curve Slices (`CS`):** Slicing along arbitrary user splines/spines.
-  * **Folded Panels / Pepakura (`FP`):** Low-poly sheet metal and cardboard folding unrolls.
-* **Final Phases:**
-  * **`P1` — Full `.3MF` Project Save / Load:** Complete state backup including model transforms, slices, dowels, and part exclusions.
-  * **`P3` — Advanced Nesting & Web Worker:** True-polygon nesting and offloading CPU-intensive Clipper computations.
+
+### 🚀 Phase 1: Rapid Fabrication Fixes & Bed Truncation (UI & Geometry)
+1. **Z-Cut (Truncate Below Bed / Base Flattening):**
+   * Slices models with spherical or uneven bottoms by truncating geometry where $Z < 0$.
+   * An independent `Z-Sink (Sink below bed: -X mm)` parameter decoupled from `Drop to Bed`; cross-sections below the bed ($Z < 0$) are omitted from slicing.
+2. **Radial: Lock Pattern to Bed Center:**
+   * Checkbox option to anchor the radial slicing origin strictly to the bed coordinate `(0, 0)` rather than the model's bounding box center.
+   * Enables asymmetrical and organic slicing patterns by freely positioning models across the bed.
+3. **Blind Dowel Depth Control:**
+   * Gives users full control over how many top layers remain blind/capped (e.g., 0 = through-hole, 1 = 1-layer cap, 2 = 2-layer cap...).
+
+### 💡 Phase 2: Lamp, Lighting & Square Dowel Fabrication Suite
+1. **Square Dowels:**
+   * Option for square dowels/pegs (`Square Dowel`) tailored for standard wooden square battens and extruded profiles.
+2. **Square Dowel CNC Relief & Tool Diameter Verification:**
+   * Active corner relief (**Dog-Bone** / **T-Bone**) is automatically applied to square dowel holes and washer cutouts.
+   * Prominent UI warning badge if cutter diameter exceeds dowel slot width (`toolDia >= dowelWidth`).
+3. **Stacked: Dowel Support Washers (Spacers):**
+   * Automatically generates drilled spacer washers to maintain uniform gaps when `Skip Layers` is active (1 skip = 1 washer, 2 skips = 2 washers). Outer diameter is user-definable, inner hole matches dowel size.
+4. **Radial: Batch Inward Offset for Horizontal Rings:**
+   * Inward offset (`offset(-inwardAmount)`) for horizontal rings (`Z-1..Z-m`) in radial mode, leaving vertical fins protruding outwards as an aesthetic lamp shade skeleton.
+5. **Radial: Center Socket/Cable Hole on Selected Ring:**
+   * Cuts parametric E27/E14 lamp socket holes at the exact central axis on user-selected horizontal rings via Clipper boolean difference.
+
+### 📐 Phase 3: 3D & Vector Export Optimizations
+1. **3D Sliced Assembly Export (`.3mf` / `.stl`):**
+   * Exports sliced assembly parts into a multi-body `.3mf` or `.stl` format compatible with 3D printer slicers (Bambu Studio, OrcaSlicer, Cura) for instant "Split to Objects / Parts" plate nesting.
+2. **Vector Arc / Bézier Fitting (Optional):**
+   * Converts segmented polyline facets in DXF and SVG exports into smooth `ARC`/`BULGE` and Bézier curves, minimizing CNC/laser cutter stuttering and reducing file sizes.
+
+### 🧠 Phase 4: Intelligent Placement & Hardware Cutouts
+1. **Intelligent Dowel Placement (Medial Axis / Wall Mid-Line):**
+   * Algorithmic dowel distribution along the medial axis of slices, ensuring placement squarely within solid geometry rather than a naive bounding-box grid.
+2. **Hardware Negative Boolean Library:**
+   * Built-in 3D negative templates for standard hardware (E27/E14 sockets, LED strip channels, magnet recesses).
+
+### ⏳ Phase 5: Future Architecture (On Hold)
+1. **Full-Scope Project Save / Load (`.3mf` / `.json`):** Preserving model, slicing parameters, and slice visibility states.
+2. **Advanced True-Polygon Nesting & Web Worker:** True-shape packing with background thread execution.
+3. **Curve Slices (`CS`):** Slicing along arbitrary user-defined guide curves.
+4. **Folded Panels / Pepakura (`FP`):** Sheet and card unrolling with gluing tabs.
 
 ---
 

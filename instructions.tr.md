@@ -121,13 +121,48 @@ Dosya içinde arama yaparken tüm dosyayı okumak yerine aşağıdaki bölüm ba
 
 ---
 
-## 5. Sıradaki Aşama ve Yol Haritası
-* **`P2+` Devamı:**
-  * **Curve Slices (`CS`):** Kullanıcı tanımlı eğri/omurga boyunca dilimleme.
-  * **Folded Panels / Pepakura (`FP`):** Sac ve karton katlama açınımı.
-* **Son Aşamalar:**
-  * **`P1` — Tam Kapsamlı `.3MF` Proje Kaydet / Yükle:** Model, dilimleme ayarları, pimler ve parça durumlarının eksiksiz saklanması.
-  * **`P3` — Gelişmiş Nesting & Web Worker:** True-polygon nesting ve arka plan iş parçacığı optimizasyonu.
+## 5. Sıradaki Aşama ve Yol Haritası (Roadmap)
+
+### 🚀 Faz 1: Hızlı İmalat Çözümleri & Taban Düzleme (UI & Geometri)
+1. **Z-Cut (Tabladan Aşağı Batırma / Taban Düzleme):**
+   * Altı küresel veya amorf modellerin tabanını düz kesebilmek için $Z < 0$ kısmını budama.
+   * `Drop to Bed` işleminden etkilenmeyen bağımsız `Z-Sink (Tabladan Batma: -X mm)` parametresi; tabla seviyesinin ($Z \ge 0$) altında kalan kesitler hesap dışı bırakılır.
+2. **Radial: Tabla Merkezine Kilitleme (`Lock Pattern to Bed Center`):**
+   * Dilimleme merkezini modelin merkezinden ayırıp doğrudan tabla koordinatına `(0,0)` sabitleme seçeneği (checkbox).
+   * Model tabla üzerinde nereye çekilirse çekilsin veya formu ne kadar asimetrik olursa olsun ışınsal dilimleme tam tabla merkezini baz alır.
+3. **Kör Delik / Dowel Derinlik Kontrolü:**
+   * Dowel'ın üstten kaç katman geride duracağını (örneğin 0=tam delik, 1=1 katman kapak, 2=2 katman...) kullanıcının belirlemesi.
+
+### 💡 Faz 2: Lamba, Aydınlatma ve Kare Dowel İmalat Paketi
+1. **Kare Dowel:**
+   * Çıta veya kare profil kullanımı için dairesel haricinde kare kesitli pim seçeneği (`Square Dowel`).
+2. **Kare Dowel CNC Relief & Takım Çapı Kontrolü:**
+   * Dosyadaki aktif köşe boşaltma modu (**Dog-Bone** / **T-Bone**), kare dowel deliklerine ve ara pullara otomatik uygulanır.
+   * Freze ucu çapı kare genişliğini aşıyorsa (`toolDia >= dowelWidth`) arayüzde belirgin uyarı rozeti gösterilir.
+3. **Stacked: Dowel Support (Ara Mesafe Pulları / Washers):**
+   * `Skip Layers` aktifken katmanlar arasındaki hava boşluğunu korumak için plana delikli ara pullar ekleme (1 boşluk = 1 pul, 2 boşluk = 2 pul). İçi dowel çapında, dış çapı kullanıcı tanımlı.
+4. **Radial: Toplu İçe Ofset (Inward Ring Offset):**
+   * Lamba yapımında yatay halkaları (`Z-1..Z-m`) toplu olarak içeri çekme (`offset(-inwardAmount)`); dikey kanatların dışarı taşmasını sağlayarak gizli iskelet oluşturma.
+5. **Radial: Seçili Katmana Merkez Duy/Kablo Deliği:**
+   * Seçilen yatay halkaya tam merkeze parametrik E27/E14 duy ve kablo geçiş deliği açma (Clipper boolean difference).
+
+### 📐 Faz 3: 3D & Vektör Export Optimizasyonları
+1. **Preview Sahnesini 3D Dışa Aktarma (`.3mf` / `.stl`):**
+   * Dilimlenmiş tüm parçaları 3D yazıcı dilimleyicisine (Bambu Studio, OrcaSlicer, Cura) aktarıp "Split to Objects / Parts" ile tablaya dizebilecek çok gövdeli formatta indirme.
+2. **Vektör Arc / Bézier Fitting (Opsiyonel):**
+   * DXF ve SVG çıktılarında düz çizgi yığınlarını (facet polyline) pürüzsüz yaylara (`ARC` / `BULGE`) ve Bézier eğrilerine dönüştürme; CNC/lazer kesim titreşimini ve dosya boyutunu azaltma.
+
+### 🧠 Faz 4: Akıllı Konumlandırma & Negatif Kütüphanesi
+1. **Akıllı Dowel Konumlandırma (Medial Axis / Et Kalınlığı Ortası):**
+   * Mevcut bounding-box gridi yerine parça et kalınlığının orta hattını bularak dowel dizilimi yapma.
+2. **Hazır Donanım Negatif Kütüphanesi (Boolean Cutouts):**
+   * E27/E14 duy, LED şerit kanalı, mıknatıs yuvası gibi standart donanımları modele 3D negatif boolean ile açma.
+
+### ⏳ Faz 5: Gelecek Mimari Geliştirmeler (Beklemede)
+1. **Tam Kapsamlı Proje Kaydet / Yükle (`.3mf` / `.json`):** Sahnedeki modeli, dilimleme ayarlarını ve parça durumlarını saklama.
+2. **Gelişmiş True-Polygon Nesting & Web Worker:** Sıfır fire yerleşimi ve arka plan iş parçacığı.
+3. **Curve Slices (`CS`):** Eğri boyunca dilimleme.
+4. **Folded Panels / Pepakura (`FP`):** Sac/karton katlama açınımı.
 
 ---
 
