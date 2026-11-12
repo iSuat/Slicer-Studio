@@ -18,7 +18,7 @@ Bu belge, **OpenSlicer Studio** projesini gelecekteki oturumlarda yapay zeka (AI
 * **Lisans:**
   * Proje resmi olarak **GNU General Public License v3.0 (GPLv3)** lisansıyla lisanslanmıştır ([LICENSE](file:///d:/Projeler/Open%20Slicer/LICENSE)).
 * **Sürümleme Kuralı (Strict Versioning Rule):**
-  * Üst barda gösterilen sürüm `beta 1.2` olarak ayarlanmıştır (`.app-version-badge`).
+  * Üst barda gösterilen sürüm `beta 1.5` olarak ayarlanmıştır (`.app-version-badge`).
   * **Önemli:** Sürüm numarası her geliştirme/sohbette otomatik arttırılmaz. Versiyon arttırımı **yalnızca kullanıcı açıkça 'publish ediyoruz / yeni versiyon yayınlayalım' dediğinde** kullanıcının belirlediği numaraya güncellenir.
 * **Destek ve Bağış Butonları:**
   * Üst barda `☀️ Light Mode` ile `? Help` arasında `Buy Me a Coffee` butonu yer alır (`https://www.buymeacoffee.com/iSuat`).
@@ -44,7 +44,7 @@ Dosya içinde arama yaparken tüm dosyayı okumak yerine aşağıdaki bölüm ba
 1. **CSS Stilleri (`Lines 6–510`):**
    * Dark / Light tema değişkenleri (`:root`, `body.light-theme`), Sol Akordeon Menü (`#sidebar`), Orta 3B Sahne (`#viewport3d`), Sağ Panel (`#viewport2d`), Tam Ekran Sheet Lightbox (`#sheetLightbox`), Sağ-Alt Assembly Step HUD (`#assemblyStepHud`), `.app-version-badge` ve `.bmc-link`.
 2. **HTML İskeleti (`Lines 515–1160`):**
-   * Üst Menü (`#topbar`): Marka logosu, `.app-version-badge` (`beta 1.2`), Undo/Redo butonları, Grid Toggle, Light/Dark Toggle, Buy Me a Coffee Linki (`.bmc-link`) ve Help butonu.
+   * Üst Menü (`#topbar`): Marka logosu, `.app-version-badge` (`beta 1.5`), Undo/Redo butonları, Grid Toggle, Light/Dark Toggle, Buy Me a Coffee Linki (`.bmc-link`) ve Help butonu.
    * Sol Menü Kutuları:
      * `Box 1`: Import, Presets & Universal Live Watch (`#presetSelect`, `#fileInput`, `#btnLiveWatchFile`, `#lblLiveWatchStatus`)
      * `Box 2`: Manufacturing Settings (`#unitSelect`, `#sheetW`, `#sheetH`, `#matThick`, `#skipCount`, `#sheetMargin`, `#slotOffset`, `#chkToolDia`, `#toolDia`)
@@ -93,7 +93,7 @@ Dosya içinde arama yaparken tüm dosyayı okumak yerine aşağıdaki bölüm ba
 
 ---
 
-## 4. Tamamlanan Son Geliştirmeler (v1.2 Beta)
+## 4. Tamamlanan Son Geliştirmeler (v1.5 Beta)
 
 1. **`P2+` Radial Slices (`RS` - Polar / Işınsal 3B Dilimleme):**
    * Arayüze `Radial Slices` üretim modu eklendi.
@@ -123,45 +123,83 @@ Dosya içinde arama yaparken tüm dosyayı okumak yerine aşağıdaki bölüm ba
 
 ## 5. Sıradaki Aşama ve Yol Haritası (Roadmap)
 
-### 🚀 Faz 1: Hızlı İmalat Çözümleri & Taban Düzleme (UI & Geometri)
-1. **Z-Cut (Tabladan Aşağı Batırma / Taban Düzleme):**
-   * Altı küresel veya amorf modellerin tabanını düz kesebilmek için $Z < 0$ kısmını budama.
-   * `Drop to Bed` işleminden etkilenmeyen bağımsız `Z-Sink (Tabladan Batma: -X mm)` parametresi; tabla seviyesinin ($Z \ge 0$) altında kalan kesitler hesap dışı bırakılır.
-2. **Radial: Tabla Merkezine Kilitleme (`Lock Pattern to Bed Center`):**
-   * Dilimleme merkezini modelin merkezinden ayırıp doğrudan tabla koordinatına `(0,0)` sabitleme seçeneği (checkbox).
-   * Model tabla üzerinde nereye çekilirse çekilsin veya formu ne kadar asimetrik olursa olsun ışınsal dilimleme tam tabla merkezini baz alır.
-3. **Kör Delik / Dowel Derinlik Kontrolü:**
-   * Dowel'ın üstten kaç katman geride duracağını (örneğin 0=tam delik, 1=1 katman kapak, 2=2 katman...) kullanıcının belirlemesi.
+### ✅ Faz 1: Hızlı İmalat Çözümleri, Masaüstü Arayüzü & Undo/Redo (Tamamlandı)
+1. **Masaüstü Uygulama Görünümü, İkon & Alt Durum Çubuğu:** `slicer-studio.png` uygulama ikonu, 50px üst bar, GitHub linki ve canlı alt durum çubuğu (`#statusBar`).
+2. **45 Adımlı Undo / Redo Motoru (`Ctrl+Z` / `Ctrl+Y`):** Model dönüşümleri, parametreler, kavelalar ve parça gizlemeleri için tam geçmiş desteği.
+3. **Z-Cut (`Sink Below Bed`):** Tabladan aşağı batırma ve $Z < 0$ geometrisini su geçirmez düz tabanla budama (`Drop to Bed` ve `Lay Flat` ile sıfırlanır).
+4. **Radial: Tabla Merkezine Kilitleme (`🔒 Lock Pattern to Bed Center`):** Işınsal dilimleme merkezini `(0,0)` tabla orijinine sabitleme.
+5. **Kavela Kör Delik Kontrolü (`Top Cap Layers` / `Bottom Cap Layers`):** Üst ve alt uçta kaç katman kapalı kalacağını seçebilme.
 
-### 💡 Faz 2: Lamba, Aydınlatma ve Kare Dowel İmalat Paketi
-1. **Kare Dowel:**
-   * Çıta veya kare profil kullanımı için dairesel haricinde kare kesitli pim seçeneği (`Square Dowel`).
-2. **Kare Dowel CNC Relief & Takım Çapı Kontrolü:**
-   * Dosyadaki aktif köşe boşaltma modu (**Dog-Bone** / **T-Bone**), kare dowel deliklerine ve ara pullara otomatik uygulanır.
-   * Freze ucu çapı kare genişliğini aşıyorsa (`toolDia >= dowelWidth`) arayüzde belirgin uyarı rozeti gösterilir.
-3. **Stacked: Dowel Support (Ara Mesafe Pulları / Washers):**
-   * `Skip Layers` aktifken katmanlar arasındaki hava boşluğunu korumak için plana delikli ara pullar ekleme (1 boşluk = 1 pul, 2 boşluk = 2 pul). İçi dowel çapında, dış çapı kullanıcı tanımlı.
-4. **Radial: Toplu İçe Ofset (Inward Ring Offset):**
-   * Lamba yapımında yatay halkaları (`Z-1..Z-m`) toplu olarak içeri çekme (`offset(-inwardAmount)`); dikey kanatların dışarı taşmasını sağlayarak gizli iskelet oluşturma.
-5. **Radial: Seçili Katmana Merkez Duy/Kablo Deliği:**
-   * Seçilen yatay halkaya tam merkeze parametrik E27/E14 duy ve kablo geçiş deliği açma (Clipper boolean difference).
+### ✅ Faz 2: Lamba, Aydınlatma, Kare/Dikdörtgen Dowel (`R-Bone`), Çoklu Dil & Bugfix Paketi (Tamamlandı)
+1. **Kare / Dikdörtgen Dowel (`Square / Rect Dowel`):**
+   * Box 5'te `Shape` seçeneği ölçü kutularının üstüne alındı.
+   * `Round` seçiliyken `Diameter` gösterilir; `Square / Rect` seçildiğinde `Diameter` gizlenip yerine **`Width (X)`** ve **`Depth (Y)`** (dikdörtgen ve kare çıta/profil desteği) kutuları açılır.
+2. **`R-Bone` (4 Yönlü Döner) Corner Relief & `Relief Type` Taşıması:**
+   * `Relief Type` (`#waffleReliefType`) ayarı **2. Manufacturing Settings (`#box2`)** içine taşındı (Advanced açıksa Advanced altında, kapalıysa `Skip Layers` altında görünür; seçenekler: `Square (None)`, `T-Bone`, `Dog Bone`).
+   * **Kullanıcı Notu:** Normal geçme yuvalarında R-Bone'un kullanışlı olmadığı tespit edilerek `#waffleReliefType` seçeneklerinden kaldırıldı; normal yuvalar için ileride daha kompleks bir relief stratejisi tasarlanacak.
+   * R-Bone modu sadece **kare/dikdörtgen dowel delikleri ve dowel support washer deliklerinde**, eğer Relief Type açıksa (`T-Bone` veya `Dog Bone`) **otomatik** olarak uygulanır. Relief kapalıysa (`Square / None`) kavelalar da düz köşeli kalır.
+   * Freze ucu çapı dowel dar kenarını aşıyorsa (`toolDia >= min(dowelW, dowelD)`) arayüzde ve Model Issues sekmesinde belirgin uyarı gösterilir.
+3. **Stacked: Dowel Support (Ara Mesafe Pulları / Washers — 3B Sahne + 2B Plaka):**
+   * `Skip Layers > 0` ve `Dowels` aktifken katmanlar arasındaki boşluğu korumak için kesim planına ve **3B görüntüleme ekranına** delikli ara pullar (`W-1, W-2...`) eklenir (1 katman atlandıysa boşluk başına 1 pul, 2 atlandıysa 2 pul).
+4. **Stacked: Eğimli Dilimlemede Merkezden Uçlara Simetrik Dilimleme (`Tilt X = 90°` veya 1. Parça Tablaya Değmiyorsa):**
+   * `6. Slice Direction` içinde eğim verildiğinde (`Tilt X = 90°` vb.) veya 1 numaralı parça yere düz basmıyorsa, dilimleme eksen merkezinden (`zMid`) iki uca doğru simetrik adımlarla başlar; böylece koltuk/kanepe gibi simetrik modeller iki uçta birebir aynı parça ile başlar.
+5. **Radial: Toplu İçe Ofset (`Horiz. Ring Offset`) & Sağ Panelde Parça Bazlı Merkez Delik (`Center Hole Ø`):**
+   * Dikey dilimli lamba yapımında yatay halkaları (`Z-1..Z-m`) toplu olarak içeri çekme (`offset(-inwardAmount)`).
+   * Merkez delik açma özelliği sağdaki **Cut Layout (`#partActionBar`)** kısmına taşındı; seçilen her bir yatay parça (`Z-1`, `Z-2`...) için ayrı delik çapı (`partCenterHoles[id]`) girilebilir ve aktif delikli parçalar etiket (pill) olarak listelenir.
+6. **Radial Dilim Seçim Bugfix (`R-*` ve `Z-*`):**
+   * 3B sahnede gizli dowel düzlemlerinin tıklamaları yakalaması, 3B rib sürükleme eşiği, tek yönlü yüzey (`FrontSide`) raycast sorunu ve 2B SVG'de delik içlerinin alttaki parçaya tıklamayı engellemesi (`fill-rule="evenodd"`) düzeltildi.
+7. **Harici Dil Dosyaları (`locales/en.js`, `locales/tr.js`), Tek Dilli Dinamik Help, Hayalet Çizgiler & Box 8 `Guides`:**
+   * Dil metinleri `locales/` klasöründeki harici dil dosyalarına taşındı; Help penceresi aktif dilde tek dilli olarak çalışır.
+   * 3B model yüklendiğinde havada asılı kalan `EdgesGeometry` tel kafesi kaldırıldı ve Box 8 `Guides (Blue)` devre dışı bırakıldı.
 
-### 📐 Faz 3: 3D & Vektör Export Optimizasyonları
-1. **Preview Sahnesini 3D Dışa Aktarma (`.3mf` / `.stl`):**
-   * Dilimlenmiş tüm parçaları 3D yazıcı dilimleyicisine (Bambu Studio, OrcaSlicer, Cura) aktarıp "Split to Objects / Parts" ile tablaya dizebilecek çok gövdeli formatta indirme.
+### 📐 Faz 3: 3D & Vektör Export Optimizasyonları (Aktif)
+1. **✅ Preview Sahnesini 3D Dışa Aktarma (`.3mf` / `.stl`):**
+   * Dilimlenmiş tüm parçaları 3D yazıcı dilimleyicilerine (Bambu Studio, OrcaSlicer, PrusaSlicer, Cura) aktarabilecek çok gövdeli üretim formatları Box 8'e eklendi (`📦 3D (.3MF)` ve `⬇ 3D (.STL)`).
+   * `.3mf`: Her parçayı (`Z-1`, `X-1`, `R-1`, `W-1`...) ayrı ve isimlendirilmiş birer `<object>` olarak barındırır. Dilimleyiciye atıldığında "Split to Objects / Parts" yapılarak tek tıkla 3D yazıcı tablasına otomatik dizilebilir (Auto-Arrange).
+   * `.stl`: Montajlı tüm parçaları dünya koordinatlarında tek parça binary STL olarak kaydeder.
 2. **Vektör Arc / Bézier Fitting (Opsiyonel):**
-   * DXF ve SVG çıktılarında düz çizgi yığınlarını (facet polyline) pürüzsüz yaylara (`ARC` / `BULGE`) ve Bézier eğrilerine dönüştürme; CNC/lazer kesim titreşimini ve dosya boyutunu azaltma.
+   * DXF ve SVG çıktılarında düz çizgi yığınlarını pürüzsüz yaylara (`ARC` / `BULGE`) ve Bézier eğrilerine dönüştürme.
 
-### 🧠 Faz 4: Akıllı Konumlandırma & Negatif Kütüphanesi
-1. **Akıllı Dowel Konumlandırma (Medial Axis / Et Kalınlığı Ortası):**
-   * Mevcut bounding-box gridi yerine parça et kalınlığının orta hattını bularak dowel dizilimi yapma.
-2. **Hazır Donanım Negatif Kütüphanesi (Boolean Cutouts):**
-   * E27/E14 duy, LED şerit kanalı, mıknatıs yuvası gibi standart donanımları modele 3D negatif boolean ile açma.
+### 🛠️ Faz 4: Sahne Araçları, Performans, İpucu Kartları & Akıllı Geometri (Aktif)
+1. **✅ Move Gizmo Koniler/Çubuklar Senkronizasyonu & Tabla Arka-Sol Köşe Triadı:**
+   * Three.js `TransformControls` kütüphanesinin dik ve dar açılarda okları ters döndürürken çubuk ile ucu ayırması (detachment bug) tüm alt bileşenlerin ölçek mutlak değerleri (`Math.abs`) ve yön bayrakları kilitlenerek tamamen giderildi.
+   * Tabladaki 3B XYZ eksen göstergesi (triad) modelin arka-sol köşesinde (`minX`, `maxY`) konumlandırıldı ve yeşil Y oku sahne içerisine/öne doğru (`(0, -1, 0)`) bakacak şekilde yönlendirildi.
+2. **✅ Tabla Merkezleme (`🎯 Center (C)`), Belirgin Merkez Eksenleri, Orijin Noktası & Ana Gride Kilitli Alt Izgara:**
+   * Üst araç çubuğuna `🎯 Center (C)` butonu ve klavye `C` kısayolu eklendi; modeli tablanın `(0, 0)` merkezine alır.
+   * Merkez eksen çizgileri ($X=0$ ve $Y=0$) belirginleştirildi; `(0, 0)` noktasına dairesel CAD orijin halkası ve noktası eklendi.
+   * Alt ızgara objeyi kaydırdıkça objeyle gezmez; ana grid orijinine tam kilitlidir. Objeyi kapsayacak şekilde sadece ana grid hücreleri katında (hücreden hücreye, kesilmeden) genişler ve çizgi aralığı o anki ana hücrenin tam yarısıdır (`mainCellSize / 2`).
+3. **✅ Büyütülmüş 3B Yön Küpü (Autodesk ViewCube):**
+   * Sağ üstteki 3B yön küpü 112px'den 140px'e büyütüldü (280×280 HiDPI canvas); 26 yüzey, kenar ve köşeye tıklama ergonomisi artırıldı.
+4. **✅ Menü/Panel Elemanlarına Tıklanınca Otomatik `Select` Moduna Dönüş & Lay Flat Temizliği:**
+   * Move, Rotate, Scale veya Lay Flat seçiliyken sol menü veya sağ paneldeki herhangi bir girdi kutusuna (`input`), açılır menüye (`select`) veya butona tıklandığı anda 3B araç anında güvenli `select` moduna döner.
+   * Model yüklendiğinde veya başka araca geçildiğinde eski modele ait havada asılı beyaz aday plakalar anında silinir; aday plakaların köşelerine 6mm fillet yuvarlatma uygulandı.
+5. **✅ Gizmo & Eksen Test Laboratuvarı (`index2.html`):**
+   * Three.js `TransformControls` davranışını, eksen kopma/ters dönme durumlarını ve kamera dönüşlerini izole test etmek amacıyla ön, arka, sol, sağ, yukarı referansları ve yönlü asimetrik 3D test modeli içeren bağımsız test ortamı [index2.html](file:///d:/Projeler/Open%20Slicer/index2.html) oluşturuldu.
+6. **Lay Flat Dış Teğet Temas Düzlemleri (Kırmızı Çizgi / Teğet Zarf Analizi - Notlara Alındı):**
+   * Kavisli veya kademeli gövdelerde yerel iç üçgenler (mavi çizgiler) yerine, modelin masaya değeceği en dış temas noktalarını birleştiren dışbükey teğet düzlemlerin (kırmızı çizgi) aday olarak üretilmesi.
+7. **Açılışta Merkezde Kare Model Yükleme / Sürükle-Bırak Alanı (Hızlı Açılış - Notlara Alındı):**
+   * Sayfanın ilk açılışta hafif ve hızlı yüklenmesi; sahne merkezinde belirgin kare "Model Yükle / Buraya Sürükle" alanı yer alması; dosya sürüklendiğinde genişlemesi ve model yüklenince mevcut arayüze geçiş yapılması.
+8. **Üretim Tekniği Seçilene Kadar Box 3 Alt Ayarlarının Sade/Gizli Kalması (Notlara Alındı):**
+   * Kullanıcıyı açar açmaz onlarca ayara boğmamak için teknik seçilmediği sürece Box 3 altındaki parametrelerin gizlenmesi.
+9. **ViewCube Temaları (SVG / PNG Kaplamaları - Notlara Alındı):**
+   * Yılbaşı, endüstriyel, CAD gibi dönemsel temalara göre yön küpünün harici PNG/SVG kaplamalar alabilmesi.
+10. **Sol Menü Özellik Açıklama Bildirimi (Contextual Hover Tooltip Popover):**
+   * Sol menüdeki bir özelliğin üzerine gelindiğinde, sol panelin hemen sağında açıklayıcı bildirim kartı gösterilmesi.
+11. **Yüksek Poligonlu / Büyük Dosyalı Modellerde Performans Optimizasyonu:**
+   * Spatial Bucket / BVH aralık indekslemesi ile dilimleme hızını katlama.
+12. **Akıllı Dowel Konumlandırma (Medial Axis / Et Kalınlığı Ortası):**
+   * Dış duvar ile iç delik arasındaki orta hat üzerinden dowel dizilimi.
+13. **Hazır Donanım Negatif Kütüphanesi (Boolean Cutouts):**
+   * Ampul duyu, LED kiti, mıknatıs yuvası gibi hazır 3D modelleri boolean ile negatif çıkarma.
+14. **Aynı (Özdeş) Parçaları Layout'a 1 Kez Ekleme (`Deduplicate Identical Parts` - Ertelendi, Notlara Alındı):**
+   * Birbiriyle aynı olan parçaları tespit edip tek kopya (`×N`) basma seçeneği.
 
 ### ⏳ Faz 5: Gelecek Mimari Geliştirmeler (Beklemede)
-1. **Tam Kapsamlı Proje Kaydet / Yükle (`.3mf` / `.json`):** Sahnedeki modeli, dilimleme ayarlarını ve parça durumlarını saklama.
-2. **Gelişmiş True-Polygon Nesting & Web Worker:** Sıfır fire yerleşimi ve arka plan iş parçacığı.
-3. **Curve Slices (`CS`):** Eğri boyunca dilimleme.
+1. **Folded Panels / Sac & Karton Katlama Açınımı (`FP`):**
+   * 3D yüzeylerin katlama çizgileri, yapıştırma kulakçıkları ve kalınlık toleranslarıyla 2D sac/karton açınımı (Pepakura tarzı üretim). Geleceğin ana karmaşık mimari hedefi.
+2. **Tam Kapsamlı Proje Kaydet / Yükle (`.3mf` / `.json`):** Sahnedeki modeli, dilimleme ayarlarını ve parça durumlarını saklama.
+3. **Gelişmiş True-Polygon Nesting & Web Worker:** Sıfır fire yerleşimi ve arka plan iş parçacığı.
+4. **Curve Slices (`CS`):** Eğri boyunca dilimleme.
 4. **Folded Panels / Pepakura (`FP`):** Sac/karton katlama açınımı.
 
 ---

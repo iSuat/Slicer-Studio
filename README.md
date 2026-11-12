@@ -3,7 +3,7 @@
 **English Version** | [Türkçe Sürüm](README.tr.md)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2--beta-green.svg)](index.html)
+[![Version](https://img.shields.io/badge/version-1.5--beta-green.svg)](index.html)
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow.svg?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/iSuat)
 
 **OpenSlicer Studio** is a modern, zero-install, browser-based (Single-File HTML) open-source reimagining and extension of Autodesk® *Slicer for Fusion 360* (formerly *123D Make*). It converts 3D models (`.STL`, `.OBJ`, `.3MF`) into fabrication-ready 2D cutting plans (`.DXF`, `.SVG`, `.EPS`) for laser cutters, CNC routers, and cardboard/wood physical model making.
@@ -123,13 +123,13 @@ flowchart LR
   - [x] Instant magenta collision highlights and continuous assembly slider.
   - [x] Neighbor-clamped linear rib sliding.
   - [x] Fullscreen sheet lightbox and single-line CNC stroke font (`SINGLE_LINE_FONT`).
-- [x] **P2+ (Phase 1) — Radial Slices, CAD Live Watch & Large Scale CNC (v1.2 Beta):**
+- [x] **P2+ (Phase 1) — Radial Slices, CAD Live Watch & Large Scale CNC (v1.5 Beta):**
   - [x] **Radial Slices (`RS`):** Radial fins (`R-1..R-n`) + horizontal rings (`Z-1..Z-m`) with radial assembly animations.
   - [x] **Large Scale CNC (5m–10m+):** Dynamic grid and camera near/far adaptations.
   - [x] **Universal Live File Watcher:** Live CAD re-export monitoring via File System Access API.
   - [x] **Autodesk Fusion 360 Add-in (`OpenSlicerBridge`):** 1-click STL bridge.
   - [x] **Flicker-Free ViewCube & Cut Layout unhide visibility bug fixes.**
-  - [x] **beta 1.2 Header Badge, Buy Me a Coffee Integration & GNU GPLv3 License.**
+  - [x] **beta 1.5 Header Badge, Buy Me a Coffee Integration & GNU GPLv3 License.**
 
 ---
 

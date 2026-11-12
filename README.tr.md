@@ -3,7 +3,7 @@
 [English Version](README.md) | **Türkçe Sürüm**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2--beta-green.svg)](index.html)
+[![Version](https://img.shields.io/badge/version-1.5--beta-green.svg)](index.html)
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow.svg?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/iSuat)
 
 **OpenSlicer Studio**, Autodesk® *Slicer for Fusion 360* (eski adıyla *123D Make*) uygulamasının modern, tarayıcı tabanlı (Zero-Install / Single-File HTML) yeniden yorumlanması ve geliştirilmiş açık mimarili alternatifidir. 3B modelleri (`.STL`, `.OBJ`, `.3MF`) lazer kesim, CNC router veya karton/ahşap maket üretimi için 2B kesim planlarına (`.DXF`, `.SVG`, `.EPS`) dönüştürür.
@@ -131,14 +131,14 @@ flowchart LR
   - [x] **Ana Ekranda Anında Çarpışma Vurgusu & Assembly Steps:** Birbirini engelleyen parçaların anında **parlak macenta (`#d946ef`)** rengiyle gösterilmesi ve kesintisiz slider animasyonu.
   - [x] Seçili Waffle dilimini komşu parçaların sınırları dahilinde (`Neighbor Clamping`) kaydırma ve parça bazlı sıfırlama.
   - [x] Tam ekran **Sheet Lightbox** ve orantılı **Single-Line (Tek Çizgi) CNC Vektör Font** (`SINGLE_LINE_FONT`).
-- [x] **P2+ (Faz 1) — Radial Slices, Canlı CAD İzleme & Devasa Sahne Desteği (v1.2 Beta):**
+- [x] **P2+ (Faz 1) — Radial Slices, Canlı CAD İzleme & Devasa Sahne Desteği (v1.5 Beta):**
   - [x] **Radial Slices (`RS`):** Dikey ışınsal kanatlar (`R-1..R-n`) + yatay dairesel halkalar (`Z-1..Z-m`), açıdan bağımsız slotlar ve radyal montaj animasyonu.
   - [x] **Geniş Ölçekli CNC (5m–10m+) Desteği:** Dinamik grid ölçekleme (50–500mm), adaptif kamera near/far ve taban ölçülendirmesi.
   - [x] **Evrensel Tarayıcı Dosya İzleyici (Universal Live File Watcher):** File System Access API ile CAD'den dışa aktarılan model dosyasını izleme ve parametreleri bozmadan canlı yeniden yükleme.
   - [x] **Autodesk Fusion 360 Add-in (`OpenSlicerBridge`):** `[Proje]-[Gövde].stl` adlandırmasıyla 1-tık otomatik dışa aktarım köprüsü.
   - [x] **ViewCube Flicker & Z-Fighting Düzeltmesi:** Yüz ve kenar koordinatlarının ayrıştırılması ile kırpışmasız görünüm küpü.
   - [x] **Cut Layout Görünürlük Düzeltmesi:** Gizlenen parçaların geri açıldığında 3B sahnede anında görünmesi.
-  - [x] **beta 1.2 Rozeti, Buy Me a Coffee Entegrasyonu ve GNU GPLv3 Lisansı.**
+  - [x] **beta 1.5 Rozeti, Buy Me a Coffee Entegrasyonu ve GNU GPLv3 Lisansı.**
 
 ---
 

@@ -18,7 +18,7 @@ The `./Backup` directory is exclusively for code backups; do not read or scan th
 * **License:**
   * The project is officially licensed under the **GNU General Public License v3.0 (GPLv3)** ([LICENSE](file:///d:/Projeler/Open%20Slicer/LICENSE)).
 * **Strict Versioning Rule:**
-  * The version badge displayed in the top bar is set to `beta 1.2` (`.app-version-badge`).
+  * The version badge displayed in the top bar is set to `beta 1.5` (`.app-version-badge`).
   * **Important:** Version numbers must NOT be incremented automatically during routine tasks. The version is only updated **when the user explicitly requests to publish a new release**, setting it to the user's chosen version string.
 * **Support & Donation Buttons:**
   * A `Buy Me a Coffee` button (`https://www.buymeacoffee.com/iSuat`) is placed in the top bar between `☀️ Light Mode` and `? Help`.
@@ -44,7 +44,7 @@ When searching inside the file, target these specific section headers instead of
 1. **CSS Styles (`Lines 6–510`):**
    * Dark / Light theme variables (`:root`, `body.light-theme`), Left Accordion Sidebar (`#sidebar`), Center 3D Scene (`#viewport3d`), Right Panel (`#viewport2d`), Fullscreen Sheet Lightbox (`#sheetLightbox`), Bottom-Right Assembly Step HUD (`#assemblyStepHud`), `.app-version-badge`, and `.bmc-link`.
 2. **HTML Layout (`Lines 515–1160`):**
-   * Top Header (`#topbar`): Brand logo, `.app-version-badge` (`beta 1.2`), Undo/Redo buttons, Grid Toggle, Light/Dark Toggle, Buy Me a Coffee Link (`.bmc-link`), and Help button.
+   * Top Header (`#topbar`): Brand logo, `.app-version-badge` (`beta 1.5`), Undo/Redo buttons, Grid Toggle, Light/Dark Toggle, Buy Me a Coffee Link (`.bmc-link`), and Help button.
    * Left Sidebar Boxes:
      * `Box 1`: Import, Presets & Universal Live Watch (`#presetSelect`, `#fileInput`, `#btnLiveWatchFile`, `#lblLiveWatchStatus`)
      * `Box 2`: Manufacturing Settings (`#unitSelect`, `#sheetW`, `#sheetH`, `#matThick`, `#skipCount`, `#sheetMargin`, `#slotOffset`, `#chkToolDia`, `#toolDia`)
@@ -93,7 +93,7 @@ When searching inside the file, target these specific section headers instead of
 
 ---
 
-## 4. Completed Features Summary (v1.2 Beta)
+## 4. Completed Features Summary (v1.5 Beta)
 
 1. **`P2+` Radial Slices (`RS` - Polar 3D Slicing):**
    * Added `Radial Slices` mode.
@@ -111,7 +111,7 @@ When searching inside the file, target these specific section headers instead of
    * Zero-install local disk polling (850ms) via File System Access API for external CAD model exports.
 7. **Autodesk Fusion 360 Add-In (`OpenSlicerBridge`):**
    * 1-click automated STL exporter with dynamic `[Project]-[Body].stl` naming.
-8. **Top Bar `beta 1.2` Badge & Buy Me a Coffee Support:**
+8. **Top Bar `beta 1.5` Badge & Buy Me a Coffee Support:**
    * Placed version badge and Buy Me a Coffee button into the header bar.
    * Officially added GNU GPLv3 license.
 9. **Label Size Fix & Box 8 Font Size Control:**
@@ -123,46 +123,83 @@ When searching inside the file, target these specific section headers instead of
 
 ## 5. Upcoming Roadmap
 
-### 🚀 Phase 1: Rapid Fabrication Fixes & Bed Truncation (UI & Geometry)
-1. **Z-Cut (Truncate Below Bed / Base Flattening):**
-   * Slices models with spherical or uneven bottoms by truncating geometry where $Z < 0$.
-   * An independent `Z-Sink (Sink below bed: -X mm)` parameter decoupled from `Drop to Bed`; cross-sections below the bed ($Z < 0$) are omitted from slicing.
-2. **Radial: Lock Pattern to Bed Center:**
-   * Checkbox option to anchor the radial slicing origin strictly to the bed coordinate `(0, 0)` rather than the model's bounding box center.
-   * Enables asymmetrical and organic slicing patterns by freely positioning models across the bed.
-3. **Blind Dowel Depth Control:**
-   * Gives users full control over how many top layers remain blind/capped (e.g., 0 = through-hole, 1 = 1-layer cap, 2 = 2-layer cap...).
+### ✅ Phase 1: Rapid Fabrication Fixes, Desktop UI & Undo/Redo (Completed)
+1. **Desktop App Styling, App Icon & Status Bar:** `slicer-studio.png` icon, 50px top bar, GitHub link, and live bottom status bar (`#statusBar`).
+2. **45-Step Undo / Redo Engine (`Ctrl+Z` / `Ctrl+Y`):** Full history across transforms, parameters, dowels, and part exclusions.
+3. **Z-Cut (`Sink Below Bed`):** Sinking models below $Z = 0$ with watertight flat base truncation (reset by `Drop to Bed` and `Lay Flat`).
+4. **Radial: Lock Pattern to Bed Center (`🔒 Lock Pattern to Bed Center`):** Anchors radial slicing axis to bed origin `(0, 0)`.
+5. **Blind Dowel Depth Control (`Top Cap Layers` / `Bottom Cap Layers`):** User-controlled undrilled cap layer counts at top and bottom ends.
 
-### 💡 Phase 2: Lamp, Lighting & Square Dowel Fabrication Suite
-1. **Square Dowels:**
-   * Option for square dowels/pegs (`Square Dowel`) tailored for standard wooden square battens and extruded profiles.
-2. **Square Dowel CNC Relief & Tool Diameter Verification:**
-   * Active corner relief (**Dog-Bone** / **T-Bone**) is automatically applied to square dowel holes and washer cutouts.
-   * Prominent UI warning badge if cutter diameter exceeds dowel slot width (`toolDia >= dowelWidth`).
-3. **Stacked: Dowel Support Washers (Spacers):**
-   * Automatically generates drilled spacer washers to maintain uniform gaps when `Skip Layers` is active (1 skip = 1 washer, 2 skips = 2 washers). Outer diameter is user-definable, inner hole matches dowel size.
-4. **Radial: Batch Inward Offset for Horizontal Rings:**
-   * Inward offset (`offset(-inwardAmount)`) for horizontal rings (`Z-1..Z-m`) in radial mode, leaving vertical fins protruding outwards as an aesthetic lamp shade skeleton.
-5. **Radial: Center Socket/Cable Hole on Selected Ring:**
-   * Cuts parametric E27/E14 lamp socket holes at the exact central axis on user-selected horizontal rings via Clipper boolean difference.
+### ✅ Phase 2: Lamp, Lighting, Square/Rect Dowel (`R-Bone`), External i18n & Bugfix Suite (Completed)
+1. **Square / Rectangular Dowels (`Square / Rect Dowel`):**
+   * `Shape` selector placed above dimension inputs in Box 5.
+   * Shows `Diameter` when `Round` is selected; hides `Diameter` and reveals **`Width (X)`** and **`Depth (Y)`** when `Square / Rect` is selected to support both square and rectangular battens/profiles.
+2. **`R-Bone` (4-Way Rotational Pinwheel) Corner Relief & `Relief Type` Relocation:**
+   * Moved `Relief Type` (`#waffleReliefType`) into **2. Manufacturing Settings (`#box2`)** (appears below Advanced when open, or below `Skip Layers` when closed; options: `Square (None)`, `T-Bone`, `Dog Bone`).
+   * **User Note:** Tested `R-Bone` on normal interlocking slots and determined it is impractical for general slotting; removed from `#waffleReliefType`. A more complex relief strategy for normal slots will be designed later.
+   * `R-Bone` mode is automatically applied **only** to **square/rectangular dowel holes and dowel support washer holes** IF Relief Type is enabled (`T-Bone` or `Dog Bone`). If Relief Type is `Square (None)`, dowels remain sharp/square.
+   * Prominent UI warning in Box 5 and Model Issues if cutter diameter exceeds the narrow dowel dimension (`toolDia >= min(dowelW, dowelD)`).
+3. **Stacked: Dowel Support Washers (Spacers in 3D Viewport + 2D Sheets):**
+   * Automatically generates drilled spacer washers (`W-1, W-2...`) in both the **3D Viewport** (at their exact gap Z positions along each dowel) and **2D Cut Layout** when `Skip Layers > 0` and `Dowels` are active.
+4. **Stacked: Symmetric Center-Out Slicing when Tilted (`Tilt X = 90°` or Piece #1 Off-Bed):**
+   * When Slice Direction is tilted (`Tilt X = 90°`, etc.) or Piece #1 does not sit flat on the bed, slicing steps symmetrically outward from the center of the slicing axis (`zMid`) toward both ends so symmetric models (like armchairs/sofas) begin with identical end pieces.
+5. **Radial: Batch Inward Offset (`Horiz. Ring Offset`) & Per-Part Center Holes (`Center Hole Ø`) in Cut Layout:**
+   * Inward offset (`offset(-inwardAmount)`) for horizontal rings (`Z-1..Z-m`) in radial mode for vertical-fin lamp fabrication.
+   * Moved Center Hole cutting to the right-hand **Cut Layout (`#partActionBar`)** panel so each horizontal part (`Z-1`, `Z-2`...) can have its own custom hole diameter (`partCenterHoles[id]`), with active part pills.
+6. **Radial Slice Selection Bugfix (`R-*` and `Z-*`):**
+   * Fixed hidden dowel work planes intercepting 3D clicks in non-stacked modes, relaxed 3D click/drag thresholds, enabled `THREE.DoubleSide` on slice meshes, and used `fill-rule="evenodd"` compound SVG paths so ring holes never block clicks on nested parts.
+7. **External Language Files (`locales/en.js`, `locales/tr.js`), Single-Language Help, Ghost Lines Fix & Box 8 `Guides`:**
+   * External locale files loaded from `locales/`; single-language Help modal dynamically rendered in the active language.
+   * Removed misaligned `EdgesGeometry` wireframe from `ghostMesh` and disabled `Guides (Blue)` in Box 8.
 
-### 📐 Phase 3: 3D & Vector Export Optimizations
-1. **3D Sliced Assembly Export (`.3mf` / `.stl`):**
-   * Exports sliced assembly parts into a multi-body `.3mf` or `.stl` format compatible with 3D printer slicers (Bambu Studio, OrcaSlicer, Cura) for instant "Split to Objects / Parts" plate nesting.
+### 📐 Phase 3: 3D & Vector Export Optimizations (In Progress)
+1. **✅ 3D Sliced Assembly Export (`.3mf` / `.stl`):**
+   * Multi-body 3D manufacturing formats added to Box 8 (`📦 3D (.3MF)` and `⬇ 3D (.STL)`) to export all sliced parts into 3D printer slicers (Bambu Studio, OrcaSlicer, PrusaSlicer, Cura).
+   * `.3mf`: Multi-body ZIP archive with each slice (`Z-1`, `X-1`, `R-1`, `W-1`...) as an individual named `<object>`. In Bambu/OrcaSlicer, users can click "Split to Objects" and "Auto-Arrange" to flat-pack every piece onto build plates in 1 click.
+   * `.stl`: Assembled world-coordinate binary STL representing the entire sliced physical model.
 2. **Vector Arc / Bézier Fitting (Optional):**
-   * Converts segmented polyline facets in DXF and SVG exports into smooth `ARC`/`BULGE` and Bézier curves, minimizing CNC/laser cutter stuttering and reducing file sizes.
+   * Converts segmented polyline facets in DXF and SVG exports into smooth `ARC`/`BULGE` and Bézier curves.
 
-### 🧠 Phase 4: Intelligent Placement & Hardware Cutouts
-1. **Intelligent Dowel Placement (Medial Axis / Wall Mid-Line):**
-   * Algorithmic dowel distribution along the medial axis of slices, ensuring placement squarely within solid geometry rather than a naive bounding-box grid.
-2. **Hardware Negative Boolean Library:**
-   * Built-in 3D negative templates for standard hardware (E27/E14 sockets, LED strip channels, magnet recesses).
+### 🛠️ Phase 4: Viewport Gizmos, High-Poly Performance, Hover Tooltips & Smart Geometry (In Progress)
+1. **✅ Move Gizmo Cone/Line Synchronization & Back-Left Bed Corner Triad:**
+   * Permanently eliminated Three.js `TransformControls` line/cone detachment bug across all camera angles by locking absolute scales (`Math.abs`) and visibility flags for all axis line and cone meshes.
+   * Relocated 3D XYZ bed corner triad to the **back-left** corner (`minX`, `maxY`) of the model footprint with the green Y arrow pointing forward (`(0, -1, 0)`) into the build plate.
+2. **✅ Model Centering (`🎯 Center (C)`), Prominent Center Axes, Origin Dot & Axis-Locked Subgrid:**
+   * Added `🎯 Center (C)` toolbar button and `C` hotkey to center the model on the bed `(0, 0)`.
+   * Highlighted center X=0 and Y=0 grid lines with a dedicated CAD origin marker ring and dot at `(0, 0)`.
+   * Subgrid is locked to the bed origin `(0, 0)`; expands cell-by-cell in full main grid increments without partial cell cutoffs, with subgrid line spacing set to exactly half of the visible main grid cell (`mainCellSize / 2`).
+3. **✅ Enlarged 3D Navigation Cube (Autodesk ViewCube):**
+   * Enlarge navigation ViewCube from 112px to 140px (280×280 HiDPI canvas) for comfortable face, edge, and corner clicking.
+4. **✅ Panel Interaction Auto-Select Reset & Lay Flat Cleanup:**
+   * Clicking on any input, select, or button in the left sidebar or right panel immediately resets the active 3D tool back to `select` mode.
+   * Instant cleanup of candidate plates and helper meshes on tool switch or new model import; 6mm smooth fillet corners applied to candidate plates.
+5. **✅ Gizmo & Axis Test Environment (`index2.html`):**
+   * Independent test sandbox [index2.html](file:///d:/Projeler/Open%20Slicer/index2.html) featuring directional markers (Front, Back, Left, Right, Up) and an asymmetric directional 3D test body to isolate and evaluate `TransformControls` axis flipping across all camera angles.
+6. **Lay Flat Outer Tangent Planes (Red Line / Convex Envelope - Backlogged):**
+   * Detecting outer tangent contact planes bridging the peaks of curved/stepped meshes (red line) instead of inner facets (blue lines).
+7. **Center Square Drop-Zone on Launch (Fast Light Load - Backlogged):**
+   * Lightweight startup view with a prominent square drag-and-drop model target in the center of the viewport, expanding on drag and transitioning to full studio layout once loaded.
+8. **Hide Box 3 Parameters Until Technique Selected (Backlogged):**
+   * Keep Box 3 sub-controls clean/hidden on startup until a construction technique is actively chosen.
+9. **ViewCube Themes (SVG / PNG Skins - Backlogged):**
+   * Support for seasonal and custom theme skins (Holiday, Dark Industrial, Classic CAD) on ViewCube faces.
+10. **Contextual Sidebar Hover Tooltip Popover:**
+    * Displays an explanatory tooltip card anchored to the right edge of the left sidebar.
+11. **High-Polygon / Large Model Performance Optimization:**
+    * Spatial Z/X/Y triangle bucketing / BVH indexing.
+12. **Intelligent Dowel Placement (Medial Axis / Wall Mid-Line):**
+    * Algorithmic dowel distribution along the medial axis.
+13. **Hardware Negative Boolean Library:**
+    * Built-in 3D negative boolean templates.
+14. **Deduplicate Identical Parts in Cut Layout (Backlogged):**
+    * Detect identical slices and place only 1 copy on the cutting sheet with a quantity multiplier (`×N`).
 
 ### ⏳ Phase 5: Future Architecture (On Hold)
-1. **Full-Scope Project Save / Load (`.3mf` / `.json`):** Preserving model, slicing parameters, and slice visibility states.
-2. **Advanced True-Polygon Nesting & Web Worker:** True-shape packing with background thread execution.
-3. **Curve Slices (`CS`):** Slicing along arbitrary user-defined guide curves.
-4. **Folded Panels / Pepakura (`FP`):** Sheet and card unrolling with gluing tabs.
+1. **Folded Panels / Sheet & Cardboard Unfolding (`FP`):**
+   * 2D sheet metal and cardboard unrolling with fold lines, bending tabs, and material thickness allowances (Pepakura-style parametric fabrication). Primary focus for future advanced fabrication.
+2. **Full-Scope Project Save / Load (`.3mf` / `.json`):** Preserving model, slicing parameters, and slice visibility states.
+3. **Advanced True-Polygon Nesting & Web Worker:** True-shape packing with background thread execution.
+4. **Curve Slices (`CS`):** Slicing along arbitrary user-defined guide curves.
 
 ---
 

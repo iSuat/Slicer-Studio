@@ -2,7 +2,10 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>OpenSlicer Studio — Slicer for Fusion 360 Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenSlicer Studio</title>
+  <link rel="icon" type="image/png" href="slicer-studio.png">
+  <link rel="apple-touch-icon" href="slicer-studio.png">
   <style>
     /* ==================== THEME VARIABLES (DARK & LIGHT MODE) ==================== */
     :root[data-theme="dark"] {
@@ -76,36 +79,59 @@
 
     /* ==================== TOP HEADER BAR ==================== */
     #topbar {
-      height: 38px;
-      background: var(--bg-topbar);
+      height: 50px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(0,0,0,0.12) 100%), var(--bg-topbar);
       border-bottom: 1px solid var(--border-topbar);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 2px 8px rgba(0,0,0,0.35);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0 12px 0 10px;
       color: #fff;
       z-index: 40;
       flex-shrink: 0;
     }
-    .topbar-left, .topbar-right { display: flex; align-items: center; gap: 10px; }
-    .brand-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; letter-spacing: 0.6px; color: #fff; }
-    .brand-logo .logo-badge {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: linear-gradient(135deg, #38bdf8 0%, #f97316 100%);
-      display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    .topbar-left, .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; letter-spacing: 0.4px; color: #fff; line-height: 1.1; }
+    .brand-logo .logo-img {
+      width: 34px; height: 34px; border-radius: 8px; display: block; flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.45);
     }
-    .brand-sub { font-size: 9px; font-weight: 500; color: #93c5fd; display: block; line-height: 1; letter-spacing: 0.3px; }
+    .brand-title { display: flex; flex-direction: column; justify-content: center; }
+    .brand-sub { font-size: 9.5px; font-weight: 600; color: #93c5fd; display: block; line-height: 1.2; letter-spacing: 1.2px; text-transform: uppercase; }
+    .topbar-sep { width: 1px; height: 26px; background: rgba(255,255,255,0.14); margin: 0 4px; }
+    .top-btn-group { display: inline-flex; align-items: center; gap: 2px; background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 2px; }
+    .top-btn-group .top-icon-btn { border-color: transparent; background: transparent; }
+    .top-btn-group .top-icon-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
     .top-icon-btn {
       background: rgba(255,255,255,0.08); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.14);
-      height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
-      display: inline-flex; align-items: center; gap: 5px; cursor: pointer; transition: 0.15s;
+      height: 30px; padding: 0 10px; border-radius: 5px; font-size: 11.5px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.15s; text-decoration: none;
     }
+    .top-icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .top-icon-btn svg.fill-icon { fill: currentColor; stroke: none; }
     .top-icon-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
     .top-icon-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .top-icon-btn:disabled { opacity: 0.35; cursor: default; }
-    .top-link { color: #cbd5e1; font-size: 11px; text-decoration: none; cursor: pointer; padding: 4px 6px; border-radius: 4px; }
+    .top-icon-btn:disabled { opacity: 0.32; cursor: default; }
+    .top-icon-btn.icon-only { width: 32px; padding: 0; justify-content: center; }
+    .top-icon-btn.bmc-btn { background: #ffdd00; color: #111; border-color: #e6c700; }
+    .top-icon-btn.bmc-btn:hover { background: #ffe633; color: #000; }
+    .top-link { color: #cbd5e1; font-size: 11.5px; text-decoration: none; cursor: pointer; padding: 6px 8px; border-radius: 5px; }
     .top-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+    /* ==================== BOTTOM STATUS BAR (Desktop App Style) ==================== */
+    #statusBar {
+      height: 24px; flex-shrink: 0; z-index: 40;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 0 10px; font-size: 11px; color: var(--text-muted);
+      background: var(--bg-panel-header); border-top: 1px solid var(--border-color);
+    }
+    #statusBar .sb-group { display: flex; align-items: center; gap: 0; min-width: 0; }
+    #statusBar .sb-item { padding: 0 9px; border-right: 1px solid var(--border-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #statusBar .sb-group .sb-item:last-child { border-right: none; }
+    #statusBar .sb-item strong { color: var(--text-main); font-weight: 600; }
+    #statusBar .sb-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 6px; vertical-align: middle; }
+    #statusBar .sb-warn { color: #f59e0b; }
     .app-version-badge {
       font-size: 10px;
       font-weight: 700;
@@ -190,11 +216,16 @@
     input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); width: 13px; height: 13px; cursor: pointer; }
     input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
 
+    input[type="text"], input[type="number"] {
+      background: var(--bg-input); border: 1px solid var(--border-input); color: var(--text-main);
+      padding: 3px 6px; border-radius: 3px; font-size: 11.5px; user-select: text; box-sizing: border-box;
+    }
+    input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: var(--accent); }
+
     /* External Spinners Number Input */
     .num-wrap { display: inline-flex; align-items: center; gap: 2px; }
     .num-wrap input[type="number"] {
-      background: var(--bg-input); border: 1px solid var(--border-input); color: var(--text-main);
-      padding: 3px 6px; border-radius: 3px; width: 74px; height: 23px; font-size: 11.5px; text-align: right; user-select: text;
+      width: 74px; height: 23px; text-align: right;
     }
     .num-wrap input[type="number"]:focus { outline: none; border-color: var(--accent); }
     .spin-btns { display: flex; flex-direction: column; gap: 1px; }
@@ -269,8 +300,8 @@
       position: absolute; top: 30px; right: 10px;
       display: flex; flex-direction: column; align-items: flex-end; gap: 8px; z-index: 25; pointer-events: none;
     }
-    #viewCubeWrap { position: relative; width: 112px; height: 112px; pointer-events: auto; }
-    #viewCubeCanvas { width: 112px; height: 112px; display: block; cursor: pointer; }
+    #viewCubeWrap { position: relative; width: 140px; height: 140px; pointer-events: auto; }
+    #viewCubeCanvas { width: 140px; height: 140px; display: block; cursor: pointer; }
     #btnCubeHome {
       position: absolute; top: 2px; left: 2px; width: 22px; height: 22px;
       background: var(--hud-bg); border: 1px solid var(--border-input); border-radius: 4px;
@@ -358,7 +389,7 @@
     }
     #helpModal.open { display: flex; }
     .help-modal-frame {
-      width: calc(100% - 90px); max-width: 680px; max-height: 85vh;
+      width: calc(100% - 90px); max-width: 720px; max-height: 86vh;
       background: var(--bg-panel); border: 1px solid var(--border-input);
       border-radius: 10px; box-shadow: 0 18px 50px rgba(0,0,0,0.65);
       display: flex; flex-direction: column; overflow: hidden; position: relative;
@@ -370,8 +401,13 @@
     .help-modal-title { font-size: 13px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
     .help-modal-body {
       padding: 16px 20px; overflow-y: auto; color: var(--text-main); font-size: 11.5px; line-height: 1.5;
+      scrollbar-width: thin; scrollbar-color: var(--border-input) var(--bg-panel);
     }
-    .help-sec { margin-bottom: 18px; }
+    .help-modal-body::-webkit-scrollbar { width: 6px; }
+    .help-modal-body::-webkit-scrollbar-track { background: var(--bg-panel); }
+    .help-modal-body::-webkit-scrollbar-thumb { background: var(--border-input); border-radius: 3px; }
+    .help-modal-body::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+    .help-sec { margin-bottom: 16px; }
     .help-sec-title {
       font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
       color: var(--accent-blue); border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 8px;
@@ -400,6 +436,12 @@
       background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);
     }
     .help-credit-desc { font-size: 10.5px; color: var(--text-muted); line-height: 1.35; }
+    .help-features-grid { display: flex; flex-direction: column; gap: 6px; }
+    .help-feature-card {
+      background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 5px;
+      padding: 6px 10px; font-size: 11px; line-height: 1.45; color: var(--text-main);
+    }
+    .help-feature-card b { color: var(--accent-blue); }
     .lightbox-header {
       height: 40px; padding: 0 14px; background: var(--bg-panel-header);
       border-bottom: 1px solid var(--border-color);
@@ -561,30 +603,48 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/ConvexGeometry.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/clipper-lib@6.4.2/clipper.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- External Language Pack Files (Add new languages under ./locales/*.js) -->
+  <script src="locales/en.js"></script>
+  <script src="locales/tr.js"></script>
 </head>
 <body>
 
   <!-- ==================== TOP HEADER BAR ==================== -->
   <header id="topbar">
     <div class="topbar-left">
-      <div class="brand-logo">
-        <span class="logo-badge">◈</span>
-        <div>
-          SLICER
-          <span class="brand-sub">OPEN STUDIO</span>
+      <div class="brand-logo" title="OpenSlicer Studio">
+        <img src="slicer-studio.png" alt="OpenSlicer Studio" class="logo-img" draggable="false">
+        <div class="brand-title">
+          OpenSlicer Studio
+          <span class="brand-sub">Fabrication Slicer</span>
         </div>
       </div>
-      <div style="width:1px; height:18px; background:rgba(255,255,255,0.15); margin:0 4px;"></div>
-      <span class="app-version-badge" title="OpenSlicer Studio Version">beta 1.2</span>
-      <button type="button" class="top-icon-btn" id="btnUndo" title="Undo" disabled>↶</button>
-      <button type="button" class="top-icon-btn" id="btnRedo" title="Redo" disabled>↷</button>
+      <span class="app-version-badge" title="OpenSlicer Studio Version">beta 1.5</span>
+      <div class="topbar-sep"></div>
+      <div class="top-btn-group">
+        <button type="button" class="top-icon-btn icon-only" id="btnUndo" title="Undo (Ctrl+Z)" disabled>
+          <svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+        </button>
+        <button type="button" class="top-icon-btn icon-only" id="btnRedo" title="Redo (Ctrl+Y / Ctrl+Shift+Z)" disabled>
+          <svg viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg>
+        </button>
+      </div>
     </div>
 
     <div class="topbar-right">
+      <select id="langSelect" title="Application Language / Dil Seçimi" style="width:auto; height:30px; background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.16); border-radius:5px; padding:0 8px; font-size:11.5px; font-weight:600; cursor:pointer;">
+        <option value="en" style="background:#1e293b; color:#fff;">🌐 EN</option>
+        <option value="tr" style="background:#1e293b; color:#fff;">🌐 TR</option>
+      </select>
       <button type="button" class="top-icon-btn active" id="btnToggleGrid" title="Show / Hide 3D Grid"># Grid</button>
       <button type="button" class="top-icon-btn" id="btnThemeToggle" title="Switch Dark / Light Mode">☀️ Light Mode</button>
-      <a href="https://www.buymeacoffee.com/iSuat" target="_blank" rel="noopener noreferrer" class="bmc-link" title="Support OpenSlicer Studio on Buy Me a Coffee"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iSuat&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee" class="bmc-btn-img" /></a>
-      <span class="top-link" id="btnHelpInfo" title="Keyboard Shortcuts & Help">? Help</span>
+      <div class="topbar-sep"></div>
+      <a href="https://www.buymeacoffee.com/iSuat" target="_blank" rel="noopener noreferrer" class="top-icon-btn bmc-btn" title="Support OpenSlicer Studio on Buy Me a Coffee">☕ Buy me a coffee</a>
+      <a href="https://github.com/iSuat/Slicer-Studio" target="_blank" rel="noopener noreferrer" class="top-icon-btn" id="btnGithubLink" title="OpenSlicer Studio on GitHub">
+        <svg viewBox="0 0 24 24" class="fill-icon"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+      <span class="top-link" id="btnHelpInfo" title="Keyboard Shortcuts &amp; Help">? Help</span>
     </div>
   </header>
 
@@ -597,7 +657,7 @@
       <!-- 1. MODEL & OBJECT SIZE -->
       <div class="box" id="box1">
         <div class="box-header" onclick="toggleBox('box1')">
-          <div class="header-left"><span class="num-badge">1</span> Model & Object Size</div>
+          <div class="header-left"><span class="num-badge">1</span> <span class="box-title">Model & Object Size</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -663,13 +723,26 @@
             </label>
             <button type="button" class="btn btn-sec btn-sm" id="btnOrigSize" style="font-size:10.5px;">Original Size</button>
           </div>
+          <div class="row" style="padding-top:4px; border-top:1px solid var(--border-color);">
+            <span class="row-left" title="Sink the model below the bed (Z = 0). Everything below the bed is cut off and NOT sliced — flattens round / uneven bottoms. You can also drag the model down with the Move (T) gizmo. 'Drop to Bed' and 'Lay Flat' reset this to 0."><span class="axis-tag" style="color:#f87171;">⤓</span> Sink Below Bed</span>
+            <div class="row-left" style="gap:3px;">
+              <div class="num-wrap">
+                <input type="number" id="modelSink" value="0" step="1" min="0">
+                <div class="spin-btns">
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="modelSink" data-dir="1">▲</button>
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="modelSink" data-dir="-1">▼</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sec btn-sm" id="resetModelSink" tabindex="-1" title="Reset sink (put model back on the bed)">↺</button>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- 2. MANUFACTURING SETTINGS -->
       <div class="box" id="box2">
         <div class="box-header" onclick="toggleBox('box2')">
-          <div class="header-left"><span class="num-badge">2</span> Manufacturing Settings</div>
+          <div class="header-left"><span class="num-badge">2</span> <span class="box-title">Manufacturing Settings</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -762,13 +835,23 @@
               </div>
             </div>
           </div>
+
+          <!-- Relief Type: Sits below Skip Layers when Advanced is closed, or below Advanced when Advanced is open -->
+          <div class="row">
+            <span data-i18n="reliefType" title="CNC inner corner relief at slot base. If enabled (T-Bone/Dog Bone), square/rectangular dowel holes and washers automatically use R-Bone relief.">Relief Type</span>
+            <select id="waffleReliefType" style="width:118px;">
+              <option value="square">Square (None)</option>
+              <option value="tbone">T-Bone</option>
+              <option value="dogbone">Dog Bone</option>
+            </select>
+          </div>
         </div>
       </div>
 
       <!-- 3. CONSTRUCTION TECHNIQUE -->
       <div class="box" id="box3">
         <div class="box-header" onclick="toggleBox('box3')">
-          <div class="header-left"><span class="num-badge">3</span> Construction Technique</div>
+          <div class="header-left"><span class="num-badge">3</span> <span class="box-title">Construction Technique</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -833,9 +916,24 @@
             <div class="row">
               <span title="Shift radial axis center along X / Y">Axis Offset X/Y</span>
               <div class="row-left" style="gap:3px;">
-                <input type="number" id="radialCenterX" value="0" step="2" style="width:46px;" title="Radial Center X Offset">
-                <input type="number" id="radialCenterY" value="0" step="2" style="width:46px;" title="Radial Center Y Offset">
+                <input type="number" id="radialCenterX" value="0" step="2" style="width:46px; height:23px; text-align:right; background:var(--bg-input); color:var(--text-main); border:1px solid var(--border-input);" title="Radial Center X Offset">
+                <input type="number" id="radialCenterY" value="0" step="2" style="width:46px; height:23px; text-align:right; background:var(--bg-input); color:var(--text-main); border:1px solid var(--border-input);" title="Radial Center Y Offset">
                 <button type="button" class="btn btn-sec btn-sm" id="resetRadialCenter" tabindex="-1" title="Reset Radial Axis Center Offset">↺</button>
+              </div>
+            </div>
+            <div class="row">
+              <label class="row-left" style="cursor:pointer;" title="Lock the radial pattern center to the bed center (0, 0). The pattern stays fixed while you move the model — useful for finding a good center on organic / amorphous forms. Axis Offset X/Y is applied relative to the bed center.">
+                <input type="checkbox" id="chkRadialLockBed"> <span data-i18n="lockPatternBed">🔒 Lock Pattern to Bed Center</span>
+              </label>
+            </div>
+            <div class="row" style="padding-top:4px; border-top:1px dashed var(--border-color);">
+              <span data-i18n="ringInwardOffset" title="Batch inward offset for all horizontal rings (Z-1..Z-m) so vertical fins protrude outward (ideal for lamp shades)">Horiz. Ring Offset</span>
+              <div class="num-wrap">
+                <input type="number" id="radialRingOffset" value="0" step="0.5" min="0">
+                <div class="spin-btns">
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="radialRingOffset" data-dir="1">▲</button>
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="radialRingOffset" data-dir="-1">▼</button>
+                </div>
               </div>
             </div>
           </div>
@@ -850,14 +948,6 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <span title="CNC inner corner relief at slot base">Relief Type</span>
-              <select id="waffleReliefType" style="width:118px;">
-                <option value="square">Square (None)</option>
-                <option value="tbone">T-Bone</option>
-                <option value="dogbone">Dog Bone</option>
-              </select>
-            </div>
           </div>
         </div>
       </div>
@@ -865,7 +955,7 @@
       <!-- 4. MODIFY FORM (HOLLOW) -->
       <div class="box collapsed" id="box4">
         <div class="box-header" onclick="toggleBox('box4')">
-          <div class="header-left"><span class="num-badge">4</span> Modify Form (Hollow)</div>
+          <div class="header-left"><span class="num-badge">4</span> <span class="box-title">Modify Form (Hollow)</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -890,21 +980,29 @@
       <!-- 5. DOWELS -->
       <div class="box" id="box5">
         <div class="box-header" onclick="toggleBox('box5')">
-          <div class="header-left"><span class="num-badge">5</span> Dowels</div>
+          <div class="header-left"><span class="num-badge">5</span> <span class="box-title">Dowels</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
           <div class="row">
             <label class="row-left" style="cursor:pointer; font-weight:600; color:var(--text-main);">
-              <input type="checkbox" id="chkDowels"> Dowels
+              <input type="checkbox" id="chkDowels"> <span data-i18n="dowelsChk">Dowels</span>
             </label>
             <div class="row-left" style="gap:4px;">
-              <button type="button" class="btn btn-sec btn-sm" id="btnAutoDowel">Automatic</button>
+              <button type="button" class="btn btn-sec btn-sm" id="btnAutoDowel" data-i18n="autoDowel">Automatic</button>
               <button type="button" class="sq-btn" id="btnEditDowelPlanes" title="Show / Hide Interactive Top & Bottom Blue Planes">⟱</button>
             </div>
           </div>
           <div class="row">
-            <span>Diameter</span>
+            <span data-i18n="dowelShape">Shape</span>
+            <select id="dowelShape" style="width:118px;">
+              <option value="round" data-i18n="shapeRound">Round</option>
+              <option value="square" data-i18n="shapeSquare">Square / Rect</option>
+            </select>
+          </div>
+          <!-- Round Dowel: Diameter -->
+          <div class="row" id="dowelRoundRow">
+            <span data-i18n="dowelDiameter">Diameter</span>
             <div class="num-wrap">
               <input type="number" id="dowelDia" value="11.0" step="0.5" min="1">
               <div class="spin-btns">
@@ -913,12 +1011,72 @@
               </div>
             </div>
           </div>
+          <!-- Square / Rectangular Dowel: Width (X) & Depth (Y) + CNC Relief + Tool Dia Warning -->
+          <div id="dowelRectRows" style="display:none; flex-direction:column; gap:6px;">
+            <div class="row">
+              <span data-i18n="dowelWidth" title="Square / Rectangular dowel width along X">Width (X)</span>
+              <div class="num-wrap">
+                <input type="number" id="dowelWidth" value="10.0" step="0.5" min="1">
+                <div class="spin-btns">
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelWidth" data-dir="1">▲</button>
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelWidth" data-dir="-1">▼</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <span data-i18n="dowelDepth" title="Square / Rectangular dowel depth along Y">Depth (Y)</span>
+              <div class="num-wrap">
+                <input type="number" id="dowelDepth" value="10.0" step="0.5" min="1">
+                <div class="spin-btns">
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelDepth" data-dir="1">▲</button>
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelDepth" data-dir="-1">▼</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <span data-i18n="dowelCornerRelief" title="Square/Rectangular dowel holes and spacer washers automatically use 4-way rotational R-Bone corner relief when Relief Type is enabled (T-Bone / Dog Bone)">Corner Relief</span>
+              <span id="lblDowelReliefBadge" style="font-size:11px; font-weight:700; color:var(--accent-blue); background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); border-radius:4px; padding:2px 7px;" title="4-Way Rotational Pinwheel Relief">R-Bone (Auto)</span>
+            </div>
+            <div id="dowelToolWarn" style="display:none; font-size:10.5px; color:#f59e0b; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.35); border-radius:4px; padding:4px 6px; line-height:1.35;"></div>
+          </div>
           <div class="row">
-            <span>Shape</span>
-            <select id="dowelShape" style="width:94px;">
-              <option value="round">Round</option>
-              <option value="square">Square</option>
-            </select>
+            <span data-i18n="dowelCapTop" title="Number of solid (undrilled) layers left at the TOP end of each dowel run — blind hole cap. 0 = through hole.">Top Cap Layers</span>
+            <div class="num-wrap">
+              <input type="number" id="dowelCapTop" value="1" step="1" min="0" max="50">
+              <div class="spin-btns">
+                <button type="button" class="spin-btn" tabindex="-1" data-target="dowelCapTop" data-dir="1">▲</button>
+                <button type="button" class="spin-btn" tabindex="-1" data-target="dowelCapTop" data-dir="-1">▼</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <span data-i18n="dowelCapBottom" title="Number of solid (undrilled) layers left at the BOTTOM end of each dowel run — blind hole cap. 0 = through hole.">Bottom Cap Layers</span>
+            <div class="num-wrap">
+              <input type="number" id="dowelCapBottom" value="0" step="1" min="0" max="50">
+              <div class="spin-btns">
+                <button type="button" class="spin-btn" tabindex="-1" data-target="dowelCapBottom" data-dir="1">▲</button>
+                <button type="button" class="spin-btn" tabindex="-1" data-target="dowelCapBottom" data-dir="-1">▼</button>
+              </div>
+            </div>
+          </div>
+          <!-- Dowel Support Washers (Shown when Skip Layers > 0 and Dowels active) -->
+          <div id="dowelWasherBox" style="display:none; flex-direction:column; gap:6px; padding-top:4px; border-top:1px dashed var(--border-color);">
+            <div class="row">
+              <label class="row-left" style="cursor:pointer; font-weight:600; color:var(--text-main);" title="Generates spacer washer rings (1 per skipped layer in each gap) with inner hole matching the dowel (including CNC relief) so skipped layers stay evenly spaced">
+                <input type="checkbox" id="chkDowelWashers"> <span data-i18n="dowelSupportChk">Dowel Support (Washer)</span>
+              </label>
+              <span id="dowelWasherCountBadge" style="font-size:10.5px; color:var(--accent); font-weight:700;">0 pcs</span>
+            </div>
+            <div class="row" id="dowelWasherDiaRow">
+              <span data-i18n="washerOuterDia" title="Outer diameter of generated spacer washer rings">Washer Outer Dia</span>
+              <div class="num-wrap">
+                <input type="number" id="dowelWasherDia" value="24.0" step="1" min="3">
+                <div class="spin-btns">
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelWasherDia" data-dir="1">▲</button>
+                  <button type="button" class="spin-btn" tabindex="-1" data-target="dowelWasherDia" data-dir="-1">▼</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row" style="justify-content:space-between; padding-top:2px;">
             <button type="button" class="btn btn-sec btn-sm" id="btnDeleteDowel" title="Shortcut: Delete key" style="flex:1;">Delete (Del)</button>
@@ -939,7 +1097,7 @@
       <!-- 6. SLICE DIRECTION -->
       <div class="box collapsed" id="box6">
         <div class="box-header" onclick="toggleBox('box6')">
-          <div class="header-left"><span class="num-badge">6</span> Slice Direction</div>
+          <div class="header-left"><span class="num-badge">6</span> <span class="box-title">Slice Direction</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -978,7 +1136,7 @@
       <!-- 7. ASSEMBLY STEPS -->
       <div class="box collapsed" id="box7">
         <div class="box-header" onclick="toggleBox('box7')">
-          <div class="header-left"><span class="num-badge">7</span> Assembly Steps</div>
+          <div class="header-left"><span class="num-badge">7</span> <span class="box-title">Assembly Steps</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -1003,7 +1161,7 @@
       <!-- 8. GET PLANS -->
       <div class="box" id="box8">
         <div class="box-header" onclick="toggleBox('box8')">
-          <div class="header-left"><span class="num-badge">8</span> Get Plans</div>
+          <div class="header-left"><span class="num-badge">8</span> <span class="box-title">Get Plans</span></div>
           <span class="caret">▼</span>
         </div>
         <div class="box-body">
@@ -1025,8 +1183,10 @@
           <div class="row">
             <label class="row-left" style="cursor:pointer;"><input type="checkbox" id="chkSvgCut" checked> Cut Lines (Red)</label>
           </div>
-          <div class="row">
-            <label class="row-left" style="cursor:pointer;"><input type="checkbox" id="chkSvgGuide" checked> Guides (Blue)</label>
+          <!-- NOTE: Guides (Blue) draws the upper adjacent layer contour (slice.nextLoops) onto Stacked Slices for manual glue-up alignment.
+               Currently disabled and hidden; kept in code to evaluate later whether to remove completely or repurpose as an optional laser-engraving layer. -->
+          <div class="row" style="display:none;">
+            <label class="row-left" style="cursor:pointer;"><input type="checkbox" id="chkSvgGuide" disabled> Guides (Blue)</label>
           </div>
           <div class="row">
             <label class="row-left" style="cursor:pointer;"><input type="checkbox" id="chkSvgLabel" checked> Labels</label>
@@ -1040,6 +1200,16 @@
           </div>
           <button type="button" class="btn" id="btnExportZip" style="width:100%; margin-top:2px;">📦 Download All (.ZIP)</button>
           <button type="button" class="btn btn-sec btn-sm" id="btnExportSingleMaster" style="width:100%;">⬇ Download Combined File</button>
+
+          <!-- 3D Slices Model Export (3MF Multi-Body for 3D printer Split-to-Objects & Binary STL) -->
+          <div class="row" style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--border-color); justify-content:space-between;">
+            <span style="font-weight:600; color:var(--text-main); font-size:11px;" title="Export 3D extruded slice model to 3D printer slicers (Bambu Studio, OrcaSlicer, PrusaSlicer, Cura)">3D Slices Model</span>
+            <span style="font-size:10px; color:var(--text-muted);">Split-to-Parts</span>
+          </div>
+          <div class="row" style="gap:4px;">
+            <button type="button" class="btn btn-sm" id="btnExport3MF" style="flex:1;" title="Export multi-body .3MF with individual named slice objects (Z-1, X-1, R-1, W-1...) for 3D printer slicing & auto-arrange">📦 3D (.3MF)</button>
+            <button type="button" class="btn btn-sec btn-sm" id="btnExportSTL" style="flex:1;" title="Export all 3D slices as single binary .STL">⬇ 3D (.STL)</button>
+          </div>
         </div>
       </div>
 
@@ -1063,6 +1233,7 @@
         </div>
         <div class="divider"></div>
         <button type="button" class="tool-btn" id="btnLayFlat">⏬ Lay Flat (F)</button>
+        <button type="button" class="tool-btn" id="btnCenterModel" title="Center Model on Bed (C)">🎯 Center (C)</button>
         <button type="button" class="tool-btn" id="btnDropBed">⬇️ Drop to Bed</button>
       </div>
 
@@ -1073,7 +1244,7 @@
       <div id="navHud">
         <div id="viewCubeWrap" title="Click any face, edge, or corner to align view">
           <button type="button" id="btnCubeHome" title="Home Isometric View">🏠</button>
-          <canvas id="viewCubeCanvas" width="224" height="224"></canvas>
+          <canvas id="viewCubeCanvas" width="280" height="280"></canvas>
         </div>
 
         <!-- Vertical 5-Icon Camera Navigation Bar (Ready for custom SVG or PNG) -->
@@ -1154,16 +1325,19 @@
         <div class="help-modal-frame" id="helpModalFrame">
           <div class="help-modal-header">
             <div class="help-modal-title">
-              <span>◈ OpenSlicer Studio</span>
-              <span class="app-version-badge">beta 1.2</span>
+              <img src="slicer-studio.png" alt="OpenSlicer Studio" style="width:22px; height:22px; border-radius:5px; vertical-align:middle;">
+              <span>OpenSlicer Studio</span>
+              <span class="app-version-badge">beta 1.5</span>
             </div>
             <button type="button" class="lightbox-close-btn" id="btnHelpModalClose" title="Close Help (ESC)">✕</button>
           </div>
-          <div class="help-modal-body">
+          <div class="help-modal-body" id="helpModalBody">
             <div class="help-sec">
               <div class="help-sec-title">Keyboard Shortcuts / Klavye Kısayolları</div>
               <div class="help-shortcut-grid">
-                <div class="help-shortcut-item"><span class="help-kbd">T</span> Move / Model Taşıma</div>
+                <div class="help-shortcut-item"><span class="help-kbd">Ctrl+Z</span> Undo / Geri Al</div>
+                <div class="help-shortcut-item"><span class="help-kbd">Ctrl+Y</span> Redo / İleri Al</div>
+                <div class="help-shortcut-item"><span class="help-kbd">T</span> Move / Model Taşıma (+Z-Cut)</div>
                 <div class="help-shortcut-item"><span class="help-kbd">R</span> Rotate / Döndürme Gimbalı</div>
                 <div class="help-shortcut-item"><span class="help-kbd">S</span> Scale / Boyutlandırma</div>
                 <div class="help-shortcut-item"><span class="help-kbd">F</span> Lay on Face / Yüzeye Oturt</div>
@@ -1216,8 +1390,21 @@
               </div>
             </div>
 
-            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid var(--border-color); font-size:11px;">
-              <div>License: <b>GNU GPLv3</b> • Open Source Community</div>
+            <div class="help-sec">
+              <div class="help-sec-title">Key Features & Updates / Önemli Özellikler & Yenilikler</div>
+              <div class="help-features-grid">
+                <div class="help-feature-card"><b>3B Çok Gövdeli Dışa Aktarma (.3MF &amp; .STL):</b> Dilimlenmiş tüm parçaları bağımsız nesne isimleriyle (Z-1, X-1, W-1...) içeren çok gövdeli 3MF arşivi veya tek gövde STL indirme; Bambu Studio / OrcaSlicer Split to Objects ve tek tıkla otomatik dizilim desteği.</div>
+                <div class="help-feature-card"><b>Kare &amp; Dikdörtgen Kavelalar ve Otomatik R-Bone:</b> Standart yuvarlak kavelaların yanı sıra kare ve dikdörtgen kesitli çıtalar; Relief Type açıkken kavela ve pul deliklerinde otomatik 4 yönlü döner <b>R-Bone</b> köşe boşaltma ve takım çapı güvenlik uyarısı.</div>
+                <div class="help-feature-card"><b>Ara Mesafe Pulları (Dowel Support Washers):</b> Katman atlandığında (Skip Layers &gt; 0) katmanlar arası boşluğu dolduran delikli ara pullar hem 3B montaj sahnesinde hem de 2B kesim tablalarında otomatik üretilir.</div>
+                <div class="help-feature-card"><b>Merkezden Uçlara Simetrik Dilimleme:</b> Eğimli dilimlemede (Tilt X = 90°) dilimleme merkezden iki uca doğru simetrik adımlarla yayılır; simetrik objeler iki uçta özdeş parçalarla başlar.</div>
+                <div class="help-feature-card"><b>Radial Lamba &amp; Parça Bazlı Merkez Delik:</b> Deseni tabla merkezine sabitleme, yatay halkaları toplu içe ofsetleme ve sağ Kesim Dizilimi panelinde her parça için ayrı Merkez Delik Çapı (Center Hole Ø) tanımlama.</div>
+                <div class="help-feature-card"><b>Z-Cut &amp; Yüzeye Oturt (Lay-on-Face):</b> Modeli tabladan batırarak düz taban oluşturma ve 3B dışbükey zarf ile tek tıkla en kararlı yüzeyine oturtma.</div>
+                <div class="help-feature-card"><b>Tam Ekran Plaka İnceleme (Lightbox):</b> Kesim tablalarına çift tıklayarak vektörleri tam ekran yakınlaştırma (Zoom), kaydırma (Pan) ve ok tuşlarıyla gezinme.</div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; margin-top:14px; border-top:1px solid var(--border-color); font-size:11px;">
+              <div>License: <b>GNU GPLv3</b> • <a href="https://github.com/iSuat/Slicer-Studio" target="_blank" rel="noopener noreferrer" style="color:var(--accent-blue); text-decoration:none; font-weight:600;">GitHub Repository ↗</a></div>
               <a href="https://www.buymeacoffee.com/iSuat" target="_blank" rel="noopener noreferrer" class="bmc-link" title="Buy me a coffee">
                 <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iSuat&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee" class="bmc-btn-img" style="height:22px;" />
               </a>
@@ -1258,7 +1445,17 @@
               <input type="checkbox" id="chkSliceVisible" checked> Include in Cut & 3D
             </label>
           </div>
-          <!-- Linear Axis Slide Control for Selected Waffle Rib (X or Y) -->
+          <!-- Per-Part Center Hole Ø Control (Cut Layout Right Panel) -->
+          <div id="partCenterHoleRow" style="display:none; flex-direction:column; gap:4px; padding-top:3px; border-top:1px dashed var(--border-color);">
+            <div class="row" style="font-size:11px;">
+              <span title="Cut a concentric center hole of this diameter on the selected part(s). You can enter different values for each part.">Center Hole Ø (<span class="unit-lbl">mm</span>):</span>
+              <div class="row-left" style="gap:4px;">
+                <input type="number" id="partCenterHoleInput" value="0" min="0" step="1" style="width:58px; background:var(--bg-input); color:var(--text-main); border:1px solid var(--border-input); border-radius:4px; padding:2px 5px; font-size:11px; text-align:right;">
+                <button type="button" class="sheet-dl-btn" id="btnResetPartCenterHole" title="Remove center hole on selected part(s) (0)">↺</button>
+              </div>
+            </div>
+          </div>
+          <!-- Linear Axis Slide Control for Selected Waffle Rib (X or Y) or Radial Ring (Z) -->
           <div id="waffleSlideRow" style="display:none; flex-direction:column; gap:4px; padding-top:3px; border-top:1px dashed var(--border-color);">
             <div class="row" style="font-size:11px;">
               <span title="Slide selected X or Y rib linearly along its axis (or drag the selected rib in 3D)">Axis Slide Offset (<span class="unit-lbl">mm</span>):</span>
@@ -1268,6 +1465,13 @@
               </div>
             </div>
             <input type="range" id="waffleRibOffsetSlider" min="-80" max="80" step="0.5" value="0" style="width:100%; height:4px;">
+          </div>
+          <div id="holedSlicesWrap" style="display:none; flex-direction:column; gap:3px; padding-top:3px; border-top:1px dashed var(--border-color);">
+            <div class="row" style="font-size:10.5px;">
+              <span>Center Holes (Click to remove):</span>
+              <button type="button" class="sheet-dl-btn" id="btnResetAllPartHoles">Clear All</button>
+            </div>
+            <div class="hidden-pills" id="holedPillsList"></div>
           </div>
           <div id="shiftedSlicesWrap" style="display:none; flex-direction:column; gap:3px; padding-top:3px; border-top:1px dashed var(--border-color);">
             <div class="row" style="font-size:10.5px;">
@@ -1295,6 +1499,21 @@
     </aside>
 
   </div>
+
+  <!-- ==================== BOTTOM STATUS BAR ==================== -->
+  <footer id="statusBar">
+    <div class="sb-group">
+      <span class="sb-item" id="sbMessage"><span class="sb-dot"></span>Ready</span>
+      <span class="sb-item" id="sbModel">No model</span>
+    </div>
+    <div class="sb-group">
+      <span class="sb-item" id="sbMode">Stacked Slices</span>
+      <span class="sb-item" id="sbParts">0 parts</span>
+      <span class="sb-item" id="sbSink" style="display:none;"></span>
+      <span class="sb-item" id="sbHistory">History 0/0</span>
+      <span class="sb-item" id="sbUnits">mm</span>
+    </div>
+  </footer>
 
 <script>
 // =========================================================
@@ -1417,7 +1636,7 @@ document.querySelectorAll('.spin-btn').forEach(btn => {
 // Units System
 let currentUnit = 'mm';
 const unitFactors = { mm: 1, cm: 10, in: 25.4 };
-const unitInputs = ['dimZ', 'dimX', 'dimY', 'sheetW', 'sheetH', 'matThick', 'sheetMargin', 'slotOffset', 'toolDia', 'hollowWall', 'dowelDia', 'radialCoreRadius', 'radialCenterX', 'radialCenterY'];
+const unitInputs = ['dimZ', 'dimX', 'dimY', 'sheetW', 'sheetH', 'matThick', 'sheetMargin', 'slotOffset', 'toolDia', 'hollowWall', 'dowelDia', 'dowelWidth', 'dowelDepth', 'dowelWasherDia', 'radialCoreRadius', 'radialCenterX', 'radialCenterY', 'radialRingOffset', 'modelSink'];
 
 function toMM(val) { return (parseFloat(val) || 0) * unitFactors[currentUnit]; }
 function fromMM(mmVal) { return Number((mmVal / unitFactors[currentUnit]).toFixed(2)); }
@@ -1431,7 +1650,8 @@ function getAutoRadialCoreRadius(count, thick, offset) {
   const sinHalf = Math.sin(Math.PI / n);
   const trigRadius = hw / Math.max(0.001, sinHalf);
   const safeMargin = Math.max(1.2, (thick || 3.0) * 0.35);
-  return Math.ceil((trigRadius + safeMargin) * 10) / 10;
+  const minCore = Math.ceil((trigRadius + safeMargin) * 10) / 10;
+  return minCore;
 }
 
 function updateRadialCoreRadiusUI(explicitAutoMM) {
@@ -1702,25 +1922,77 @@ function updateDynamicGridAndFloorDimensions() {
   yLabelMesh.rotation.z = Math.PI / 2;
   floorDimensionsGroup.add(yLabelMesh);
 
-  // --- 3D XYZ CORNER AXIS TRIAD (Screenshot #2 Style: Red X, Green Y, Blue Z on Front-Left of Model) ---
+  // --- 3D XYZ CORNER AXIS TRIAD: Red X, Green Y, Blue Z placed at Back-Left of Model (minX, maxY) ---
   const triadLen = Math.max(12, maxXY * 0.18);
-  const triadOrigin = new THREE.Vector3(minX - gap * 1.45, minY - gap * 0.25, zFloor);
+  const triadOrigin = new THREE.Vector3(minX - gap * 1.45, maxY + gap * 0.25, zFloor);
   const headLen = triadLen * 0.26;
   const headWid = triadLen * 0.13;
 
   floorDimensionsGroup.add(new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), triadOrigin, triadLen, 0xef4444, headLen, headWid));
-  floorDimensionsGroup.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), triadOrigin, triadLen, 0x4ade80, headLen, headWid));
+  floorDimensionsGroup.add(new THREE.ArrowHelper(new THREE.Vector3(0, -1, 0), triadOrigin, triadLen, 0x4ade80, headLen, headWid));
   floorDimensionsGroup.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), triadOrigin, triadLen, 0x60a5fa, headLen, headWid));
 
   const tagSize = Math.max(6, triadLen * 0.42);
   const xTag = makeFloorLabelMesh('X', '#f87171', tagSize * 2, tagSize);
   xTag.position.set(triadOrigin.x + triadLen + tagSize * 0.45, triadOrigin.y, zFloor * 1.5);
   const yTag = makeFloorLabelMesh('Y', '#86efac', tagSize * 2, tagSize);
-  yTag.position.set(triadOrigin.x, triadOrigin.y + triadLen + tagSize * 0.45, zFloor * 1.5);
+  yTag.position.set(triadOrigin.x, triadOrigin.y - triadLen - tagSize * 0.45, zFloor * 1.5);
   const zTag = makeFloorLabelMesh('Z', '#93c5fd', tagSize * 2, tagSize);
   zTag.position.set(triadOrigin.x, triadOrigin.y, triadOrigin.z + triadLen + tagSize * 0.45);
   zTag.rotation.x = Math.PI / 2;
   floorDimensionsGroup.add(xTag, yTag, zTag);
+
+  // --- PROMINENT CENTER AXIS LINES (X=0 & Y=0) & CENTER MARKER DOT ---
+  const halfGrid = currentGridSize / 2;
+  const centerAxesPts = [
+    new THREE.Vector3(-halfGrid, 0, zFloor * 0.2), new THREE.Vector3(halfGrid, 0, zFloor * 0.2),
+    new THREE.Vector3(0, -halfGrid, zFloor * 0.2), new THREE.Vector3(0, halfGrid, zFloor * 0.2)
+  ];
+  floorDimensionsGroup.add(new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(centerAxesPts),
+    new THREE.LineBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.85 })
+  ));
+
+  const centerRingMesh = new THREE.Mesh(
+    new THREE.RingGeometry(1.2, 2.2, 32),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.85 })
+  );
+  centerRingMesh.position.set(0, 0, zFloor * 0.25);
+  const centerDotMesh = new THREE.Mesh(
+    new THREE.CircleGeometry(0.7, 24),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide })
+  );
+  centerDotMesh.position.set(0, 0, zFloor * 0.26);
+  floorDimensionsGroup.add(centerRingMesh, centerDotMesh);
+
+  // --- SUBGRID LOCKED TO MAIN GRID AXES (HALF-CELL SUBDIVISION, CELL-BY-CELL EXPANSION) ---
+  const cellTarget = neededSize > 4000 ? 200 : (neededSize > 1200 ? 50 : (neededSize > 400 ? 20 : 10));
+  const divisions = Math.max(16, Math.min(80, Math.round(neededSize / cellTarget)));
+  const mainCellSize = neededSize / divisions;
+  const subStep = mainCellSize / 2; // Exactly half of the visible main grid cell
+
+  // Distance from bed center (0, 0) to furthest model extent
+  const maxModelDist = Math.max(Math.abs(minX), Math.abs(maxX), Math.abs(minY), Math.abs(maxY));
+  const spanCells = Math.max(1, Math.ceil(maxModelDist / mainCellSize));
+  const subHalf = Math.min(halfGrid, spanCells * mainCellSize);
+
+  const subgridPts = [];
+  // Intermediate half-cell lines along Y (between main grid lines)
+  for (let x = -subHalf + subStep; x < subHalf; x += mainCellSize) {
+    subgridPts.push(new THREE.Vector3(x, -subHalf, zFloor * 0.15));
+    subgridPts.push(new THREE.Vector3(x, subHalf, zFloor * 0.15));
+  }
+  // Intermediate half-cell lines along X (between main grid lines)
+  for (let y = -subHalf + subStep; y < subHalf; y += mainCellSize) {
+    subgridPts.push(new THREE.Vector3(-subHalf, y, zFloor * 0.15));
+    subgridPts.push(new THREE.Vector3(subHalf, y, zFloor * 0.15));
+  }
+  if (subgridPts.length > 0) {
+    floorDimensionsGroup.add(new THREE.LineSegments(
+      new THREE.BufferGeometry().setFromPoints(subgridPts),
+      new THREE.LineBasicMaterial({ color: 0x3b4252, transparent: true, opacity: 0.85 })
+    ));
+  }
 
   // Also keep the Slice Direction Orbital Rings scaled outside the object!
   if (typeof rebuildCustomOrcaSliceGimbal === 'function') {
@@ -1747,6 +2019,8 @@ document.getElementById('btnThemeToggle').addEventListener('click', () => {
 let rawOriginalGeometry = null;
 let originalSizeMM = new THREE.Vector3(90, 90, 120);
 let ghostMesh = null;
+let ghostGeomVersion = 0;   // Incremented whenever ghostMesh geometry is re-baked (Undo/Redo tracking)
+let modelSinkMM = 0;        // Z-Cut: how far the model bottom is sunk below the bed (mm)
 let slicesGroup = new THREE.Group();
 scene.add(slicesGroup);
 
@@ -1756,14 +2030,68 @@ layFlatPlatesGroup.visible = false;
 scene.add(layFlatPlatesGroup);
 
 // TransformControls for Model (Move / Rotate / Scale)
+// Permanent fix for Three.js 180° arrow flipping: In CAD/CAM, X (+X), Y (+Y), Z (+Z) must strictly point in their true positive directions!
+// Cone and line must remain permanently locked together without detaching across camera rotations.
+if (typeof THREE.TransformControlsGizmo !== 'undefined' && !THREE.TransformControlsGizmo._arrowFlipPatched) {
+  const origGizmoUpdate = THREE.TransformControlsGizmo.prototype.updateMatrixWorld;
+  THREE.TransformControlsGizmo.prototype.updateMatrixWorld = function(force) {
+    origGizmoUpdate.call(this, force);
+
+    this.traverse(child => {
+      if (child.tag === 'bwd') {
+        child.visible = false;
+      } else if (child.tag === 'fwd') {
+        child.visible = true;
+      }
+      if (child.scale && (child.scale.x < 0 || child.scale.y < 0 || child.scale.z < 0)) {
+        child.scale.x = Math.abs(child.scale.x);
+        child.scale.y = Math.abs(child.scale.y);
+        child.scale.z = Math.abs(child.scale.z);
+        child.updateMatrix();
+        child.updateMatrixWorld(true);
+      }
+    });
+  };
+  THREE.TransformControlsGizmo._arrowFlipPatched = true;
+}
+
 const transformControl = new THREE.TransformControls(camera, renderer.domElement);
 transformControl.setSpace('world');
 transformControl.setRotationSnap(THREE.MathUtils.degToRad(15));
 scene.add(transformControl);
 
+transformControl.addEventListener('change', () => {
+  if (transformControl.dragging && ghostMesh && transformControl.getMode() === 'translate') {
+    ghostMesh.updateMatrixWorld(true);
+    const wb = new THREE.Box3().setFromObject(ghostMesh);
+    const liveSink = clampModelSinkMM(Math.max(0, -wb.min.z));
+    const sinkInp = document.getElementById('modelSink');
+    if (sinkInp) sinkInp.value = fromMM(liveSink);
+    const badge = document.getElementById('angleReadoutBadge');
+    if (badge) {
+      badge.style.left = '50%';
+      badge.style.top = '56px';
+      badge.style.display = 'block';
+      badge.innerText = liveSink > 0.01
+        ? `⤓ Sink Below Bed (Z-Cut): -${fromMM(liveSink)} ${currentUnit}`
+        : `Move Model  X: ${fromMM(ghostMesh.position.x)}  Y: ${fromMM(ghostMesh.position.y)} ${currentUnit}`;
+    }
+  }
+});
+
 transformControl.addEventListener('dragging-changed', (ev) => {
   orbit.enabled = !ev.value;
-  if (!ev.value) bakeTransformAndReslice(false);
+  if (!ev.value) {
+    const badge = document.getElementById('angleReadoutBadge');
+    if (badge && !sliceGimbalPivot.visible) badge.style.display = 'none';
+    // Move gizmo: dragging the model below the bed sinks it (Z-Cut). Lifting it above the bed drops it back (sink = 0).
+    if (ghostMesh && transformControl.getMode() === 'translate') {
+      ghostMesh.updateMatrixWorld(true);
+      const wb = new THREE.Box3().setFromObject(ghostMesh);
+      modelSinkMM = clampModelSinkMM(Math.max(0, -wb.min.z));
+    }
+    bakeTransformAndReslice(false);
+  }
 });
 
 // =========================================================
@@ -2075,12 +2403,14 @@ function projectRayOnFrozenGimbalPlane(state) {
     const vec = hitPt.sub(state.centerWorld);
     const u = vec.dot(state.uWorld);
     const v = vec.dot(state.vWorld);
+    const dist = Math.hypot(u, v);
+    if (dist < 1e-3) return null;
     return {
       angleDeg: THREE.MathUtils.radToDeg(Math.atan2(v, u)),
-      distFromCenter: Math.hypot(u, v)
+      distFromCenter: dist
     };
   }
-  // Fallback when viewing ring nearly edge-on
+  // Fallback when viewing ring nearly edge-on (grazing angle)
   const camPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(
     camera.getWorldDirection(new THREE.Vector3()),
     state.centerWorld
@@ -2089,9 +2419,11 @@ function projectRayOnFrozenGimbalPlane(state) {
     const vec = hitPt.sub(state.centerWorld);
     const u = vec.dot(state.uWorld);
     const v = vec.dot(state.vWorld);
+    const dist = Math.hypot(u, v);
+    if (dist < 1e-3) return null;
     return {
       angleDeg: THREE.MathUtils.radToDeg(Math.atan2(v, u)),
-      distFromCenter: Math.hypot(u, v)
+      distFromCenter: dist
     };
   }
   return null;
@@ -2194,7 +2526,7 @@ document.getElementById('navBtnOrtho').addEventListener('click', () => setCamera
 // =========================================================
 const vcCanvas = document.getElementById('viewCubeCanvas');
 const vcRenderer = new THREE.WebGLRenderer({ canvas: vcCanvas, alpha: true, antialias: true });
-vcRenderer.setSize(112, 112);
+vcRenderer.setSize(140, 140);
 vcRenderer.setPixelRatio(window.devicePixelRatio);
 
 const vcScene = new THREE.Scene();
@@ -2399,7 +2731,7 @@ function loadPreset(type) {
   setupNewModel(nonIdx);
 }
 
-function setupNewModel(rawGeom, preserveCameraAndState = false) {
+function setupNewModel(rawGeom, preserveCameraAndState = false, resetHistory = !preserveCameraAndState) {
   const geom = rawGeom.clone();
   geom.computeBoundingBox();
   const center = new THREE.Vector3();
@@ -2416,11 +2748,23 @@ function setupNewModel(rawGeom, preserveCameraAndState = false) {
     geom.applyMatrix4(modelRotMatrix);
   } else {
     modelRotMatrix.identity();
+    modelSinkMM = 0;
     excludedSliceIds.clear();
     selectedSliceIds.clear();
     lastSelectedSliceId = null;
     dowels = [{ x: 0, y: 0 }];
     selectedDowelIndex = 0;
+  }
+
+  if (resetHistory && typeof clearUndoHistory === 'function') {
+    clearUndoHistory();
+  }
+
+  // Clear any lingering lay flat candidate plates from previous model
+  while (layFlatPlatesGroup.children.length > 0) layFlatPlatesGroup.remove(layFlatPlatesGroup.children[0]);
+  layFlatPlatesGroup.visible = false;
+  if (!preserveCameraAndState && typeof setTool === 'function') {
+    setTool('select');
   }
 
   buildGhostMeshFromGeometry(geom);
@@ -2462,12 +2806,6 @@ function buildGhostMeshFromGeometry(geom) {
   ghostMesh = new THREE.Mesh(geom, mat);
   ghostMesh.visible = true;
 
-  const wf = new THREE.LineSegments(
-    new THREE.EdgesGeometry(geom, 18),
-    new THREE.LineBasicMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.42 })
-  );
-  ghostMesh.add(wf);
-
   recenterMeshPivot();
   dropMeshToBed(true);
   scene.add(ghostMesh);
@@ -2475,6 +2813,7 @@ function buildGhostMeshFromGeometry(geom) {
 
 function recenterMeshPivot() {
   if (!ghostMesh) return;
+  ghostGeomVersion++; // Every geometry bake / lay-flat / rebuild passes through here -> Undo/Redo geometry change tracking
   const geom = ghostMesh.geometry;
   geom.computeBoundingBox();
   const center = new THREE.Vector3();
@@ -2483,18 +2822,48 @@ function recenterMeshPivot() {
   ghostMesh.position.add(center);
 }
 
+// Z-Cut / Sink Below Bed: model bottom sits at Z = -modelSinkMM. Everything below the bed (Z < 0) is truncated before slicing.
+function getModelHeightMM() {
+  if (!ghostMesh) return 0;
+  ghostMesh.geometry.computeBoundingBox();
+  return ghostMesh.geometry.boundingBox.max.z - ghostMesh.geometry.boundingBox.min.z;
+}
+
+function clampModelSinkMM(v) {
+  const h = getModelHeightMM();
+  const maxSink = Math.max(0, h - 1.0);
+  return Math.max(0, Math.min(maxSink, Number(v) || 0));
+}
+
+function syncModelSinkInput() {
+  const inp = document.getElementById('modelSink');
+  if (inp && document.activeElement !== inp) inp.value = fromMM(modelSinkMM);
+}
+
+function setModelSinkMM(v, reslice = true) {
+  modelSinkMM = clampModelSinkMM(v);
+  const sinkInp = document.getElementById('modelSink');
+  if (sinkInp) sinkInp.value = fromMM(modelSinkMM);
+  if (reslice && ghostMesh) {
+    dropMeshToBed(false);
+    runSlicer();
+  }
+}
+
 function dropMeshToBed(centerXY = true) {
   if (!ghostMesh) return;
   ghostMesh.updateMatrixWorld(true);
   const geom = ghostMesh.geometry;
   geom.computeBoundingBox();
+  modelSinkMM = clampModelSinkMM(modelSinkMM);
   const minZ = geom.boundingBox.min.z + ghostMesh.position.z;
-  ghostMesh.position.z -= minZ;
+  ghostMesh.position.z -= (minZ + modelSinkMM);
   if (centerXY) {
     ghostMesh.position.x = 0;
     ghostMesh.position.y = 0;
   }
   ghostMesh.updateMatrixWorld(true);
+  syncModelSinkInput();
 }
 
 function syncDimensionInputsFromMesh() {
@@ -2518,12 +2887,7 @@ function bakeTransformAndReslice(centerXY = false) {
   ghostMesh.scale.set(1, 1, 1);
   ghostMesh.updateMatrixWorld(true);
   geom.computeVertexNormals();
-
-  ghostMesh.children = [];
-  ghostMesh.add(new THREE.LineSegments(
-    new THREE.EdgesGeometry(geom, 18),
-    new THREE.LineBasicMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.38 })
-  ));
+  disposeGroupChildren(ghostMesh);
 
   recenterMeshPivot();
   dropMeshToBed(centerXY);
@@ -2536,6 +2900,7 @@ function bakeTransformAndReslice(centerXY = false) {
 
 function resetMoveTransform() {
   if (!ghostMesh) return;
+  modelSinkMM = 0;
   dropMeshToBed(true);
   bakeTransformAndReslice(true);
 }
@@ -2647,106 +3012,108 @@ function layMeshFlatOnNormal(rawWorldNormal) {
   ghostMesh.scale.set(1, 1, 1);
   ghostMesh.updateMatrixWorld(true);
   geom.computeVertexNormals();
-
-  ghostMesh.children = [];
-  ghostMesh.add(new THREE.LineSegments(
-    new THREE.EdgesGeometry(geom, 18),
-    new THREE.LineBasicMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.38 })
-  ));
+  disposeGroupChildren(ghostMesh);
 
   recenterMeshPivot();
+  modelSinkMM = 0; // Lay Flat always seats the chosen face on the bed (cancels Sink Below Bed)
   dropMeshToBed(true);
   syncDimensionInputsFromMesh();
   updateDynamicGridAndFloorDimensions();
   runSlicer();
 }
 
-// True 3D Shrink-Wrap (3D Convex Hull) Coplanar Facet Clustering (OrcaSlicer / PrusaSlicer Place-on-Face Method)
+// PrusaSlicer / Bambu Studio Coplanar Triangle Clustering for "Place on Face" (Lay Flat)
+// Scans real mesh triangles, clusters coplanar faces (including annular rings with holes), and eliminates fake curved hull patches!
 function buildLayFlatCandidatePlates() {
   while (layFlatPlatesGroup.children.length > 0) layFlatPlatesGroup.remove(layFlatPlatesGroup.children[0]);
-  if (!ghostMesh) return;
+  if (!ghostMesh || !ghostMesh.geometry) return;
 
   ghostMesh.updateMatrixWorld(true);
-  const posAttr = ghostMesh.geometry.attributes.position;
+  const geom = ghostMesh.geometry;
+  const posAttr = geom.attributes.position;
+  const indexAttr = geom.index;
   const arr = posAttr.array;
   const matWorld = ghostMesh.matrixWorld;
 
-  // 1. Collect unique world vertices (deduplicated to 0.25mm grid so QuickHull runs fast and clean)
-  const uniquePts = [];
-  const seen = new Set();
-  for (let i = 0; i < arr.length; i += 3) {
-    const v = new THREE.Vector3(arr[i], arr[i + 1], arr[i + 2]).applyMatrix4(matWorld);
-    const key = `${Math.round(v.x * 4)},${Math.round(v.y * 4)},${Math.round(v.z * 4)}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      uniquePts.push(v);
-    }
-  }
-  if (uniquePts.length < 4 || typeof THREE.ConvexGeometry === 'undefined') return;
+  const triCount = indexAttr ? (indexAttr.count / 3) : (posAttr.count / 3);
+  if (triCount < 1) return;
 
-  // 2. Compute true 3D Convex Hull ("Shrink-Wrap" around the 3D object!)
-  const hullGeom = new THREE.ConvexGeometry(uniquePts);
-  const hullPos = hullGeom.attributes.position.array;
-
-  // 3. Group coplanar triangles of the 3D Shrink-Wrap Hull (dot > 0.996 = within ~5° on the outer hull)
-  const hullFacets = [];
   const vA = new THREE.Vector3(), vB = new THREE.Vector3(), vC = new THREE.Vector3();
   const e1 = new THREE.Vector3(), e2 = new THREE.Vector3();
+  const norm = new THREE.Vector3();
 
-  for (let i = 0; i < hullPos.length; i += 9) {
-    vA.set(hullPos[i], hullPos[i + 1], hullPos[i + 2]);
-    vB.set(hullPos[i + 3], hullPos[i + 4], hullPos[i + 5]);
-    vC.set(hullPos[i + 6], hullPos[i + 7], hullPos[i + 8]);
+  // 1. Group coplanar triangles directly from actual mesh geometry
+  const clusters = [];
+  let totalMeshArea = 0;
+
+  for (let t = 0; t < triCount; t++) {
+    let iA, iB, iC;
+    if (indexAttr) {
+      iA = indexAttr.getX(t * 3);
+      iB = indexAttr.getX(t * 3 + 1);
+      iC = indexAttr.getX(t * 3 + 2);
+    } else {
+      iA = t * 3;
+      iB = t * 3 + 1;
+      iC = t * 3 + 2;
+    }
+
+    vA.set(arr[iA * 3], arr[iA * 3 + 1], arr[iA * 3 + 2]).applyMatrix4(matWorld);
+    vB.set(arr[iB * 3], arr[iB * 3 + 1], arr[iB * 3 + 2]).applyMatrix4(matWorld);
+    vC.set(arr[iC * 3], arr[iC * 3 + 1], arr[iC * 3 + 2]).applyMatrix4(matWorld);
+
     e1.subVectors(vB, vA);
     e2.subVectors(vC, vA);
-    const cross = new THREE.Vector3().crossVectors(e1, e2);
-    const area = cross.length() * 0.5;
-    if (area < 0.25) continue;
-    const normal = cross.normalize();
-    const planeDist = normal.dot(vA);
+    norm.crossVectors(e1, e2);
+    const area = norm.length() * 0.5;
+    if (area < 0.05) continue; // Ignore tiny slivers
+    totalMeshArea += area;
+    norm.normalize();
+    const planeDist = norm.dot(vA);
 
     let merged = false;
-    for (let f = 0; f < hullFacets.length; f++) {
-      const facet = hullFacets[f];
-      if (facet.normal.dot(normal) > 0.994 && Math.abs(facet.planeDist - planeDist) < 1.2) {
-        // Weighted average normal & accumulate hull vertices
-        const newArea = facet.area + area;
-        facet.normal.multiplyScalar(facet.area).addScaledVector(normal, area).normalize();
-        facet.planeDist = (facet.planeDist * facet.area + planeDist * area) / newArea;
-        facet.area = newArea;
-        facet.pts.push(vA.clone(), vB.clone(), vC.clone());
+    for (let c = 0; c < clusters.length; c++) {
+      const cl = clusters[c];
+      if (cl.normal.dot(norm) > 0.998 && Math.abs(cl.planeDist - planeDist) < 0.35) {
+        const newArea = cl.area + area;
+        cl.normal.multiplyScalar(cl.area).addScaledVector(norm, area).normalize();
+        cl.planeDist = (cl.planeDist * cl.area + planeDist * area) / newArea;
+        cl.area = newArea;
+        cl.pts.push(vA.clone(), vB.clone(), vC.clone());
         merged = true;
         break;
       }
     }
+
     if (!merged) {
-      hullFacets.push({
-        normal: normal.clone(),
-        planeDist,
-        area,
+      clusters.push({
+        normal: norm.clone(),
+        planeDist: planeDist,
+        area: area,
         pts: [vA.clone(), vB.clone(), vC.clone()]
       });
     }
   }
 
-  // 4. Filter to only physically stable / significant shrink-wrap polygons (top 24 facets by area)
-  hullFacets.sort((a, b) => b.area - a.area);
-  const totalHullArea = hullFacets.reduce((s, f) => s + f.area, 0) || 1;
-  const minSignificantArea = totalHullArea * 0.0065; // Ignore tiny sliver triangles on curved transitions
+  // 2. Filter to significant flat candidate surfaces:
+  // Must have a minimum absolute area (>= 12 mm²) so small cylinder tips or washers are never discarded,
+  // and curved surfaces (which cannot form coplanar clusters) are cleanly ignored.
+  const minCandidateArea = Math.max(12, totalMeshArea * 0.0003);
+  const validClusters = clusters
+    .filter(c => c.area >= minCandidateArea)
+    .sort((a, b) => b.area - a.area)
+    .slice(0, 36);
 
-  const topFacets = hullFacets.filter(f => f.area >= minSignificantArea).slice(0, 28);
-
-  topFacets.forEach(facet => {
-    const dir = facet.normal.clone().normalize();
-    // Compute centroid of this shrink-wrap facet
+  validClusters.forEach(cluster => {
+    const dir = cluster.normal.clone().normalize();
     const center = new THREE.Vector3();
-    facet.pts.forEach(p => center.add(p));
-    center.divideScalar(facet.pts.length);
+    cluster.pts.forEach(p => center.add(p));
+    center.divideScalar(cluster.pts.length);
 
     const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir);
     const invQ = q.clone().invert();
 
-    const pts2d = facet.pts.map(p => {
+    const pts2d = cluster.pts.map(p => {
       const loc = p.clone().sub(center).applyQuaternion(invQ);
       return { x: loc.x, y: loc.y };
     });
@@ -2755,12 +3122,45 @@ function buildLayFlatCandidatePlates() {
     if (hull2d.length < 3) return;
     hull2d = ensurePolygonWinding(hull2d, true);
 
-    // Inset the polygon slightly (0.86) so adjacent shrink-wrap polygons have a crisp visible gap like OrcaSlicer!
     const shape = new THREE.Shape();
-    const scaleIn = 0.88;
-    shape.moveTo(hull2d[0].x * scaleIn, hull2d[0].y * scaleIn);
-    for (let k = 1; k < hull2d.length; k++) {
-      shape.lineTo(hull2d[k].x * scaleIn, hull2d[k].y * scaleIn);
+    const scaleIn = 0.92;
+    const n = hull2d.length;
+    const scaledPts = hull2d.map(p => ({ x: p.x * scaleIn, y: p.y * scaleIn }));
+
+    // Apply corner radius for polished, smooth candidate plates
+    const fillets = [];
+    for (let i = 0; i < n; i++) {
+      const prev = scaledPts[(i - 1 + n) % n];
+      const cur = scaledPts[i];
+      const next = scaledPts[(i + 1) % n];
+
+      const vPrev = { x: prev.x - cur.x, y: prev.y - cur.y };
+      const lenPrev = Math.hypot(vPrev.x, vPrev.y);
+      const vNext = { x: next.x - cur.x, y: next.y - cur.y };
+      const lenNext = Math.hypot(vNext.x, vNext.y);
+
+      const maxR = Math.min(lenPrev, lenNext) * 0.35;
+      const r = Math.min(6.0, maxR);
+
+      if (r > 0.4 && lenPrev > 1e-4 && lenNext > 1e-4) {
+        const pIn = { x: cur.x + (vPrev.x / lenPrev) * r, y: cur.y + (vPrev.y / lenPrev) * r };
+        const pOut = { x: cur.x + (vNext.x / lenNext) * r, y: cur.y + (vNext.y / lenNext) * r };
+        fillets.push({ cur, pIn, pOut, rounded: true });
+      } else {
+        fillets.push({ cur, pIn: cur, pOut: cur, rounded: false });
+      }
+    }
+
+    shape.moveTo(fillets[0].pOut.x, fillets[0].pOut.y);
+    for (let i = 1; i < n; i++) {
+      shape.lineTo(fillets[i].pIn.x, fillets[i].pIn.y);
+      if (fillets[i].rounded) {
+        shape.quadraticCurveTo(fillets[i].cur.x, fillets[i].cur.y, fillets[i].pOut.x, fillets[i].pOut.y);
+      }
+    }
+    shape.lineTo(fillets[0].pIn.x, fillets[0].pIn.y);
+    if (fillets[0].rounded) {
+      shape.quadraticCurveTo(fillets[0].cur.x, fillets[0].cur.y, fillets[0].pOut.x, fillets[0].pOut.y);
     }
     shape.closePath();
 
@@ -2827,7 +3227,8 @@ document.getElementById('btnResetModel').addEventListener('click', (e) => {
   e.stopPropagation();
   if (rawOriginalGeometry) {
     Object.keys(waffleRibOffsets).forEach(k => delete waffleRibOffsets[k]);
-    setupNewModel(rawOriginalGeometry);
+    Object.keys(partCenterHoles).forEach(k => delete partCenterHoles[k]);
+    setupNewModel(rawOriginalGeometry, false, false);
   }
 });
 
@@ -3197,18 +3598,220 @@ function isDowelValidInSlice(dowel, radius, outerLoops, holeLoops) {
   return getDowelClearanceInSlice(dowel, radius, outerLoops, holeLoops) >= 0;
 }
 
-function makeDowelPolygon(x, y, radius, shape) {
-  const pts = [];
+function getCurrentDowelSpec() {
+  const shape = document.getElementById('dowelShape') ? document.getElementById('dowelShape').value : 'round';
+  const slotOffset = toMM(document.getElementById('slotOffset').value);
+  const toolDia = Math.max(0.5, toMM(document.getElementById('toolDia').value) || 3.0);
+  // R-Bone relief is applied ONLY to square/rectangular dowel holes and washers IF Relief Type is enabled (T-Bone or Dog Bone)!
+  const globalRelief = document.getElementById('waffleReliefType') ? document.getElementById('waffleReliefType').value : 'square';
+  const reliefEnabled = (globalRelief !== 'square');
+  const reliefType = reliefEnabled ? 'rbone' : 'square';
+
   if (shape === 'square') {
-    pts.push({ x: x - radius, y: y + radius }, { x: x + radius, y: y + radius }, { x: x + radius, y: y - radius }, { x: x - radius, y: y - radius });
+    const rawW = Math.max(1.0, toMM(document.getElementById('dowelWidth') ? document.getElementById('dowelWidth').value : 10));
+    const rawD = Math.max(1.0, toMM(document.getElementById('dowelDepth') ? document.getElementById('dowelDepth').value : 10));
+    const w = Math.max(0.5, rawW + slotOffset);
+    const d = Math.max(0.5, rawD + slotOffset);
+    const rx = w * 0.5;
+    const ry = d * 0.5;
+    const rBit = Math.max(0.25, toolDia * 0.5);
+    const minSpan = Math.min(w, d);
+    const toolTooLarge = toolDia >= minSpan - 0.02;
+    const reliefExtra = (reliefEnabled && !toolTooLarge) ? rBit * 0.55 : 0;
+    const clearanceRadius = Math.hypot(rx, ry) + reliefExtra;
+    return {
+      shape: 'square',
+      rawW,
+      rawD,
+      w,
+      d,
+      rx,
+      ry,
+      radius: clearanceRadius,
+      reliefType,
+      toolDia,
+      minSpan,
+      toolTooLarge,
+      summaryLabel: `${fromMM(rawW)}×${fromMM(rawD)} ${currentUnit}`
+    };
   } else {
+    const rawDia = Math.max(1.0, toMM(document.getElementById('dowelDia') ? document.getElementById('dowelDia').value : 11));
+    const dia = Math.max(1.0, rawDia + slotOffset);
+    const r = dia * 0.5;
+    return {
+      shape: 'round',
+      rawW: rawDia,
+      rawD: rawDia,
+      w: dia,
+      d: dia,
+      rx: r,
+      ry: r,
+      radius: r,
+      reliefType: 'square',
+      toolDia,
+      minSpan: dia,
+      toolTooLarge: false,
+      summaryLabel: `Ø${fromMM(rawDia)} ${currentUnit}`
+    };
+  }
+}
+
+function updateDowelShapeAndToolUI() {
+  const spec = getCurrentDowelSpec();
+  const isSquare = (spec.shape === 'square');
+  const roundRow = document.getElementById('dowelRoundRow');
+  const rectRows = document.getElementById('dowelRectRows');
+  const warnBox = document.getElementById('dowelToolWarn');
+  const badge = document.getElementById('lblDowelReliefBadge');
+  if (roundRow) roundRow.style.display = isSquare ? 'none' : 'flex';
+  if (rectRows) rectRows.style.display = isSquare ? 'flex' : 'none';
+  if (badge) {
+    if (spec.reliefType === 'rbone') {
+      badge.innerText = 'R-Bone (Auto: On)';
+      badge.style.color = 'var(--accent-blue)';
+      badge.style.borderColor = 'rgba(56,189,248,0.3)';
+      badge.style.background = 'rgba(56,189,248,0.12)';
+      badge.title = 'R-Bone 4-way rotational corner relief is active because Relief Type is enabled';
+    } else {
+      badge.innerText = 'None (Relief Off)';
+      badge.style.color = 'var(--text-muted)';
+      badge.style.borderColor = 'var(--border-color)';
+      badge.style.background = 'transparent';
+      badge.title = 'Corner relief is off (Relief Type is Square / None)';
+    }
+  }
+  if (warnBox) {
+    if (isSquare && spec.toolTooLarge) {
+      warnBox.style.display = 'block';
+      warnBox.innerHTML = `⚠️ <b>Tool Diameter (${fromMM(spec.toolDia)} ${currentUnit})</b> is too large for dowel narrow side (${fromMM(spec.minSpan)} ${currentUnit}). Reduce Tool Diameter or increase Dowel Width/Depth.`;
+    } else {
+      warnBox.style.display = 'none';
+    }
+  }
+  return spec;
+}
+
+function makeDowelPolygon(x, y, radiusOrSpec, shape) {
+  const spec = (radiusOrSpec && typeof radiusOrSpec === 'object') ? radiusOrSpec : getCurrentDowelSpec();
+  const effShape = shape || spec.shape;
+  if (effShape === 'square') {
+    const rx = spec.rx || (typeof radiusOrSpec === 'number' ? radiusOrSpec : 5);
+    const ry = spec.ry || (typeof radiusOrSpec === 'number' ? radiusOrSpec : 5);
+    const baseCW = [
+      { x: x - rx, y: y + ry },
+      { x: x + rx, y: y + ry },
+      { x: x + rx, y: y - ry },
+      { x: x - rx, y: y - ry }
+    ];
+    // R-Bone (Rotational 4-Edge Pinwheel Corner Relief):
+    // Applied to Square/Rect Dowel Holes and Dowel Support Washer Holes ONLY if Relief Type is enabled (T-Bone or Dog Bone)!
+    if (spec.reliefType === 'rbone' && !spec.toolTooLarge && typeof ClipperLib !== 'undefined') {
+      const rBit = Math.max(0.25, (spec.toolDia || 3.0) * 0.5);
+      const cpr = new ClipperLib.Clipper();
+      cpr.AddPath(toClipperPath(ensurePolygonWinding(baseCW, true)), ClipperLib.PolyType.ptSubject, true);
+      const rBoneCenters = [
+        { cx: x - rx + rBit, cy: y + ry }, // Top-Left -> Top edge (+Y)
+        { cx: x + rx, cy: y + ry - rBit }, // Top-Right -> Right edge (+X)
+        { cx: x + rx - rBit, cy: y - ry }, // Bottom-Right -> Bottom edge (-Y)
+        { cx: x - rx, cy: y - ry + rBit }  // Bottom-Left -> Left edge (-X)
+      ];
+      rBoneCenters.forEach(({ cx, cy }) => {
+        cpr.AddPath(toClipperPath(ensurePolygonWinding(makeCirclePolygon2D(cx, cy, rBit, 24), true)), ClipperLib.PolyType.ptClip, true);
+      });
+      const sol = new ClipperLib.Paths();
+      cpr.Execute(ClipperLib.ClipType.ctUnion, sol, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero);
+      if (sol && sol.length > 0) {
+        const cleaned = ClipperLib.Clipper.CleanPolygon(sol[0], 0.015 * CLIPPER_SCALE);
+        if (cleaned && cleaned.length >= 3) {
+          return ensurePolygonWinding(fromClipperPath(cleaned), false); // CW hole contour
+        }
+      }
+    }
+    return baseCW;
+  } else {
+    const r = spec.shape === 'round' ? spec.rx : (typeof radiusOrSpec === 'number' ? radiusOrSpec : 5);
+    const pts = [];
     const segs = 24;
     for (let i = 0; i < segs; i++) {
       const a = -(i / segs) * Math.PI * 2;
-      pts.push({ x: x + Math.cos(a) * radius, y: y + Math.sin(a) * radius });
+      pts.push({ x: x + Math.cos(a) * r, y: y + Math.sin(a) * r });
     }
+    return pts;
   }
-  return pts;
+}
+
+// Radial Lamp Helpers: Batch inward offset for horizontal rings & center socket/cable hole cutout
+function insetHorizontalRingLoops(outerLoops, meshHoles, inwardOffsetMM) {
+  if (!outerLoops || outerLoops.length === 0 || inwardOffsetMM <= 0.01 || typeof ClipperLib === 'undefined') {
+    return { outerLoops, meshHoles: meshHoles || [] };
+  }
+  const co = new ClipperLib.ClipperOffset(2.0, 0.25 * CLIPPER_SCALE);
+  outerLoops.forEach(ol => {
+    co.AddPath(toClipperPath(ensurePolygonWinding(ol, true)), ClipperLib.JoinType.jtRound, ClipperLib.EndType.etClosedPolygon);
+  });
+  const insetOuters = new ClipperLib.Paths();
+  co.Execute(insetOuters, -inwardOffsetMM * CLIPPER_SCALE);
+  if (!insetOuters || insetOuters.length === 0) return { outerLoops: [], meshHoles: [] };
+
+  const cpr = new ClipperLib.Clipper();
+  cpr.AddPaths(insetOuters, ClipperLib.PolyType.ptSubject, true);
+  if (meshHoles && meshHoles.length > 0) {
+    const holePaths = meshHoles.map(mh => toClipperPath(ensurePolygonWinding(mh, true)));
+    cpr.AddPaths(holePaths, ClipperLib.PolyType.ptClip, true);
+  }
+  const polyTree = new ClipperLib.PolyTree();
+  cpr.Execute(
+     (meshHoles && meshHoles.length > 0) ? ClipperLib.ClipType.ctDifference : ClipperLib.ClipType.ctUnion,
+    polyTree,
+    ClipperLib.PolyFillType.pftNonZero,
+    ClipperLib.PolyFillType.pftNonZero
+  );
+  const resOuters = [];
+  const resHoles = [];
+  const walk = (node) => {
+    if (node.Contour && node.Contour().length >= 3) {
+      const loop = fromClipperPath(node.Contour());
+      if (Math.abs(signedPolygonArea(loop)) >= 2.0) {
+        if (node.IsHole()) resHoles.push(ensurePolygonWinding(loop, false));
+        else resOuters.push(ensurePolygonWinding(loop, true));
+      }
+    }
+    const ch = node.Childs();
+    for (let i = 0; i < ch.length; i++) walk(ch[i]);
+  };
+  const topCh = polyTree.Childs();
+  for (let i = 0; i < topCh.length; i++) walk(topCh[i]);
+  return { outerLoops: resOuters, meshHoles: resHoles };
+}
+
+function cutCenterHoleInRingLoops(outerLoops, meshHoles, cx, cy, holeRadiusMM) {
+  if (!outerLoops || outerLoops.length === 0 || holeRadiusMM <= 0.05 || typeof ClipperLib === 'undefined') {
+    return { outerLoops, meshHoles: meshHoles || [] };
+  }
+  const cpr = new ClipperLib.Clipper();
+  outerLoops.forEach(ol => cpr.AddPath(toClipperPath(ensurePolygonWinding(ol, true)), ClipperLib.PolyType.ptSubject, true));
+  (meshHoles || []).forEach(mh => cpr.AddPath(toClipperPath(ensurePolygonWinding(mh, false)), ClipperLib.PolyType.ptSubject, true));
+  const holeCircle = makeCirclePolygon2D(cx, cy, holeRadiusMM, 36);
+  cpr.AddPath(toClipperPath(ensurePolygonWinding(holeCircle, true)), ClipperLib.PolyType.ptClip, true);
+
+  const polyTree = new ClipperLib.PolyTree();
+  cpr.Execute(ClipperLib.ClipType.ctDifference, polyTree, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftNonZero);
+  const resOuters = [];
+  const resHoles = [];
+  const walk = (node) => {
+    if (node.Contour && node.Contour().length >= 3) {
+      const loop = fromClipperPath(node.Contour());
+      if (Math.abs(signedPolygonArea(loop)) >= 2.0) {
+        if (node.IsHole()) resHoles.push(ensurePolygonWinding(loop, false));
+        else resOuters.push(ensurePolygonWinding(loop, true));
+      }
+    }
+    const ch = node.Childs();
+    for (let i = 0; i < ch.length; i++) walk(ch[i]);
+  };
+  const topCh = polyTree.Childs();
+  for (let i = 0; i < topCh.length; i++) walk(topCh[i]);
+  return { outerLoops: resOuters, meshHoles: resHoles };
 }
 
 // Find an interior point on the solid material of a slice for smart label placement (avoiding slot labels & edges!)
@@ -3520,6 +4123,8 @@ function intersectVerticalIntervals(intA, intB) {
 
 // Per-rib custom linear offsets (in mm) along their normal axis in Waffle & Radial modes: { 'X-2': 12.5, 'Y-1': -8.0, 'Z-3': 5.0 }
 const waffleRibOffsets = {};
+// Per-part custom center hole diameters (in mm) editable in the right Cut Layout panel: { 'Z-1': 40.0, 'Z-2': 28.0 }
+const partCenterHoles = {};
 let waffleAssemblyCollisions = [];
 let activeCollidingSliceIds = new Set();
 let lastWaffleBounds = { minX: -50, maxX: 50, minY: -50, maxY: 50, minZ: 0, maxZ: 100, matThick: 3, xCount: 5, yCount: 5, zCount: 5 };
@@ -3873,12 +4478,72 @@ function subtractWaffleSlotsWithClipper(outerLoops, meshHoles, hollowHoles, slot
   return { outerLoops: newOuters, meshHoles: newHoles };
 }
 
+// =========================================================
+// Z-CUT: TRUNCATE WORLD GEOMETRY BELOW THE BED (Z < zCut) + WATERTIGHT FLAT CAP
+// =========================================================
+// Clips every triangle against the half-space Z >= zCut (Sutherland-Hodgman) and closes the open
+// bottom with a triangulated cap (outer loops + holes at Z = zCut) so all slicing modes stay watertight.
+function truncateGeometryBelowBed(geom, zCut = 0) {
+  const src = geom.attributes.position.array;
+  const out = [];
+  const pushTri = (a, b, c) => { out.push(a[0], a[1], a[2], b[0], b[1], b[2], c[0], c[1], c[2]); };
+
+  for (let i = 0; i < src.length; i += 9) {
+    const v = [
+      [src[i], src[i + 1], src[i + 2]],
+      [src[i + 3], src[i + 4], src[i + 5]],
+      [src[i + 6], src[i + 7], src[i + 8]]
+    ];
+    const inside = [v[0][2] >= zCut, v[1][2] >= zCut, v[2][2] >= zCut];
+    const nIn = (inside[0] ? 1 : 0) + (inside[1] ? 1 : 0) + (inside[2] ? 1 : 0);
+    if (nIn === 3) { pushTri(v[0], v[1], v[2]); continue; }
+    if (nIn === 0) continue;
+    const poly = [];
+    for (let k = 0; k < 3; k++) {
+      const a = v[k], b = v[(k + 1) % 3];
+      const ia = inside[k], ib = inside[(k + 1) % 3];
+      if (ia) poly.push(a);
+      if (ia !== ib) {
+        const t = (zCut - a[2]) / (b[2] - a[2]);
+        poly.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]), zCut]);
+      }
+    }
+    for (let k = 1; k + 1 < poly.length; k++) pushTri(poly[0], poly[k], poly[k + 1]);
+  }
+
+  // Flat bottom cap at Z = zCut (outward normal = -Z)
+  const { outerLoops, meshHoles } = sliceMeshAtZ(geom, zCut, 'Z');
+  const holesAll = meshHoles || [];
+  outerLoops.forEach(outer => {
+    const holes = holesAll.filter(h => h.length > 2 && pointInPolygon(h[0], outer));
+    const contour = outer.map(p => new THREE.Vector2(p.x, p.y));
+    const holeV = holes.map(h => h.map(p => new THREE.Vector2(p.x, p.y)));
+    let faces = [];
+    try { faces = THREE.ShapeUtils.triangulateShape(contour, holeV); } catch (_) { return; }
+    const all = contour.concat(...holeV);
+    faces.forEach(f => {
+      const A = all[f[0]], B = all[f[1]], C = all[f[2]];
+      if (!A || !B || !C) return;
+      const cross = (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
+      if (cross > 0) pushTri([A.x, A.y, zCut], [C.x, C.y, zCut], [B.x, B.y, zCut]);
+      else pushTri([A.x, A.y, zCut], [B.x, B.y, zCut], [C.x, C.y, zCut]);
+    });
+  });
+
+  const res = new THREE.BufferGeometry();
+  res.setAttribute('position', new THREE.Float32BufferAttribute(out, 3));
+  return res;
+}
+
+let computedWasherSlices = [];
+
 function runSlicer(skip2D = false) {
   if (!ghostMesh) return;
   ghostMesh.updateMatrixWorld(true);
 
   disposeGroupChildren(slicesGroup);
   computedSlices = [];
+  computedWasherSlices = [];
   waffleAssemblyCollisions = [];
 
   const mode = document.getElementById('modeSelect').value;
@@ -3895,16 +4560,29 @@ function runSlicer(skip2D = false) {
   const hollowWall = Math.max(2, toMM(document.getElementById('hollowWall').value));
   const useDowels = !isInterlockMode && document.getElementById('chkDowels').checked;
   const slotOffset = toMM(document.getElementById('slotOffset').value);
-  const dowelRadius = Math.max(0.5, (toMM(document.getElementById('dowelDia').value) + slotOffset) / 2);
-  const dowelShape = document.getElementById('dowelShape').value;
+  const dowelSpec = updateDowelShapeAndToolUI();
+  const dowelRadius = dowelSpec.radius;
+  const dowelShape = dowelSpec.shape;
   const showExtrude = document.getElementById('chkShowExtrude').checked;
   const toolDia = Math.max(0.5, toMM(document.getElementById('toolDia').value) || matThick);
   slicesGroup.visible = !isInspectingRawModel;
+
+  const washerBoxEl = document.getElementById('dowelWasherBox');
+  if (washerBoxEl) {
+    washerBoxEl.style.display = (!isInterlockMode && skipCount > 0 && document.getElementById('chkDowels').checked) ? 'flex' : 'none';
+  }
 
   // Pivot slice direction rotation around the 3D model's center so dowels and work planes stay centered on the model!
   const workGeom = ghostMesh.geometry.clone();
   workGeom.applyMatrix4(ghostMesh.matrixWorld);
   workGeom.computeBoundingBox();
+  // Z-Cut: anything sunk below the bed (Z < 0) is removed and capped flat before slicing (all modes)
+  if (workGeom.boundingBox.min.z < -0.01) {
+    const truncated = truncateGeometryBelowBed(workGeom, 0);
+    workGeom.copy(truncated);
+    truncated.dispose();
+    workGeom.computeBoundingBox();
+  }
   const modelWorldCenter = new THREE.Vector3();
   workGeom.boundingBox.getCenter(modelWorldCenter);
 
@@ -4198,8 +4876,17 @@ function runSlicer(skip2D = false) {
     const hw = slotW * 0.5;
     const rBit = Math.max(0.25, toolDia * 0.5);
 
-    const cx = 0.5 * (box.min.x + box.max.x) + centerOffX;
-    const cy = 0.5 * (box.min.y + box.max.y) + centerOffY;
+    const lockToBed = !!(document.getElementById('chkRadialLockBed') && document.getElementById('chkRadialLockBed').checked);
+    let cx, cy;
+    if (lockToBed) {
+      // Lock Pattern: radial axis anchored to the bed origin (0,0) in world space, mapped into the (possibly tilted) slicing frame
+      const bedPivot = new THREE.Vector3(0, 0, modelWorldCenter.z).applyMatrix4(rotMat);
+      cx = bedPivot.x + centerOffX;
+      cy = bedPivot.y + centerOffY;
+    } else {
+      cx = 0.5 * (box.min.x + box.max.x) + centerOffX;
+      cy = 0.5 * (box.min.y + box.max.y) + centerOffY;
+    }
 
     // Minimum safe center clearance radius so adjacent radial fins of thickness slotW never collide at the center axis!
     const rAutoCore = getAutoRadialCoreRadius(radialCount, matThick, slotOffset);
@@ -4225,8 +4912,9 @@ function runSlicer(skip2D = false) {
 
     const zRings = [];
     const rFins = [];
+    const ringInwardOffset = Math.max(0, toMM(document.getElementById('radialRingOffset') ? document.getElementById('radialRingOffset').value : 0));
 
-    // 1. Slice Horizontal Rings (Z-1..Z-m) at planes Z = zVal with neighbor clamping
+    // 1. Slice Horizontal Rings (Z-1..Z-m) at planes Z = zVal with neighbor clamping + optional batch inward offset + per-part center holes
     for (let j = 0; j < ringCount; j++) {
       const ringId = `Z-${j + 1}`;
       const basePos = box.min.z + ((j + 1) / (ringCount + 1)) * (box.max.z - box.min.z);
@@ -4235,7 +4923,19 @@ function runSlicer(skip2D = false) {
       }
       const customOff = waffleRibOffsets[ringId] || 0;
       const zVal = basePos + customOff;
-      const { outerLoops, meshHoles } = sliceMeshAtZ(workGeom, zVal, 'Z');
+      let { outerLoops, meshHoles } = sliceMeshAtZ(workGeom, zVal, 'Z');
+      if (outerLoops.length > 0 && ringInwardOffset > 0.01) {
+        const insetRes = insetHorizontalRingLoops(outerLoops, meshHoles, ringInwardOffset);
+        outerLoops = insetRes.outerLoops;
+        meshHoles = insetRes.meshHoles;
+      }
+      // Cut per-part center hole (if set in Right Panel Cut Layout) BEFORE slot computation so radial slots automatically adapt!
+      const partHoleDiaMM = Math.max(0, partCenterHoles[ringId] || 0);
+      if (outerLoops.length > 0 && partHoleDiaMM > 0.1) {
+        const holedRes = cutCenterHoleInRingLoops(outerLoops, meshHoles, cx, cy, partHoleDiaMM * 0.5);
+        outerLoops = holedRes.outerLoops;
+        meshHoles = holedRes.meshHoles;
+      }
       if (outerLoops.length > 0) {
         zRings.push({
           axis: 'Z',
@@ -4483,12 +5183,67 @@ function runSlicer(skip2D = false) {
     // STACKED SLICES ENGINE
     // =========================================================
     // Skip Layers: 0 = every layer, 1 = 1 on 1 off, 2 = 1 on 2 off
+    // Symmetric Center-Out Slicing:
+    // When Slice Direction is tilted (e.g. Tilt X = 90° or Rotate Y != 0°) OR when Piece #1 does not rest flat on the bed,
+    // slice positions step symmetrically outward from the center of the slicing axis toward both ends so symmetric objects
+    // (like armchairs / sofas) begin with identical end pieces on both sides!
+    const angXDeg = parseFloat(document.getElementById('sliceAngX').value) || 0;
+    const angYDeg = parseFloat(document.getElementById('sliceAngY').value) || 0;
+    const isSliceTilted = (Math.abs(angXDeg) > 0.05 || Math.abs(angYDeg) > 0.05);
+    let firstLayerTouchesBed = !isSliceTilted;
+    if (!isSliceTilted) {
+      const zFirst = box.min.z + matThick * 0.5;
+      const probeFirst = sliceMeshAtZ(workGeom, zFirst, 'Z');
+      const zBedProbe = box.min.z + Math.min(0.25, matThick * 0.15);
+      const probeBed = sliceMeshAtZ(workGeom, zBedProbe, 'Z');
+      if (probeFirst.outerLoops.length === 0 || probeBed.outerLoops.length === 0) {
+        firstLayerTouchesBed = false;
+      }
+    }
+
+    const cycle = skipCount + 1;
+    const zPositions = [];
+    if (isSliceTilted || !firstLayerTouchesBed) {
+      const zMid = 0.5 * (box.min.z + box.max.z);
+      const halfSpan = 0.5 * (box.max.z - box.min.z);
+      let k = 0;
+      while (k * matThick <= halfSpan - matThick * 0.25 + 1e-4) {
+        if (k % cycle === 0) {
+          if (k === 0) {
+            zPositions.push(zMid);
+          } else {
+            zPositions.push(zMid - k * matThick);
+            zPositions.push(zMid + k * matThick);
+          }
+        }
+        k++;
+      }
+      zPositions.sort((a, b) => a - b);
+    } else {
+      let layerIndex = 0;
+      for (let z = box.min.z + matThick / 2; z < box.max.z; z += matThick) {
+        if (layerIndex % cycle === 0) {
+          zPositions.push(z);
+        }
+        layerIndex++;
+      }
+    }
+
+    const stackedCenterX = 0.5 * (box.min.x + box.max.x);
+    const stackedCenterY = 0.5 * (box.min.y + box.max.y);
     const rawLayers = [];
-    let layerIndex = 0;
-    for (let z = box.min.z + matThick / 2; z < box.max.z; z += matThick) {
-      const cycle = skipCount + 1;
-      if (layerIndex % cycle === 0) {
-        const { outerLoops, meshHoles } = sliceMeshAtZ(workGeom, z, 'Z');
+    for (let pIdx = 0; pIdx < zPositions.length; pIdx++) {
+      const z = zPositions[pIdx];
+      let { outerLoops, meshHoles } = sliceMeshAtZ(workGeom, z, 'Z');
+      if (outerLoops.length > 0) {
+        const nextIdx = rawLayers.length + 1;
+        const sliceId = `Z-${nextIdx}`;
+        const partHoleDiaMM = Math.max(0, partCenterHoles[sliceId] || 0);
+        if (partHoleDiaMM > 0.1) {
+          const holedRes = cutCenterHoleInRingLoops(outerLoops, meshHoles, stackedCenterX, stackedCenterY, partHoleDiaMM * 0.5);
+          outerLoops = holedRes.outerLoops;
+          meshHoles = holedRes.meshHoles;
+        }
         if (outerLoops.length > 0) {
           rawLayers.push({
             axis: 'Z',
@@ -4497,11 +5252,10 @@ function runSlicer(skip2D = false) {
             meshHoles: meshHoles || [],
             hollowHoles: [],
             dowelHoles: [],
-            index: rawLayers.length + 1
+            index: nextIdx
           });
         }
       }
-      layerIndex++;
     }
     workGeom.dispose();
 
@@ -4529,22 +5283,73 @@ function runSlicer(skip2D = false) {
             validIndices.push(i);
           }
         }
-        // Leave highest valid layer as blind-hole cap, then group into contiguous runs and discard any run < 2 layers
-        const candidateDrilled = validIndices.length >= 2 ? validIndices.slice(0, -1) : [];
-        const runs = getDowelRuns(candidateDrilled);
+        // User-controlled blind caps: leave `capTop` undrilled layers at the top end and `capBottom` at the bottom end
+        // of EVERY contiguous dowel run (multi-block safe). Runs shorter than 2 drilled layers are discarded.
+        const capTop = Math.max(0, parseInt(document.getElementById('dowelCapTop') ? document.getElementById('dowelCapTop').value : 1) || 0);
+        const capBottom = Math.max(0, parseInt(document.getElementById('dowelCapBottom') ? document.getElementById('dowelCapBottom').value : 0) || 0);
+        const runs = getDowelRuns(validIndices);
         const filteredDrilled = [];
         runs.forEach(([sIdx, eIdx]) => {
-          if (eIdx - sIdx + 1 >= 2) {
-            for (let k = sIdx; k <= eIdx; k++) filteredDrilled.push(k);
+          const s = sIdx + capBottom;
+          const e = eIdx - capTop;
+          if (e - s + 1 >= 2) {
+            for (let k = s; k <= e; k++) filteredDrilled.push(k);
           }
         });
 
         dowelDrilledLayers[dIdx] = filteredDrilled;
-        const poly = makeDowelPolygon(d.x, d.y, dowelRadius, dowelShape);
+        const poly = makeDowelPolygon(d.x, d.y, dowelSpec, dowelShape);
         filteredDrilled.forEach(layerIdx => {
           rawLayers[layerIdx].dowelHoles.push(poly);
         });
       });
+    }
+
+    // Generate Dowel Support Spacer Washers (W-1, W-2...) when Skip Layers > 0 and Dowel Support is enabled,
+    // and place them at their exact physical 3D coordinates in the skipped gaps along each dowel rod!
+    const washerBadgeEl = document.getElementById('dowelWasherCountBadge');
+    const useWashers = useDowels && skipCount > 0 && document.getElementById('chkDowelWashers') && document.getElementById('chkDowelWashers').checked;
+    const washer3DPlacements = [];
+    if (useWashers) {
+      const rawWasherDia = Math.max(3.0, toMM(document.getElementById('dowelWasherDia') ? document.getElementById('dowelWasherDia').value : 24));
+      const washerRadius = Math.max(rawWasherDia * 0.5, dowelSpec.radius + 2.0);
+      let wCounter = 0;
+      dowels.forEach((d, dIdx) => {
+        const drilled = dowelDrilledLayers[dIdx] || [];
+        const runs = getDowelRuns(drilled);
+        const wOuter = ensurePolygonWinding(makeCirclePolygon2D(d.x, d.y, washerRadius, 32), true);
+        const wHole = makeDowelPolygon(d.x, d.y, dowelSpec, dowelShape);
+        runs.forEach(([sIdx, eIdx]) => {
+          for (let k = sIdx; k < eIdx; k++) {
+            const zLower = rawLayers[k].z;
+            const zUpper = rawLayers[k + 1].z;
+            for (let s = 1; s <= skipCount; s++) {
+              wCounter++;
+              const wId = `W-${wCounter}`;
+              const wZ = zLower + (s / (skipCount + 1)) * (zUpper - zLower);
+              const wObj = {
+                sliceIdx: rawLayers.length + wCounter - 1,
+                id: wId,
+                isWasher: true,
+                axis: 'Z',
+                z: wZ,
+                outerLoops: [wOuter],
+                meshHoles: [],
+                hollowHoles: [],
+                dowelHoles: [wHole],
+                slotLabels: [],
+                collidingWithIds: [],
+                nextLoops: null
+              };
+              computedWasherSlices.push(wObj);
+              washer3DPlacements.push(wObj);
+            }
+          }
+        });
+      });
+      if (washerBadgeEl) washerBadgeEl.innerText = `${wCounter} pcs`;
+    } else if (washerBadgeEl) {
+      washerBadgeEl.innerText = `0 pcs`;
     }
 
     rawLayers.forEach((layer, idx) => {
@@ -4565,6 +5370,11 @@ function runSlicer(skip2D = false) {
       });
 
       build3DLayerMesh(layer, idx, id, matThick, showExtrude, invRotMat);
+    });
+
+    // Build 3D meshes for all Dowel Support Spacer Washers so they are visible and selectable in the 3D Viewport!
+    washer3DPlacements.forEach((wLayer) => {
+      build3DLayerMesh(wLayer, wLayer.sliceIdx, wLayer.id, matThick, showExtrude, invRotMat);
     });
 
     updateDowelPlaneAndMarkers(box, dowelRadius, dowelShape, rawLayers, dowelDrilledLayers, matThick, invRotMat);
@@ -4588,6 +5398,8 @@ function runSlicer(skip2D = false) {
     render2DSheets();
     analyzeModelIssues();
     updatePartActionBarUI();
+    if (typeof recordUndoSnapshot === 'function') recordUndoSnapshot();
+    if (typeof updateStatusBar === 'function') updateStatusBar();
   }
 }
 
@@ -4666,6 +5478,7 @@ function build3DLayerMesh(layer, sliceIdx, sliceId, thickness, extrude, invRotMa
         color: isHi ? colors.highlight : baseFaceColor,
         roughness: 0.62,
         metalness: 0.08,
+        side: THREE.DoubleSide,
         polygonOffset: true,
         polygonOffsetFactor: 1,
         polygonOffsetUnits: 1
@@ -4752,16 +5565,17 @@ function updateSliceColors() {
 function selectSliceById(sliceId, source, ev = null) {
   const isCtrl = ev && (ev.ctrlKey || ev.metaKey);
   const isShift = ev && ev.shiftKey;
+  const allParts = [...computedSlices, ...computedWasherSlices];
 
-  if (isShift && lastSelectedSliceId && computedSlices.length > 0) {
-    const idxA = computedSlices.findIndex(s => s.id === lastSelectedSliceId);
-    const idxB = computedSlices.findIndex(s => s.id === sliceId);
+  if (isShift && lastSelectedSliceId && allParts.length > 0) {
+    const idxA = allParts.findIndex(s => s.id === lastSelectedSliceId);
+    const idxB = allParts.findIndex(s => s.id === sliceId);
     if (idxA !== -1 && idxB !== -1) {
       if (!isCtrl) selectedSliceIds.clear();
       const start = Math.min(idxA, idxB);
       const end = Math.max(idxA, idxB);
       for (let k = start; k <= end; k++) {
-        selectedSliceIds.add(computedSlices[k].id);
+        selectedSliceIds.add(allParts[k].id);
       }
     } else {
       selectedSliceIds.add(sliceId);
@@ -4805,7 +5619,10 @@ function selectSliceById(sliceId, source, ev = null) {
 function updatePartActionBarUI() {
   const bar = document.getElementById('partActionBar');
   const checkRow = document.getElementById('partCheckRow');
+  const holeRow = document.getElementById('partCenterHoleRow');
   const waffleSlideRow = document.getElementById('waffleSlideRow');
+  const holedWrap = document.getElementById('holedSlicesWrap');
+  const holedPillsList = document.getElementById('holedPillsList');
   const shiftedWrap = document.getElementById('shiftedSlicesWrap');
   const shiftedPillsList = document.getElementById('shiftedPillsList');
   const hiddenWrap = document.getElementById('hiddenSlicesWrap');
@@ -4824,6 +5641,21 @@ function updatePartActionBarUI() {
     // Checked if at least one selected part is currently included
     const anyIncluded = arr.some(id => !excludedSliceIds.has(id));
     document.getElementById('chkSliceVisible').checked = anyIncluded;
+
+    // Show Per-Part Center Hole Ø input when any horizontal Z-* part is selected (Radial or Stacked mode)
+    const zParts = arr.filter(id => id.startsWith('Z-'));
+    if (holeRow) {
+      if (zParts.length > 0 && (modeVal === 'radial' || modeVal === 'stacked')) {
+        holeRow.style.display = 'flex';
+        const holeInp = document.getElementById('partCenterHoleInput');
+        if (holeInp) {
+          const firstHoleMM = partCenterHoles[zParts[0]] || 0;
+          holeInp.value = fromMM(firstHoleMM);
+        }
+      } else {
+        holeRow.style.display = 'none';
+      }
+    }
 
     // Show linear slide controls when a single Waffle rib (X-*/Y-*) or Radial ring (Z-*) is selected
     const canSlidePart = (modeVal === 'waffle' && (arr[0].startsWith('X-') || arr[0].startsWith('Y-'))) ||
@@ -4846,7 +5678,30 @@ function updatePartActionBarUI() {
     }
   } else {
     checkRow.style.display = 'none';
+    if (holeRow) holeRow.style.display = 'none';
     if (waffleSlideRow) waffleSlideRow.style.display = 'none';
+  }
+
+  // Active Per-Part Center Holes pills (click a pill to remove that part's hole, or click Clear All)
+  const holedKeys = Object.keys(partCenterHoles).filter(k => partCenterHoles[k] > 0.1);
+  if ((modeVal === 'radial' || modeVal === 'stacked') && holedKeys.length > 0 && holedWrap && holedPillsList) {
+    holedWrap.style.display = 'flex';
+    holedPillsList.innerHTML = '';
+    holedKeys.forEach(id => {
+      const diaVal = fromMM(partCenterHoles[id]);
+      const pill = document.createElement('span');
+      pill.className = 'hidden-pill';
+      pill.style.borderColor = '#10b981';
+      pill.innerText = `${id} (Ø${diaVal}${currentUnit}) ✕`;
+      pill.title = `Click to remove center hole on ${id}`;
+      pill.addEventListener('click', () => {
+        delete partCenterHoles[id];
+        runSlicer(false);
+      });
+      holedPillsList.appendChild(pill);
+    });
+  } else if (holedWrap) {
+    holedWrap.style.display = 'none';
   }
 
   // Shifted Waffle Ribs / Radial Rings reset pills (just like Excluded Parts pills!)
@@ -4887,6 +5742,8 @@ function updatePartActionBarUI() {
         render2DSheets();
         analyzeModelIssues();
         updatePartActionBarUI();
+        if (typeof recordUndoSnapshot === 'function') recordUndoSnapshot();
+        if (typeof updateStatusBar === 'function') updateStatusBar();
       });
       pillsList.appendChild(pill);
     });
@@ -4897,10 +5754,35 @@ function updatePartActionBarUI() {
   bar.classList.toggle(
     'open',
     checkRow.style.display !== 'none' ||
+    (holedWrap && holedWrap.style.display !== 'none') ||
     (shiftedWrap && shiftedWrap.style.display !== 'none') ||
     hiddenWrap.style.display !== 'none'
   );
 }
+
+document.getElementById('partCenterHoleInput').addEventListener('change', (e) => {
+  const zParts = Array.from(selectedSliceIds).filter(id => id.startsWith('Z-'));
+  if (zParts.length === 0) return;
+  const mmVal = Math.max(0, toMM(parseFloat(e.target.value) || 0));
+  zParts.forEach(id => {
+    if (mmVal <= 0.1) delete partCenterHoles[id];
+    else partCenterHoles[id] = Number(mmVal.toFixed(2));
+  });
+  e.target.value = fromMM(mmVal);
+  runSlicer(false);
+});
+document.getElementById('btnResetPartCenterHole').addEventListener('click', () => {
+  const zParts = Array.from(selectedSliceIds).filter(id => id.startsWith('Z-'));
+  if (zParts.length === 0) return;
+  zParts.forEach(id => delete partCenterHoles[id]);
+  const holeInp = document.getElementById('partCenterHoleInput');
+  if (holeInp) holeInp.value = 0;
+  runSlicer(false);
+});
+document.getElementById('btnResetAllPartHoles').addEventListener('click', () => {
+  Object.keys(partCenterHoles).forEach(k => delete partCenterHoles[k]);
+  runSlicer(false);
+});
 
 document.getElementById('waffleRibOffsetSlider').addEventListener('input', (e) => {
   if (selectedSliceIds.size !== 1) return;
@@ -4950,6 +5832,8 @@ document.getElementById('chkSliceVisible').addEventListener('change', (e) => {
   render2DSheets();
   analyzeModelIssues();
   updatePartActionBarUI();
+  if (typeof recordUndoSnapshot === 'function') recordUndoSnapshot();
+  if (typeof updateStatusBar === 'function') updateStatusBar();
 });
 
 document.getElementById('btnRestoreAllSlices').addEventListener('click', () => {
@@ -4959,6 +5843,8 @@ document.getElementById('btnRestoreAllSlices').addEventListener('click', () => {
   render2DSheets();
   analyzeModelIssues();
   updatePartActionBarUI();
+  if (typeof recordUndoSnapshot === 'function') recordUndoSnapshot();
+  if (typeof updateStatusBar === 'function') updateStatusBar();
 });
 
 // =========================================================
@@ -4993,7 +5879,7 @@ function updateDowelLengthSummary(rawLayers, dowelDrilledLayers, matThick) {
     return;
   }
 
-  const diaVal = parseFloat(document.getElementById('dowelDia').value) || 0;
+  const spec = getCurrentDowelSpec();
   const rodItems = [];
   const groupedByLen = {};
 
@@ -5026,11 +5912,15 @@ function updateDowelLengthSummary(rawLayers, dowelDrilledLayers, matThick) {
     return;
   }
 
-  let html = `<div style="font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Summary by Length (Ø${diaVal} ${currentUnit})</div>`;
+  let html = `<div style="font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Summary by Length (${spec.summaryLabel})</div>`;
   Object.keys(groupedByLen).sort((a, b) => parseFloat(b) - parseFloat(a)).forEach(lenKey => {
     const qty = groupedByLen[lenKey];
     html += `<div class="dowel-sum-group"><span>${qty} × Dowel Rod</span><span style="color:var(--accent);">${lenKey} ${currentUnit}</span></div>`;
   });
+
+  if (computedWasherSlices.length > 0) {
+    html += `<div class="dowel-sum-group" style="color:var(--accent-blue);"><span>${computedWasherSlices.length} × Spacer Washers (W-1..W-${computedWasherSlices.length})</span><span>Ø${parseFloat(document.getElementById('dowelWasherDia').value) || 0} ${currentUnit}</span></div>`;
+  }
 
   html += `<div style="font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase; margin-top:3px;">Individual Rods</div>`;
   rodItems.forEach(item => {
@@ -5060,6 +5950,8 @@ function updateDowelPlaneAndMarkers(box, radius, shape, rawLayers, dowelDrilledL
   dowelMarkersGroup.visible = showPlanes;
   disposeGroupChildren(dowelMarkersGroup);
   if (!useDowels) return;
+
+  const spec = getCurrentDowelSpec();
 
   // Dynamically expand and center the Top & Bottom Blue Work Planes so they cover the tilted model AND all existing dowels!
   let minX = box.min.x, maxX = box.max.x;
@@ -5098,7 +5990,7 @@ function updateDowelPlaneAndMarkers(box, radius, shape, rawLayers, dowelDrilledL
     const isSel = (idx === selectedDowelIndex);
     const colorHex = isSel ? 0xf97316 : 0x0284c7;
 
-    const pts = makeDowelPolygon(d.x, d.y, radius, shape);
+    const pts = makeDowelPolygon(d.x, d.y, spec, shape);
     const shape2d = new THREE.Shape();
     shape2d.moveTo(pts[0].x, pts[0].y);
     for (let i = 1; i < pts.length; i++) shape2d.lineTo(pts[i].x, pts[i].y);
@@ -5132,8 +6024,13 @@ function updateDowelPlaneAndMarkers(box, radius, shape, rawLayers, dowelDrilledL
       const zBottom = rawLayers[sIdx].z - matThick / 2;
       const zTop = rawLayers[eIdx].z + matThick / 2;
       const h = Math.max(matThick, zTop - zBottom);
-      const rodGeom = new THREE.CylinderGeometry(radius * 0.9, radius * 0.9, h, shape === 'square' ? 4 : 20);
-      rodGeom.rotateX(Math.PI / 2);
+      let rodGeom;
+      if (spec.shape === 'square') {
+        rodGeom = new THREE.BoxGeometry(spec.rx * 1.85, spec.ry * 1.85, h);
+      } else {
+        rodGeom = new THREE.CylinderGeometry(radius * 0.9, radius * 0.9, h, 20);
+        rodGeom.rotateX(Math.PI / 2);
+      }
       rodGeom.translate(d.x, d.y, (zBottom + zTop) / 2);
       const rodMesh = new THREE.Mesh(rodGeom, new THREE.MeshStandardMaterial({ color: 0x22c55e, transparent: true, opacity: 0.55 }));
       dowelMarkersGroup.add(rodMesh);
@@ -5151,8 +6048,7 @@ document.getElementById('btnAutoDowel').addEventListener('click', () => {
   if (computedSlices.length === 0) runSlicer();
   if (computedSlices.length < 2) return;
 
-  const slotOffset = toMM(document.getElementById('slotOffset').value);
-  const dowelRadius = Math.max(0.5, (toMM(document.getElementById('dowelDia').value) + slotOffset) / 2);
+  const dowelRadius = getCurrentDowelSpec().radius;
 
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   computedSlices.forEach(s => {
@@ -5293,8 +6189,22 @@ function analyzeModelIssues() {
     });
   }
 
+  // 1b. Report Square / Rectangular Dowel Tool Diameter warning if CNC tool cannot fit inside dowel pocket
+  if (curMode === 'stacked' && document.getElementById('chkDowels').checked && dowels.length > 0) {
+    const dSpec = getCurrentDowelSpec();
+    if (dSpec.shape === 'square' && dSpec.toolTooLarge) {
+      issues.push({
+        type: 'warn',
+        sliceId: computedSlices[0] ? computedSlices[0].id : 'Z-1',
+        title: `Dowel Tool Diameter Too Large (Ø${fromMM(dSpec.toolDia)} ≥ ${fromMM(dSpec.minSide)} ${currentUnit})`,
+        desc: `CNC router bit (Ø${fromMM(dSpec.toolDia)} ${currentUnit}) cannot fit inside the ${dSpec.summaryLabel} dowel cutout.`
+      });
+    }
+  }
+
   // 2. Report sheet size & island warnings per slice
-  computedSlices.forEach((slice) => {
+  const allLayoutSlices = [...computedSlices, ...computedWasherSlices];
+  allLayoutSlices.forEach((slice) => {
     if (excludedSliceIds.has(slice.id)) return;
     const b = getBounds(slice.outerLoops);
 
@@ -5368,8 +6278,9 @@ function generateSheetsData() {
   const spacing = Math.max(margin, toolGap + 2);
   const layoutMode = document.getElementById('layoutSelect').value;
 
-  // Exclude slices unchecked by the user in Cut Layout!
-  let items = computedSlices
+  // Exclude slices unchecked by the user in Cut Layout (includes Dowel Support Washers W-1..W-n)!
+  const allLayoutSlices = [...computedSlices, ...computedWasherSlices];
+  let items = allLayoutSlices
     .filter(slice => !excludedSliceIds.has(slice.id))
     .map(slice => {
       const b = getBounds(slice.outerLoops);
@@ -5422,17 +6333,19 @@ function generateSheetsData() {
 
     const allCavityHoles = [...(slice.meshHoles || []), ...(slice.hollowHoles || [])];
     if (layoutMode === 'nested' && allCavityHoles.length > 0) {
-      const hb = getBounds(allCavityHoles);
-      if (hb.w > 18 && hb.h > 18) {
-        availablePockets.push({
-          sheetIdx,
-          w: hb.w * 0.72,
-          h: hb.h * 0.72,
-          cx: (hb.minX + hb.maxX) / 2 + offsetX,
-          cy: (hb.minY + hb.maxY) / 2 + offsetY,
-          used: false
-        });
-      }
+      allCavityHoles.forEach(holeLoop => {
+        const hb = getBounds([holeLoop]);
+        if (hb.w > 18 && hb.h > 18) {
+          availablePockets.push({
+            sheetIdx,
+            w: hb.w * 0.72,
+            h: hb.h * 0.72,
+            cx: (hb.minX + hb.maxX) / 2 + offsetX,
+            cy: (hb.minY + hb.maxY) / 2 + offsetY,
+            used: false
+          });
+        }
+      });
     }
 
     curX += bounds.w + spacing;
@@ -5463,6 +6376,7 @@ const SINGLE_LINE_FONT = {
   'Y': [[[0,1],[0.5,0.5],[1,1]], [[0.5,0.5],[0.5,0]]],
   'Z': [[[0,1],[1,1],[0,0],[1,0]]],
   'R': [[[0,0],[0,1],[0.75,1],[1,0.8],[1,0.6],[0.75,0.5],[0,0.5]], [[0.55,0.5],[1,0]]],
+  'W': [[[0,1],[0.22,0],[0.5,0.65],[0.78,0],[1,1]]],
   'S': [[[1,0.85],[0.8,1],[0.2,1],[0,0.85],[0,0.65],[0.2,0.5],[0.8,0.5],[1,0.35],[1,0.15],[0.8,0],[0.2,0],[0,0.15]]],
   'I': [[[0.2,1],[0.8,1]], [[0.5,1],[0.5,0]], [[0.2,0],[0.8,0]]]
 };
@@ -5561,15 +6475,23 @@ function buildSVGString(sheetItems, sheetW, sheetH, interactive = false) {
     }
 
     if (showCut) {
-      slice.outerLoops.forEach(loop => {
-        const d = loop.map((p, i) => `${i===0?'M':'L'} ${(p.x + offsetX).toFixed(2)} ${(sheetH - (p.y + offsetY)).toFixed(2)}`).join(' ') + ' Z';
-        svg += `<path d="${d}" stroke="#dc2626" fill="rgba(255,255,255,0.45)" stroke-width="1.35" vector-effect="non-scaling-stroke"/>`;
-      });
+      // Combine outer loops and inner cut holes into a single compound path with fill-rule="evenodd"
+      // so central holes are truly transparent to mouse clicks (never blocking selection of parts nested inside a ring!)
       const innerCutHoles = [...(slice.meshHoles || []), ...(slice.hollowHoles || [])];
-      innerCutHoles.forEach(loop => {
-        const d = loop.map((p, i) => `${i===0?'M':'L'} ${(p.x + offsetX).toFixed(2)} ${(sheetH - (p.y + offsetY)).toFixed(2)}`).join(' ') + ' Z';
-        svg += `<path d="${d}" stroke="#dc2626" fill="var(--sheet-bg)" stroke-width="1.35" vector-effect="non-scaling-stroke"/>`;
+      const compoundSubpaths = [];
+      slice.outerLoops.forEach(loop => {
+        if (loop.length >= 3) {
+          compoundSubpaths.push(loop.map((p, i) => `${i===0?'M':'L'} ${(p.x + offsetX).toFixed(2)} ${(sheetH - (p.y + offsetY)).toFixed(2)}`).join(' ') + ' Z');
+        }
       });
+      innerCutHoles.forEach(loop => {
+        if (loop.length >= 3) {
+          compoundSubpaths.push(loop.map((p, i) => `${i===0?'M':'L'} ${(p.x + offsetX).toFixed(2)} ${(sheetH - (p.y + offsetY)).toFixed(2)}`).join(' ') + ' Z');
+        }
+      });
+      if (compoundSubpaths.length > 0) {
+        svg += `<path d="${compoundSubpaths.join(' ')}" fill-rule="evenodd" stroke="#dc2626" fill="rgba(255,255,255,0.45)" stroke-width="1.35" vector-effect="non-scaling-stroke"/>`;
+      }
       slice.dowelHoles.forEach(loop => {
         const d = loop.map((p, i) => `${i===0?'M':'L'} ${(p.x + offsetX).toFixed(2)} ${(sheetH - (p.y + offsetY)).toFixed(2)}`).join(' ') + ' Z';
         svg += `<path d="${d}" stroke="#16a34a" fill="none" stroke-width="1.2" vector-effect="non-scaling-stroke"/>`;
@@ -5974,6 +6896,220 @@ document.getElementById('btnExportSingleMaster').addEventListener('click', () =>
 });
 
 // =========================================================
+// 11b. 3D SLICES MODEL EXPORT ENGINE (.3MF MULTI-BODY & BINARY .STL)
+// =========================================================
+function collectAll3DSliceMeshes() {
+  const parts = [];
+  if (!slicesGroup || slicesGroup.children.length === 0) return parts;
+
+  slicesGroup.children.forEach(grp => {
+    const sliceId = grp.userData.id;
+    if (excludedSliceIds.has(sliceId)) return;
+
+    // Temporarily revert group position to basePosition so assembly steps / hovering don't displace the exported slice
+    const curPos = grp.position.clone();
+    if (grp.userData.basePosition) grp.position.copy(grp.userData.basePosition);
+    grp.updateMatrixWorld(true);
+
+    const triangles = [];
+
+    grp.traverse(ch => {
+      if (ch.isMesh && ch.userData && ch.userData.isSliceMesh && ch.geometry) {
+        ch.updateMatrixWorld(true);
+        const geom = ch.geometry;
+        const posAttr = geom.attributes.position;
+        const indexAttr = geom.index;
+        const mw = ch.matrixWorld;
+
+        if (indexAttr) {
+          for (let i = 0; i < indexAttr.count; i += 3) {
+            const i0 = indexAttr.getX(i);
+            const i1 = indexAttr.getX(i + 1);
+            const i2 = indexAttr.getX(i + 2);
+            const v0 = new THREE.Vector3().fromBufferAttribute(posAttr, i0).applyMatrix4(mw);
+            const v1 = new THREE.Vector3().fromBufferAttribute(posAttr, i1).applyMatrix4(mw);
+            const v2 = new THREE.Vector3().fromBufferAttribute(posAttr, i2).applyMatrix4(mw);
+            triangles.push([v0, v1, v2]);
+          }
+        } else if (posAttr) {
+          for (let i = 0; i < posAttr.count; i += 3) {
+            const v0 = new THREE.Vector3().fromBufferAttribute(posAttr, i).applyMatrix4(mw);
+            const v1 = new THREE.Vector3().fromBufferAttribute(posAttr, i + 1).applyMatrix4(mw);
+            const v2 = new THREE.Vector3().fromBufferAttribute(posAttr, i + 2).applyMatrix4(mw);
+            triangles.push([v0, v1, v2]);
+          }
+        }
+      }
+    });
+
+    // Restore current position
+    grp.position.copy(curPos);
+    grp.updateMatrixWorld(true);
+
+    if (triangles.length > 0) {
+      parts.push({ id: sliceId, triangles });
+    }
+  });
+
+  return parts;
+}
+
+async function export3DSlices3MF() {
+  const parts = collectAll3DSliceMeshes();
+  if (parts.length === 0) {
+    showError('No 3D slice geometry found to export. Please ensure 3D Slice Thickness is enabled.');
+    return;
+  }
+  const baseName = getSanitizedExportBaseName();
+
+  let objectsXml = '';
+  let buildItemsXml = '';
+
+  parts.forEach((part, pIdx) => {
+    const objId = pIdx + 1;
+    const vMap = new Map();
+    const vertices = [];
+    const triIndices = [];
+
+    part.triangles.forEach(tri => {
+      const idxs = [];
+      for (let k = 0; k < 3; k++) {
+        const pt = tri[k];
+        const key = `${Math.round(pt.x * 1000)},${Math.round(pt.y * 1000)},${Math.round(pt.z * 1000)}`;
+        let vIdx = vMap.get(key);
+        if (vIdx === undefined) {
+          vIdx = vertices.length;
+          vMap.set(key, vIdx);
+          vertices.push(pt);
+        }
+        idxs.push(vIdx);
+      }
+      triIndices.push(idxs);
+    });
+
+    objectsXml += `    <object id="${objId}" name="${part.id}" type="model">\n`;
+    objectsXml += `      <mesh>\n`;
+    objectsXml += `        <vertices>\n`;
+    vertices.forEach(v => {
+      objectsXml += `          <vertex x="${v.x.toFixed(3)}" y="${v.y.toFixed(3)}" z="${v.z.toFixed(3)}"/>\n`;
+    });
+    objectsXml += `        </vertices>\n`;
+    objectsXml += `        <triangles>\n`;
+    triIndices.forEach(t => {
+      objectsXml += `          <triangle v1="${t[0]}" v2="${t[1]}" v3="${t[2]}"/>\n`;
+    });
+    objectsXml += `        </triangles>\n`;
+    objectsXml += `      </mesh>\n`;
+    objectsXml += `    </object>\n`;
+
+    buildItemsXml += `    <item objectid="${objId}"/>\n`;
+  });
+
+  const modelXml = `<?xml version="1.0" encoding="UTF-8"?>
+<model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">
+  <metadata name="Title">${baseName} 3D Slices</metadata>
+  <metadata name="Application">OpenSlicer Studio</metadata>
+  <resources>
+${objectsXml}  </resources>
+  <build>
+${buildItemsXml}  </build>
+</model>`;
+
+  const zip = new JSZip();
+  zip.file('[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/>
+</Types>`);
+
+  zip.folder('_rels').file('.rels', `<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Target="/3D/3dmodel.model" Id="rel0" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/>
+</Relationships>`);
+
+  zip.folder('3D').file('3dmodel.model', modelXml);
+
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${baseName}_3DSlices.3mf`;
+  a.click();
+}
+
+function export3DSlicesSTL() {
+  const parts = collectAll3DSliceMeshes();
+  if (parts.length === 0) {
+    showError('No 3D slice geometry found to export. Please ensure 3D Slice Thickness is enabled.');
+    return;
+  }
+  const baseName = getSanitizedExportBaseName();
+
+  let totalTris = 0;
+  parts.forEach(p => { totalTris += p.triangles.length; });
+  if (totalTris === 0) return;
+
+  const bufferSize = 84 + totalTris * 50;
+  const buffer = new ArrayBuffer(bufferSize);
+  const view = new DataView(buffer);
+
+  // 80 bytes header
+  const headerStr = 'OpenSlicer Studio Binary STL - 3D Slices Export';
+  for (let i = 0; i < headerStr.length && i < 80; i++) {
+    view.setUint8(i, headerStr.charCodeAt(i));
+  }
+
+  // 4 bytes uint32 total triangle count at offset 80 (little endian)
+  view.setUint32(80, totalTris, true);
+
+  let offset = 84;
+  const cb = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  parts.forEach(part => {
+    part.triangles.forEach(([v0, v1, v2]) => {
+      // Normal = (v2 - v1) x (v0 - v1)
+      cb.subVectors(v2, v1);
+      ab.subVectors(v0, v1);
+      cb.cross(ab).normalize();
+      normal.copy(cb);
+
+      // Normal (3 x float32)
+      view.setFloat32(offset, normal.x, true); offset += 4;
+      view.setFloat32(offset, normal.y, true); offset += 4;
+      view.setFloat32(offset, normal.z, true); offset += 4;
+
+      // Vertex 0 (3 x float32)
+      view.setFloat32(offset, v0.x, true); offset += 4;
+      view.setFloat32(offset, v0.y, true); offset += 4;
+      view.setFloat32(offset, v0.z, true); offset += 4;
+
+      // Vertex 1 (3 x float32)
+      view.setFloat32(offset, v1.x, true); offset += 4;
+      view.setFloat32(offset, v1.y, true); offset += 4;
+      view.setFloat32(offset, v1.z, true); offset += 4;
+
+      // Vertex 2 (3 x float32)
+      view.setFloat32(offset, v2.x, true); offset += 4;
+      view.setFloat32(offset, v2.y, true); offset += 4;
+      view.setFloat32(offset, v2.z, true); offset += 4;
+
+      // Attribute byte count (uint16 = 0)
+      view.setUint16(offset, 0, true); offset += 2;
+    });
+  });
+
+  const blob = new Blob([buffer], { type: 'application/octet-stream' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${baseName}_3DSlices.stl`;
+  a.click();
+}
+
+document.getElementById('btnExport3MF').addEventListener('click', export3DSlices3MF);
+document.getElementById('btnExportSTL').addEventListener('click', export3DSlicesSTL);
+
+// =========================================================
 // 12. ANIMATED ASSEMBLY STEPS (CONTINUOUS SLIDER + STEP-HOLD ON PREV/NEXT + VIVID COLLISION HIGHLIGHT)
 // =========================================================
 var assemblyTimer = null;
@@ -6289,6 +7425,9 @@ function setTool(mode, keepGimbal = false) {
   }
 
   layFlatPlatesGroup.visible = (mode === 'layFlat');
+  if (mode !== 'layFlat') {
+    while (layFlatPlatesGroup.children.length > 0) layFlatPlatesGroup.remove(layFlatPlatesGroup.children[0]);
+  }
 
   if (mode === 'select') {
     document.getElementById('btnSelect').classList.add('active');
@@ -6315,6 +7454,13 @@ function setTool(mode, keepGimbal = false) {
   }
 }
 
+function centerModelOnBed() {
+  if (!ghostMesh) return;
+  ghostMesh.position.x = 0;
+  ghostMesh.position.y = 0;
+  bakeTransformAndReslice(true);
+}
+
 document.getElementById('btnSelect').addEventListener('click', () => setTool('select'));
 document.getElementById('btnMove').addEventListener('click', () => setTool('move'));
 document.getElementById('btnRotate').addEventListener('click', () => setTool('rotate'));
@@ -6323,7 +7469,23 @@ document.getElementById('btnResetMove').addEventListener('click', (e) => { e.sto
 document.getElementById('btnResetRotate').addEventListener('click', (e) => { e.stopPropagation(); resetRotateTransform(); });
 document.getElementById('btnResetScale').addEventListener('click', (e) => { e.stopPropagation(); resetScaleTransform(); });
 document.getElementById('btnLayFlat').addEventListener('click', () => setTool(currentTool === 'layFlat' ? 'select' : 'layFlat'));
-document.getElementById('btnDropBed').addEventListener('click', () => { dropMeshToBed(true); bakeTransformAndReslice(true); });
+document.getElementById('btnCenterModel').addEventListener('click', centerModelOnBed);
+document.getElementById('btnDropBed').addEventListener('click', () => { modelSinkMM = 0; dropMeshToBed(true); bakeTransformAndReslice(true); });
+
+// Automatically reset to 'select' mode when user interacts with sidebar or right panel inputs/controls
+const panelContainers = [document.getElementById('sidebar'), document.getElementById('viewport2d')];
+panelContainers.forEach(container => {
+  if (!container) return;
+  container.addEventListener('focusin', () => {
+    if (currentTool !== 'select') setTool('select');
+  });
+  container.addEventListener('pointerdown', (e) => {
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'BUTTON' || e.target.closest('.row') || e.target.closest('.box-body')) {
+      if (currentTool !== 'select') setTool('select');
+    }
+  });
+});
 
 function openHelpModal() {
   document.getElementById('helpModal').classList.add('open');
@@ -6352,6 +7514,19 @@ window.addEventListener('keydown', (e) => {
   const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toUpperCase() : '';
   if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
 
+  if ((e.ctrlKey || e.metaKey) && !e.altKey) {
+    if ((e.key === 'z' || e.key === 'Z') && !e.shiftKey) {
+      e.preventDefault();
+      if (typeof performUndo === 'function') performUndo();
+      return;
+    }
+    if ((e.key === 'y' || e.key === 'Y') || ((e.key === 'z' || e.key === 'Z') && e.shiftKey)) {
+      e.preventDefault();
+      if (typeof performRedo === 'function') performRedo();
+      return;
+    }
+  }
+
   if (e.key === 'Delete' || e.key === 'Backspace') {
     if (document.getElementById('chkDowels').checked && selectedDowelIndex >= 0) {
       e.preventDefault();
@@ -6367,6 +7542,8 @@ window.addEventListener('keydown', (e) => {
     setTool('scale');
   } else if (e.key === 'f' || e.key === 'F') {
     setTool(currentTool === 'layFlat' ? 'select' : 'layFlat');
+  } else if (e.key === 'c' || e.key === 'C') {
+    centerModelOnBed();
   }
 });
 
@@ -6459,8 +7636,9 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
     return;
   }
 
-  // 2. Interactive Top & Bottom Dowel Blue Planes (when Dowel Edit Mode is active)
-  if (document.getElementById('chkDowels').checked && isDowelEditMode && currentTool === 'select') {
+  // 2. Interactive Top & Bottom Dowel Blue Planes (when Dowel Edit Mode is active in Stacked Slices mode)
+  const curModeVal = document.getElementById('modeSelect').value;
+  if (curModeVal === 'stacked' && dowelPlaneGroup.visible && document.getElementById('chkDowels').checked && isDowelEditMode && currentTool === 'select') {
     const markerHits = raycaster.intersectObjects(dowelMarkersGroup.children, false);
     const hitMarker = markerHits.find(h => h.object.userData && h.object.userData.dowelIndex !== undefined);
     if (hitMarker) {
@@ -6486,7 +7664,6 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
   }
 
   // 3. Linear Axis Sliding of an Already-Selected Waffle Rib (X-*/Y-*) or Radial Ring (Z-*) directly in the 3D Viewport!
-  const curModeVal = document.getElementById('modeSelect').value;
   if (currentTool === 'select' && (curModeVal === 'waffle' || curModeVal === 'radial') && selectedSliceIds.size === 1) {
     const selId = Array.from(selectedSliceIds)[0];
     const isSlidable3D = (curModeVal === 'waffle' && (selId.startsWith('X-') || selId.startsWith('Y-'))) ||
@@ -6528,7 +7705,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
 
   // Direct 3D Linear Sliding of Selected Waffle Rib along its normal axis
   if (isDraggingWaffleRib && waffleRibDragState) {
-    if (Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) > 3) {
+    if (Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) > 7) {
       waffleRibDragState.moved = true;
     }
     if (waffleRibDragState.moved) {
@@ -6578,7 +7755,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
           } else {
             newVal = Number(newVal.toFixed(1));
           }
-          newVal = Math.max(-85, Math.min(85, newVal));
+          newVal = Math.max(-90, Math.min(90, newVal));
           const appliedDelta = newVal - gimbalDragState.startInputVal;
           gimbalDragState.lastAppliedDeg = appliedDelta;
 
@@ -6727,11 +7904,13 @@ window.addEventListener('pointerup', (e) => {
     orbit.enabled = true;
     render2DSheets();
     analyzeModelIssues();
+    if (typeof recordUndoSnapshot === 'function') recordUndoSnapshot();
+    if (typeof updateStatusBar === 'function') updateStatusBar();
     return;
   }
 
   // Click on 3D Slice -> Cross-Highlight in 2D Cut Layout (supports Shift & Ctrl multi-select)
-  if (e.button === 0 && currentTool === 'select' && Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) < 4) {
+  if (e.button === 0 && currentTool === 'select' && Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y) < 7) {
     const rect = renderer.domElement.getBoundingClientRect();
     if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -6752,6 +7931,7 @@ window.addEventListener('pointerup', (e) => {
 // =========================================================
 document.getElementById('presetSelect').addEventListener('change', (e) => {
   Object.keys(waffleRibOffsets).forEach(k => delete waffleRibOffsets[k]);
+  Object.keys(partCenterHoles).forEach(k => delete partCenterHoles[k]);
   if (e.target.value !== 'custom') loadPreset(e.target.value);
 });
 
@@ -6778,15 +7958,35 @@ document.getElementById('resetRadialCenter').addEventListener('click', () => {
 
 ['sheetW', 'sheetH', 'matThick', 'skipCount', 'sheetMargin', 'slotOffset', 'chkToolDia', 'toolDia',
  'waffleX', 'waffleY', 'radialCount', 'radialRings', 'radialCoreRadius', 'radialCenterX', 'radialCenterY',
- 'waffleNotchFactor', 'waffleReliefType', 'chkHollow', 'hollowWall', 'dowelDia', 'dowelShape', 'sliceAngX', 'sliceAngY',
- 'chkShowExtrude', 'layoutSelect', 'chkSvgCut', 'chkSvgGuide', 'chkSvgLabel', 'labelFontSize'].forEach(id => {
+ 'radialRingOffset',
+ 'waffleNotchFactor', 'waffleReliefType', 'chkHollow', 'hollowWall',
+ 'dowelShape', 'dowelDia', 'dowelWidth', 'dowelDepth',
+ 'chkDowelWashers', 'dowelWasherDia', 'sliceAngX', 'sliceAngY',
+ 'chkShowExtrude', 'layoutSelect', 'chkSvgCut', 'chkSvgGuide', 'chkSvgLabel', 'labelFontSize',
+ 'dowelCapTop', 'dowelCapBottom', 'chkRadialLockBed'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('change', () => runSlicer(false));
+});
+
+// Z-Cut / Sink Below Bed input
+document.getElementById('modelSink').addEventListener('change', (e) => {
+  setModelSinkMM(toMM(e.target.value), true);
+});
+document.getElementById('resetModelSink').addEventListener('click', () => {
+  setModelSinkMM(0, true);
 });
 
 ['radialCount', 'radialCoreRadius', 'matThick', 'slotOffset'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('input', () => updateRadialCoreRadiusUI());
+});
+
+['dowelShape', 'dowelWidth', 'dowelDepth', 'chkToolDia', 'toolDia', 'slotOffset', 'waffleReliefType'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', () => updateDowelShapeAndToolUI());
+    el.addEventListener('change', () => updateDowelShapeAndToolUI());
+  }
 });
 
 document.getElementById('resetAngX').addEventListener('click', () => {
@@ -6797,6 +7997,390 @@ document.getElementById('resetAngY').addEventListener('click', () => {
   document.getElementById('sliceAngY').value = 0;
   runSlicer();
 });
+
+// =========================================================
+// 15. UNDO / REDO HISTORY ENGINE, EXTERNAL I18N & STATUS BAR
+// =========================================================
+const MAX_UNDO_HISTORY = 45;
+const undoHistoryStack = [];
+let undoHistoryIndex = -1;
+let isApplyingUndoRedo = false;
+const geomCacheByVersion = new Map();
+
+const UNDO_INPUT_IDS = [
+  'unitSelect', 'dimZ', 'dimX', 'dimY', 'modelSink',
+  'sheetW', 'sheetH', 'matThick', 'skipCount', 'sheetMargin', 'slotOffset', 'toolDia',
+  'modeSelect', 'waffleX', 'waffleY', 'radialCount', 'radialRings', 'radialCoreRadius',
+  'radialCenterX', 'radialCenterY', 'radialRingOffset',
+  'waffleNotchFactor', 'waffleReliefType',
+  'hollowWall', 'dowelShape', 'dowelDia', 'dowelWidth', 'dowelDepth',
+  'dowelCapTop', 'dowelCapBottom', 'dowelWasherDia',
+  'sliceAngX', 'sliceAngY', 'layoutSelect', 'exportFormatSelect', 'labelFontSize'
+];
+
+const UNDO_CHECK_IDS = [
+  'chkUniform', 'chkToolDia', 'chkRadialLockBed', 'chkHollow', 'chkDowels', 'chkDowelWashers',
+  'chkShowExtrude', 'chkSvgCut', 'chkSvgGuide', 'chkSvgLabel'
+];
+
+function clearUndoHistory() {
+  undoHistoryStack.length = 0;
+  undoHistoryIndex = -1;
+  geomCacheByVersion.clear();
+  updateUndoRedoButtons();
+}
+
+function buildCurrentStateSnapshot() {
+  if (!ghostMesh) return null;
+  const inputs = {};
+  UNDO_INPUT_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) inputs[id] = el.value;
+  });
+  const checks = {};
+  UNDO_CHECK_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) checks[id] = !!el.checked;
+  });
+
+  if (!geomCacheByVersion.has(ghostGeomVersion)) {
+    geomCacheByVersion.set(ghostGeomVersion, ghostMesh.geometry.clone());
+    if (geomCacheByVersion.size > MAX_UNDO_HISTORY + 5) {
+      const oldestKey = geomCacheByVersion.keys().next().value;
+      geomCacheByVersion.delete(oldestKey);
+    }
+  }
+
+  const snap = {
+    unit: currentUnit,
+    inputs,
+    checks,
+    geomVersion: ghostGeomVersion,
+    meshPos: [
+      Number(ghostMesh.position.x.toFixed(3)),
+      Number(ghostMesh.position.y.toFixed(3)),
+      Number(ghostMesh.position.z.toFixed(3))
+    ],
+    modelRotMatrix: modelRotMatrix.elements.map(v => Number(v.toFixed(6))),
+    modelSinkMM: Number(modelSinkMM.toFixed(3)),
+    dowels: dowels.map(d => ({ x: Number(d.x.toFixed(2)), y: Number(d.y.toFixed(2)) })),
+    selectedDowelIndex,
+    excludedSliceIds: Array.from(excludedSliceIds).sort(),
+    waffleRibOffsets: Object.assign({}, waffleRibOffsets),
+    partCenterHoles: Object.assign({}, partCenterHoles)
+  };
+  snap.signature = JSON.stringify({
+    u: snap.unit,
+    i: snap.inputs,
+    c: snap.checks,
+    gv: snap.geomVersion,
+    mp: snap.meshPos,
+    mr: snap.modelRotMatrix,
+    sk: snap.modelSinkMM,
+    dw: snap.dowels,
+    ex: snap.excludedSliceIds,
+    ro: snap.waffleRibOffsets,
+    ph: snap.partCenterHoles
+  });
+  return snap;
+}
+
+function updateUndoRedoButtons() {
+  const btnUndo = document.getElementById('btnUndo');
+  const btnRedo = document.getElementById('btnRedo');
+  const canUndo = undoHistoryIndex > 0;
+  const canRedo = undoHistoryIndex >= 0 && undoHistoryIndex < undoHistoryStack.length - 1;
+  if (btnUndo) {
+    btnUndo.disabled = !canUndo;
+    btnUndo.title = canUndo ? `Undo (${undoHistoryIndex} step${undoHistoryIndex > 1 ? 's' : ''} available — Ctrl+Z)` : 'Undo (Ctrl+Z)';
+  }
+  if (btnRedo) {
+    const redoCount = Math.max(0, undoHistoryStack.length - 1 - undoHistoryIndex);
+    btnRedo.disabled = !canRedo;
+    btnRedo.title = canRedo ? `Redo (${redoCount} step${redoCount > 1 ? 's' : ''} available — Ctrl+Y)` : 'Redo (Ctrl+Y / Ctrl+Shift+Z)';
+  }
+}
+
+function recordUndoSnapshot() {
+  if (isApplyingUndoRedo || !ghostMesh) return;
+  const snap = buildCurrentStateSnapshot();
+  if (!snap) return;
+
+  if (undoHistoryIndex >= 0 && undoHistoryStack[undoHistoryIndex] && undoHistoryStack[undoHistoryIndex].signature === snap.signature) {
+    updateUndoRedoButtons();
+    return;
+  }
+
+  if (undoHistoryIndex < undoHistoryStack.length - 1) {
+    undoHistoryStack.splice(undoHistoryIndex + 1);
+  }
+  undoHistoryStack.push(snap);
+  if (undoHistoryStack.length > MAX_UNDO_HISTORY) {
+    undoHistoryStack.shift();
+  }
+  undoHistoryIndex = undoHistoryStack.length - 1;
+  updateUndoRedoButtons();
+}
+
+function applyUndoSnapshot(snap) {
+  if (!snap || !ghostMesh) return;
+  isApplyingUndoRedo = true;
+  try {
+    currentUnit = snap.unit || 'mm';
+    UNDO_INPUT_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && snap.inputs[id] !== undefined) el.value = snap.inputs[id];
+    });
+    UNDO_CHECK_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && snap.checks[id] !== undefined) el.checked = !!snap.checks[id];
+    });
+
+    const modeVal = document.getElementById('modeSelect').value;
+    const isWaffle = (modeVal === 'waffle');
+    const isRadial = (modeVal === 'radial');
+    const isInterlock = (isWaffle || isRadial);
+    document.getElementById('waffleBox').style.display = isWaffle ? 'flex' : 'none';
+    document.getElementById('radialBox').style.display = isRadial ? 'flex' : 'none';
+    document.getElementById('interlockCommonBox').style.display = isInterlock ? 'flex' : 'none';
+    document.getElementById('box4').style.display = isInterlock ? 'none' : 'block';
+    document.getElementById('box5').style.display = isInterlock ? 'none' : 'block';
+
+    if (snap.geomVersion !== ghostGeomVersion && geomCacheByVersion.has(snap.geomVersion)) {
+      const restoredGeom = geomCacheByVersion.get(snap.geomVersion).clone();
+      restoredGeom.computeVertexNormals();
+      restoredGeom.computeBoundingBox();
+      ghostMesh.geometry.dispose();
+      ghostMesh.geometry = restoredGeom;
+      disposeGroupChildren(ghostMesh);
+      ghostGeomVersion = snap.geomVersion;
+    }
+
+    ghostMesh.position.set(snap.meshPos[0], snap.meshPos[1], snap.meshPos[2]);
+    ghostMesh.rotation.set(0, 0, 0);
+    ghostMesh.scale.set(1, 1, 1);
+    ghostMesh.updateMatrixWorld(true);
+    modelRotMatrix.fromArray(snap.modelRotMatrix);
+    modelSinkMM = snap.modelSinkMM || 0;
+    syncModelSinkInput();
+
+    dowels = snap.dowels.map(d => ({ x: d.x, y: d.y }));
+    selectedDowelIndex = Math.min(snap.selectedDowelIndex, dowels.length - 1);
+
+    excludedSliceIds.clear();
+    snap.excludedSliceIds.forEach(id => excludedSliceIds.add(id));
+
+    Object.keys(waffleRibOffsets).forEach(k => delete waffleRibOffsets[k]);
+    Object.assign(waffleRibOffsets, snap.waffleRibOffsets);
+
+    Object.keys(partCenterHoles).forEach(k => delete partCenterHoles[k]);
+    if (snap.partCenterHoles) Object.assign(partCenterHoles, snap.partCenterHoles);
+
+    updateRadialCoreRadiusUI();
+    updateDowelShapeAndToolUI();
+    updateDynamicGridAndFloorDimensions();
+    if (currentTool === 'layFlat') buildLayFlatCandidatePlates();
+    if (sliceGimbalPivot.visible) {
+      rebuildCustomOrcaSliceGimbal();
+      syncSliceGimbalFromInputs();
+      updateGimbalVisualHighlight();
+    }
+    runSlicer(false);
+  } finally {
+    isApplyingUndoRedo = false;
+    updateUndoRedoButtons();
+    updateStatusBar();
+  }
+}
+
+function performUndo() {
+  if (undoHistoryIndex <= 0) return;
+  undoHistoryIndex--;
+  applyUndoSnapshot(undoHistoryStack[undoHistoryIndex]);
+}
+
+function performRedo() {
+  if (undoHistoryIndex < 0 || undoHistoryIndex >= undoHistoryStack.length - 1) return;
+  undoHistoryIndex++;
+  applyUndoSnapshot(undoHistoryStack[undoHistoryIndex]);
+}
+
+document.getElementById('btnUndo').addEventListener('click', performUndo);
+document.getElementById('btnRedo').addEventListener('click', performRedo);
+
+function updateStatusBar() {
+  const sbMsg = document.getElementById('sbMessage');
+  const sbModel = document.getElementById('sbModel');
+  const sbMode = document.getElementById('sbMode');
+  const sbParts = document.getElementById('sbParts');
+  const sbSink = document.getElementById('sbSink');
+  const sbHistory = document.getElementById('sbHistory');
+  const sbUnits = document.getElementById('sbUnits');
+  if (!sbMsg) return;
+
+  const colCount = activeCollidingSliceIds ? activeCollidingSliceIds.size : 0;
+  if (!ghostMesh) {
+    sbMsg.innerHTML = `<span class="sb-dot" style="background:#94a3b8;"></span>Waiting for 3D Model`;
+    sbModel.innerHTML = `No model loaded`;
+  } else if (colCount > 0) {
+    sbMsg.innerHTML = `<span class="sb-dot" style="background:#f59e0b;"></span><span class="sb-warn">⚠️ ${colCount} colliding part${colCount > 1 ? 's' : ''}</span>`;
+  } else {
+    sbMsg.innerHTML = `<span class="sb-dot"></span>Ready`;
+  }
+
+  if (ghostMesh) {
+    const sel = document.getElementById('presetSelect');
+    const modelName = (sel && sel.selectedOptions && sel.selectedOptions[0]) ? sel.selectedOptions[0].textContent : 'Model';
+    const dx = document.getElementById('dimX').value;
+    const dy = document.getElementById('dimY').value;
+    const dz = document.getElementById('dimZ').value;
+    sbModel.innerHTML = `<strong>${modelName}</strong> (${dx} × ${dy} × ${dz} ${currentUnit})`;
+  }
+
+  const modeVal = document.getElementById('modeSelect').value;
+  const lockBed = document.getElementById('chkRadialLockBed') && document.getElementById('chkRadialLockBed').checked;
+  const modeLabel = modeVal === 'waffle'
+    ? 'Interlocked Slices'
+    : (modeVal === 'radial' ? `Radial Slices${lockBed ? ' (🔒 Bed Center)' : ''}` : 'Stacked Slices');
+  sbMode.innerHTML = `Mode: <strong>${modeLabel}</strong>`;
+
+  const totalSlices = computedSlices.length + computedWasherSlices.length;
+  const activeSlices = Math.max(0, totalSlices - excludedSliceIds.size);
+  const sheetsCount = document.getElementById('statSheets') ? document.getElementById('statSheets').innerText : '0';
+  sbParts.innerHTML = `Parts: <strong>${activeSlices}/${totalSlices}</strong>${computedWasherSlices.length > 0 ? ` <span style="opacity:0.8;">(${computedWasherSlices.length}W)</span>` : ''} • Sheets: <strong>${sheetsCount}</strong>`;
+
+  if (modelSinkMM > 0.01) {
+    sbSink.style.display = 'inline';
+    sbSink.innerHTML = `<span class="sb-warn">⤓ Z-Cut: <strong>-${fromMM(modelSinkMM)} ${currentUnit}</strong></span>`;
+  } else {
+    sbSink.style.display = 'none';
+  }
+
+  const uSteps = Math.max(0, undoHistoryIndex);
+  const rSteps = Math.max(0, undoHistoryStack.length - 1 - undoHistoryIndex);
+  sbHistory.innerHTML = `Undo: <strong>${uSteps}</strong> • Redo: <strong>${rSteps}</strong>`;
+  sbUnits.innerHTML = `Units: <strong>${currentUnit}</strong>`;
+}
+
+// =========================================================
+// 16. EXTERNAL LANGUAGE SYSTEM (locales/en.js, locales/tr.js) & SINGLE-LANGUAGE HELP MODAL
+// =========================================================
+let currentLang = 'en';
+
+function renderHelpModalForLang(lang) {
+  const locales = window.OPENSLICER_LOCALES || {};
+  const pack = locales[lang] || locales.en;
+  if (!pack || !pack.help) return;
+  const h = pack.help;
+
+  const bodyEl = document.getElementById('helpModalBody');
+  if (!bodyEl) return;
+
+  const shortcutsHtml = (h.shortcuts || []).map(sc => `
+    <div class="help-shortcut-item"><span class="help-kbd">${sc.key}</span> ${sc.desc}</div>
+  `).join('');
+
+  const creditsHtml = (h.libs || []).map(lib => `
+    <div class="help-credit-card">
+      <div class="help-credit-top">
+        <span class="help-credit-name">${lib.name}</span>
+        <span class="help-credit-badge">${lib.license}</span>
+      </div>
+      <div class="help-credit-desc">${lib.desc}</div>
+    </div>
+  `).join('');
+
+  const pedigreeHtml = (h.pedigreeLines || []).map(l => `• ${l}`).join('<br>');
+
+  const featuresHtml = (h.features || []).map(f => `
+    <div class="help-feature-card">${f}</div>
+  `).join('');
+
+  bodyEl.innerHTML = `
+    <div class="help-sec">
+      <div class="help-sec-title">${h.shortcutsTitle || 'Keyboard Shortcuts'}</div>
+      <div class="help-shortcut-grid">
+        ${shortcutsHtml}
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-sec-title">${h.libsTitle || 'Open Source Libraries & Licenses'}</div>
+      <div class="help-credits-grid">
+        ${creditsHtml}
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-sec-title">${h.pedigreeTitle || 'Design Pedigree & Inspirations'}</div>
+      <div style="font-size:11px; color:var(--text-muted); line-height:1.45;">
+        ${pedigreeHtml}
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-sec-title">${h.featuresTitle || 'Key Features & Updates'}</div>
+      <div class="help-features-grid">
+        ${featuresHtml}
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; margin-top:14px; border-top:1px solid var(--border-color); font-size:11px;">
+      <div>${h.licenseFooter || 'License: <b>GNU GPLv3</b>'} • <a href="https://github.com/iSuat/Slicer-Studio" target="_blank" rel="noopener noreferrer" style="color:var(--accent-blue); text-decoration:none; font-weight:600;">GitHub Repository ↗</a></div>
+      <a href="https://www.buymeacoffee.com/iSuat" target="_blank" rel="noopener noreferrer" class="bmc-link" title="Buy me a coffee">
+        <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iSuat&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee" class="bmc-btn-img" style="height:22px;" />
+      </a>
+    </div>
+  `;
+}
+
+function applyLanguage(lang) {
+  const locales = window.OPENSLICER_LOCALES || {};
+  const pack = locales[lang] ? locales[lang] : locales.en;
+  currentLang = locales[lang] ? lang : 'en';
+  try { localStorage.setItem('openslicer_lang', currentLang); } catch (e) {}
+
+  const langSel = document.getElementById('langSelect');
+  if (langSel && langSel.value !== currentLang) langSel.value = currentLang;
+
+  if (pack && pack.ui) {
+    const u = pack.ui;
+    const setTxt = (sel, txt) => {
+      const el = document.querySelector(sel);
+      if (el && txt) el.textContent = txt;
+    };
+    setTxt('#btnHelpInfo', u.helpBtn);
+    setTxt('#box1 .box-title', u.box1Title || u.box1);
+    setTxt('#box2 .box-title', u.box2Title || u.box2);
+    setTxt('#box3 .box-title', u.box3Title || u.box3);
+    setTxt('#box4 .box-title', u.box4Title || u.box4);
+    setTxt('#box5 .box-title', u.box5Title || u.box5);
+    setTxt('#box6 .box-title', u.box6Title || u.box6);
+    setTxt('#box7 .box-title', u.box7Title || u.box7);
+    setTxt('#box8 .box-title', u.box8Title || u.box8);
+    setTxt('#lblDowelShape', u.lblDowelShape);
+    setTxt('#lblDowelDia', u.lblDowelDia);
+    setTxt('#lblDowelWidth', u.lblDowelWidth);
+    setTxt('#lblDowelDepth', u.lblDowelDepth);
+    setTxt('#lblDowelRelief', u.lblDowelRelief);
+    setTxt('#lblDowelWasherDia', u.lblDowelWasherDia);
+    setTxt('#lblRadialRingOffset', u.lblRadialRingOffset);
+    setTxt('#lblRadialHoleRing', u.lblRadialHoleRing);
+    setTxt('#lblRadialCenterHoleDia', u.lblRadialCenterHoleDia);
+    setTxt('#btnCenterModel', u.btnCenterModel);
+    setTxt('#btnDropBed', u.btnDropBed);
+    setTxt('#btnExportAction', u.btnExport);
+  }
+
+  renderHelpModalForLang(currentLang);
+}
+
+const langSelectEl = document.getElementById('langSelect');
+if (langSelectEl) {
+  langSelectEl.addEventListener('change', (e) => {
+    applyLanguage(e.target.value);
+  });
+}
 
 function handleViewportResize() {
   const w = container3d.clientWidth;
@@ -6833,8 +8417,16 @@ function animate() {
 }
 
 // Initialize with empty build plate (waiting for user model import)
+try {
+  const savedLang = localStorage.getItem('openslicer_lang');
+  applyLanguage(savedLang && window.OPENSLICER_LOCALES && window.OPENSLICER_LOCALES[savedLang] ? savedLang : 'en');
+} catch (e) {
+  applyLanguage('en');
+}
 updateDynamicGridAndFloorDimensions();
 updateRadialCoreRadiusUI();
+updateDowelShapeAndToolUI();
+updateStatusBar();
 dowelPlaneGroup.visible = false;
 dowelMarkersGroup.visible = false;
 animate();
